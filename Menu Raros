@@ -1,0 +1,100 @@
+
+Tampermonkey® by Jan Biniok
+v5.3.3
+Menu/Raros
+1
+// ==UserScript==
+2
+// @name         Menu/Raros
+3
+// @namespace    zezinhoestiloso
+4
+// @version      2.2
+5
+// @match        https://www.habblet.city/hotel*
+6
+// @grant        GM_xmlhttpRequest
+7
+// @connect      www.radiohabblet.com.br
+8
+// @run-at       document-idle
+9
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
+10
+// ==/UserScript==
+11
+​
+12
+function listen(i) {
+13
+    i = i || console.log;
+14
+    let e = Object.getOwnPropertyDescriptor(MessageEvent.prototype, "data"),
+15
+        t = e.get;
+16
+    e.get = function i() {
+17
+        if (!(this.currentTarget instanceof WebSocket)) return t.call(this);
+18
+        let e = t.call(this);
+19
+        return Object.defineProperty(this, "data", { value: e }), window.i({ data: e, t: this.currentTarget, event: this });
+20
+    };
+21
+    Object.defineProperty(MessageEvent.prototype, "data", e);
+22
+}
+23
+​
+24
+class RoomUnitEvent {
+25
+    static parse(h) {
+26
+        for (let e = h.l(); e > 0; e--) {
+27
+            let t = h.l(),
+28
+                e = h.o(),
+29
+                i = h.o(),
+30
+                n = h.o(),
+31
+                s = h.l(),
+32
+                a = h.l(),
+33
+                l = h.l(),
+34
+                d = parseFloat(h.o()),
+35
+                o = h.l(),
+36
+                r = h.l(),
+37
+                c = null;
+38
+            if (1 == r)
+39
+                c = {
+40
+                    group: {},
+41
+                    parse() {
+42
+                        this.h = h.o();
+43
+                        this.group.id = h.l();
+44
+                        this.group.status = h.l();
+45
+                        this.group.name = h.o();
+46
+                        h.o();
+47
+                        this.v = h.l();
+48
+                        this.p = h.u();
