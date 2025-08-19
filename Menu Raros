@@ -6,7 +6,7 @@
 // ==UserScript==
 // @name         Menu/Raros
 // @namespace    zezinhoestiloso
-// @version      2.2
+// @version      2.4
 // @match        https://www.habblet.city/hotel*
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
