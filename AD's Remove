@@ -1,3 +1,5 @@
+// ESTE SCRIPT REMOVE ADS DENTRO DO CLIENT DO HABBLET. PARA OS DA PÁGINA DE LOGIN DEVERÃO USAR ADBLOCK OU UBLOCK
+
 // ==UserScript==
 // @name         Habblet Ads Remover
 // @namespace    http://tampermonkey.net/
@@ -5,7 +7,6 @@
 // @match        https://www.habblet.city/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
 // @grant        none
-// APENAS REMOVE ADS DENTRO DO JOGO. PARA OS DA PÁGINA DE LOGIN/CLIENT DEVERÃO USAR ADBLOCK OU UBLOCK
 // ==/UserScript==
 
 
