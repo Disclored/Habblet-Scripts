@@ -1,5 +1,6 @@
-// ==UserScript==
 //CARREGA A COMPARAÇÃO NA FEIRA LIVRE ASSIM QUE O JOGADOR FAZ LOGIN, DEMORA CERCA DE 20 SEGUNDOS
+
+// ==UserScript==
 // @name         Valores Loja Automatico
 // @namespace    zezinhoestiloso
 // @version      2.2
