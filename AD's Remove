@@ -1,0 +1,45 @@
+// ==UserScript==
+// @name         Habblet Ads Remover
+// @namespace    http://tampermonkey.net/
+// @version      1.1.1.1
+// @match        https://www.habblet.city/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
+// @grant        none
+// APENAS REMOVE ADS DENTRO DO JOGO. PARA OS DA PÁGINA DE LOGIN/CLIENT DEVERÃO USAR ADBLOCK OU UBLOCK
+// ==/UserScript==
+
+
+(function () {
+    'use strict';
+
+    const observer = new MutationObserver(() => {
+        const divToRemove = document.getElementById('hjk324nb2');
+        if (divToRemove) {
+            divToRemove.remove();
+            observer.disconnect(); // Stop observing after removal
+        }
+    });
+
+    // Start observing the body for new elements
+    observer.observe(document.body, { childList: true, subtree: true });
+})();
+
+
+(function () {
+    'use strict';
+
+    const observer = new MutationObserver(() => {
+        const divToRemove = document.getElementById('56dfgav234');
+        if (divToRemove) {
+            divToRemove.remove();
+            observer.disconnect(); // Stop observing after removal
+        }
+    });
+
+    // Start observing the body for new elements
+    observer.observe(document.body, { childList: true, subtree: true });
+})();
+
+// Remove the div by its ID
+document.getElementById('675hfgh3453').remove(); // Removes the first div
+document.getElementById('6fs7567545g').remove(); // Removes the second div
