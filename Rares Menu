@@ -477,7 +477,7 @@ async function main() {
          style="height: 100%; overflow-y: auto;">
         <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header">
             <div class="d-flex w-100 align-items-center justify-content-center">
-                <span class="nitro-card-header-text">TE AMO KEMELLY</span>
+                <span class="nitro-card-header-text">Script</span>
                 <div class="position-absolute end-0 nitro-card-header-close"></div>
             </div>
         </div>
