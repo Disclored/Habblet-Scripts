@@ -1,0 +1,185 @@
+// ==UserScript==
+//CARREGA A COMPARAÇÃO NA FEIRA LIVRE ASSIM QUE O JOGADOR FAZ LOGIN, DEMORA CERCA DE 20 SEGUNDOS
+// @name         Valores Loja Automatico
+// @namespace    zezinhoestiloso
+// @version      2.2
+// @match        https://www.habblet.city/*
+// @grant        GM_xmlhttpRequest
+// @connect      www.radiohabblet.com.br
+// @run-at       document-idle
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
+// ==/UserScript==
+
+(function() {
+  'use strict';
+
+  const limitePorLote = 50;
+  const totalPaginas = 25;
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
+  // Lista de exceções que devem manter o "raro"
+  const excecoesRaro = ["raroestatuadelucifer"];
+
+  // Mapeamento de substituições específicas
+  const substituicoesRaros = {
+    "Sorveteira Espacial LTD": "Sorveteria Espacial LTD",
+    "Escultura de Ovelha Apaixonante LTD": "Escultura da Ovelha Apaixonante LTD",
+    "Raro Máquina de Chocolate Retro": "Raro Máquina Chocolate Retro"
+  };
+
+  // Função única para normalizar nomes
+  function normalizarNome(nome) {
+    if (!nome) return "";
+    nome = nome.toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/ltd/g, "")
+      .replace(/,/g, "")
+      .replace(/['"’‘`´]/g, "")
+      .replace(/\s+/g, "").trim();
+    if (excecoesRaro.includes(nome)) return nome;
+    return nome.replace(/rar[oa]?/g, "");
+  }
+
+  // Busca sequencial de dados da API (menos risco de bloqueio)
+  async function buscaDadosAPI() {
+    let listaResumida = [];
+
+    for (let pag = 1; pag <= totalPaginas; pag++) {
+      console.log(`Buscando valores da página ${pag} de ${totalPaginas}...`);
+      try {
+        const json = await new Promise((resolve, reject) => {
+          GM_xmlhttpRequest({
+            method: "POST",
+            url: "https://www.radiohabblet.com.br/getItens/mobs-val",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Origin": "https://www.radiohabblet.com.br",
+              "Referer": "https://www.radiohabblet.com.br/",
+              "User-Agent": navigator.userAgent,
+            },
+            data: JSON.stringify({ pag: pag, limit: limitePorLote }),
+            onload: function(response) {
+              if (response.status === 200) {
+                try {
+                  const data = JSON.parse(response.responseText);
+                  resolve(data);
+                } catch (e) {
+                  reject(e);
+                }
+              } else {
+                reject(new Error(`Status ${response.status}`));
+              }
+            },
+            onerror: reject
+          });
+        });
+
+        if (json && Array.isArray(json.valores)) {
+          const resumido = json.valores.map(item => {
+            // Aplicar substituição específica antes da normalização
+            let nomeCorrigido = substituicoesRaros[item.mob] || item.mob;
+            return {
+              nomeNorm: normalizarNome(nomeCorrigido),
+              preco: item.preco
+            };
+          });
+          listaResumida.push(...resumido);
+        }
+      } catch (err) {
+        console.error(`Erro na página ${pag}`, err);
+      }
+
+      await delay(500);
+    }
+
+    // Adicionando os raros manualmente
+    listaResumida.push(
+      { nomeNorm: normalizarNome("Raro Jacinto Azul"), preco: 2 },
+      { nomeNorm: normalizarNome("Raro Jacinto Vermelho"), preco: 2 },
+      { nomeNorm: normalizarNome("Raro tapete 100 dólares"), preco: 3 }
+    );
+
+    console.log(`Carregados ${listaResumida.length} valores de raros`);
+    return listaResumida;
+  }
+
+  // Extrai dados da loja já normalizados
+  function extraiDadosLoja() {
+    const container = document.querySelector('.nitro-catalog-layout-marketplace-grid');
+    if (!container) return [];
+
+    return [...container.querySelectorAll('.layout-grid-item')].map(item => {
+      const nomeElem = item.querySelector('.fw-bold');
+      const precoElem = [...item.querySelectorAll('div')].find(div => div.textContent.includes('Preço:'));
+      if (!nomeElem || !precoElem) return null;
+
+      const precoMatch = precoElem.textContent.match(/Preço:\s*(\d+)/);
+      return {
+        nomeNorm: normalizarNome(nomeElem.textContent.trim()),
+        preco: precoMatch ? Number(precoMatch[1]) : null,
+        nomeElem
+      };
+    }).filter(Boolean);
+  }
+
+  // Cria seta de comparação
+  function criaSeta(cor, simbolo, valorAPI) {
+    const span = document.createElement('span');
+    span.style.color = cor;
+    span.style.marginLeft = '6px';
+    span.style.fontWeight = 'bold';
+    span.classList.add('seta-preco-comparacao');
+    span.textContent = `${simbolo} (${valorAPI})`;
+    return span;
+  }
+
+  // Compara preços e marca no DOM
+  function comparaEMarca(apiMap, lojaDados) {
+    lojaDados.forEach(({ nomeNorm, preco, nomeElem }) => {
+      if (preco == null) return;
+
+      const precoApi = apiMap.get(nomeNorm);
+      if (precoApi == null) return;
+
+      const setaExistente = nomeElem.querySelector('.seta-preco-comparacao');
+      if (setaExistente) setaExistente.remove();
+
+      let seta;
+      if (preco < precoApi) seta = criaSeta('green', '⬇️', precoApi);
+      else if (preco > precoApi) seta = criaSeta('red', '⬆️', precoApi);
+      else seta = criaSeta('grey', '➡️', precoApi);
+
+      nomeElem.appendChild(seta);
+    });
+  }
+
+  // Observa alterações no DOM da loja
+  function observarMudancas(apiMap) {
+    const observer = new MutationObserver(() => {
+      const lojaDados = extraiDadosLoja();
+      comparaEMarca(apiMap, lojaDados);
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Primeira execução
+    const lojaDados = extraiDadosLoja();
+    comparaEMarca(apiMap, lojaDados);
+  }
+
+  // Fluxo principal
+  async function main() {
+    console.log("Iniciando busca da API...");
+    const apiDados = await buscaDadosAPI();
+    const apiMap = new Map(apiDados.map(({ nomeNorm, preco }) => [nomeNorm, preco]));
+
+    console.log("Carregando valores na loja");
+    observarMudancas(apiMap);
+
+    console.log("Script carregado");
+  }
+
+  main();
+
+})();
