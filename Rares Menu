@@ -547,7 +547,7 @@ async function main() {
                         <input type="checkbox" id="enables-doidex-toggle">
                         <span class="slider"></span>
                     </label>
-                    <div class="d-inline text-black option-name">Enables doidex</div>
+                    <div class="d-inline text-black option-name">Enables</div>
                 </div>
             </div>
             <div class="line">
@@ -557,7 +557,7 @@ async function main() {
                 <button id="btn-loja-raros" class="btn btn-secondary w-100">Valores dos Raros</button>
                 <div id="status-loja-raros" style="margin-top:0.1px; color:black; text-align:center;">A Feira-Livre terá comparação de preços</div>
             </div>
-            <hr style="position: absolute; bottom: 12px; width: calc(100% - 32px); left: 16px;">
+            <hr style="position: absolute; bottom: 10px; width: calc(100% - 32px); left: 16px;">
         </div>
     </div>
 </div>
@@ -902,17 +902,15 @@ else if (1446 == i) {
     }
 } else if (1778 == i) {
     if (window.J && window.J.elements.ie.checked) return;
+
 } else if (1797 == i) {
     if (window.J && window.J.elements.te.checked) {
-        let e = new BinaryWriter(2080);
-        e.C(1);
-        window.ne.bind(t)(e.K());
-        setTimeout(() => {
-            let e = new BinaryWriter(2080);
-            e.C(0);
-            window.ne.bind(t)(e.K());
-        }, 500);
+        let writer = new BinaryWriter(1314);
+        writer.I(":enable 0");
+        writer.C(0);
+        window.ne.bind(t)(writer.K());
     }
+
 } else if (3920 == i) {
     let i = s.l(),
         e = s.o(),
@@ -923,6 +921,7 @@ else if (1446 == i) {
     n.L = e;
     n.h = t;
 }
+
 return e;
 };
 
@@ -1085,6 +1084,7 @@ const searcher = setInterval(() => {
     let contador = 20; // 20 segundos
     statusElem.style.color = "black";
     statusElem.style.textAlign = "center";
+    statusElem.style.marginTop = "5px";
 
     // Atualiza o texto imediatamente
     statusElem.textContent = `Carregando... (${contador}s)`;
@@ -1261,5 +1261,6 @@ const searcher = setInterval(() => {
 
     window.executarLojaRaros = executarLojaRaros;
 })();
+
 
 
