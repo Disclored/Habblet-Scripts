@@ -911,7 +911,7 @@ initExceptionInput();
 // --- Código principal de processamento de pacotes ---
 if (374 === i) {
     RoomUnitEvent.parse(s);
-} else if (1446 === i || i == 1036) {
+} else if (1446 === i || i == 1036) { // 1446 mensagens normais | 1036 mensagens em negrito
     if (window.J && window.J.elements.ee.checked) {
         const userId = s.l();
         const message = s.o();
