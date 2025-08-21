@@ -22,4 +22,7 @@ Os scripts devem ser salvos no **Tampermonkey** e depois ativados.
 ## 💰 Comparação de Preços
 | | |
 |---|---|
-| <img width="535" height="615" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" /> | A *feira-livre* agora apresenta uma **comparação de preço de venda / valor**, com visualização intuitiva. Seta para cima e valor a vermelho indica que o preço de venda está acima do valor do raro. Seta para baixo e valor a verde indica que o preço de venda está abaixo. Seta lateral e valor cinza indica preço igual |
+| <img width="750" height="615" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" /> | A *feira-livre* agora apresenta uma **comparação de preço de venda / valor**, com visualização intuitiva. 
+Seta para cima e valor a vermelho indica que o preço de venda está acima do valor do raro. 
+Seta para baixo e valor a verde indica que o preço de venda está abaixo. 
+Seta lateral e valor cinza indica preço igual |
