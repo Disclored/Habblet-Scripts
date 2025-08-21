@@ -17,7 +17,7 @@ Para além deste readme, dentro de cada página dos scripts, apresento comentado
 ## 📌 Menu Rares – Nova Opção Feira-Livre
 | | |
 |---|---|
-| <img width="248" height="422" src="https://github.com/user-attachments/assets/d0be8edf-9ae3-4fa1-ae4a-3d13b98a5f34" /> | O **Menu Rares** agora conta com uma nova opção de busca de valores de raros. |
+| <img width="248" height="508" alt="image" src="https://github.com/user-attachments/assets/d8ba7eaa-573e-4564-b359-4c4c29a2740a" /> | O **Menu Rares** agora conta com uma nova opção de busca de valores de raros. |
 
 ---
 
