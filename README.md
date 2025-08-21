@@ -7,7 +7,7 @@ Os scripts devem ser salvos no **Tampermonkey** e depois ativados.
 ## 📌 Menu Rares – Nova Opção Feira-Livre
 | | |
 |---|---|
-| <img width="248" height="422" src="https://github.com/user-attachments/assets/d0be8edf-9ae3-4fa1-ae4a-3d13b98a5f34" /> | O **Menu Rares** agora conta com uma nova opção da *feira-livre*. |
+| <img width="248" height="422" src="https://github.com/user-attachments/assets/d0be8edf-9ae3-4fa1-ae4a-3d13b98a5f34" /> | O **Menu Rares** agora conta com uma nova opção de busca de valores de raros. |
 
 ---
 
@@ -22,4 +22,4 @@ Os scripts devem ser salvos no **Tampermonkey** e depois ativados.
 ## 💰 Comparação de Preços
 | | |
 |---|---|
-| <img width="535" height="615" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" /> | A *feira-livre* agora apresenta uma **comparação de preço de venda / valor**, com visualização intuitiva. |
+| <img width="535" height="615" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" /> | A *feira-livre* agora apresenta uma **comparação de preço de venda / valor**, com visualização intuitiva. Seta para cima e valor a vermelho indica que o preço de venda está acima do valor do raro. Seta para baixo e valor a verde indica que o preço de venda está abaixo. Seta lateral e valor cinza indica preço igual |
