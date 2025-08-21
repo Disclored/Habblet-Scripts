@@ -14,6 +14,7 @@ Ao iniciar é ativado um timer
 <img width="244" height="222" alt="image" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" />
 
 Para além disto, a feira livre agora apresenta uma comparação de preço de venda / valor, onde a apresentação é bastante intuitiva.
+
 <img width="535" height="615" alt="image" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" />
 
 
