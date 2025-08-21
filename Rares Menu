@@ -1,13 +1,12 @@
 //ESTE MENU FOI MODIFICADO TENDO EM CONTA UM JÁ EXISTENTE CRIADO PELO XARU.
 //NELE ADICIONEI UM CAMPO DE FEIRA LIVRE, QUE AO SER ATIVADO, PERMITE BUSCAR NOME DOS RAROS INDICANDO O RESPECTIVO PREÇO E ICONE
 //NA FEIRA-LIVRE TAMBÉM É ADICIONADO UMA COMPARAÇAO TENDO EM CONTA O PREÇO DO RARO/ PREÇO DE VENDA
-//NA OPÇAO DE MUTE-ALL ADICIONEI EXCEÇÃO DE USER AMIGOS QUE NÃO SÃO MUTADOS. PODEM REMOVER
-// O ANTI AUS AGORA APLICA O ENABLE 0 EM VEZ DE UM MOVIMENTO DE DANÇA, DEIXANDO IMPERCETÍVEL O USO DO SCRIPT
+//NA OPÇAO DE MUTE-ALL ADICIONEI UM CAMPO PARA ADICIONAR EXCEÇÕES. O SEU PRORIO USUARIO DEVERA SER ADICIONADO TAMBEM
 
 // ==UserScript==
 // @name         Menu/Raros
 // @namespace    zezinhoestiloso
-// @version      2.4
+// @version      2.6
 // @match        https://www.habblet.city/hotel*
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -473,12 +472,12 @@ async function main() {
 
     i.innerHTML = `
 <div class="position-absolute draggable-window"
-    style="z-index: 401; top: calc(-290.5px + 50vh); left: calc(-127.5px + 50vw); visibility: visible; height: 465px;">
+    style="z-index: 401; top: calc(-290.5px + 50vh); left: calc(-127.5px + 50vw); visibility: visible; height: 550px;">
     <div class="d-flex position-relative flex-column nitro-card theme-primary-slim nitro-room-construction-tool"
          style="height: 100%; overflow-y: auto;">
         <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header">
             <div class="d-flex w-100 align-items-center justify-content-center">
-                <span class="nitro-card-header-text">Script</span>
+                <span class="nitro-card-header-text">TE AMO KEMELLY</span>
                 <div class="position-absolute end-0 nitro-card-header-close"></div>
             </div>
         </div>
@@ -521,9 +520,15 @@ async function main() {
                         <span class="slider"></span>
                     </label>
                     <div class="d-inline text-black option-name">Mutar todos da sala</div>
-
                 </div>
             </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between" style="margin-top:4px;">
+               <div class="d-flex flex-column w-100">
+                  <label class="text-black fw-bold" for="exception-user">Exceções (não mutar):</label>
+                      <input type="text" id="exception-user" placeholder="Escreve o nick..." style="width:100%; padding:4px; border:1px solid #ccc; border-radius:4px;">
+                     <button id="add-exception-btn" class="btn btn-secondary w-100" style="margin-top:4px;">Adicionar à exceção</button>
+              </div>
+           </div>
             <div class="d-flex gap-2 align-items-center justify-content-between">
                 <div class="d-flex gap-2 align-items-center">
                     <label class="switch">
@@ -872,46 +877,75 @@ window.i = ({ data: e, t }) => {
         window.addOpcodeLog('RECEBIDO', i, extraData);
     }
 
-if (374 == i)
+
+// Array global para guardar os nicks digitados
+window.exceptionList = window.exceptionList || [];
+
+// Função que tenta encontrar o input e o botão repetidamente
+function initExceptionInput() {
+    const input = document.getElementById('exception-user');
+    const button = document.getElementById('add-exception-btn');
+
+    if (!input || !button) {
+        setTimeout(initExceptionInput, 500);
+        return;
+    }
+
+    button.addEventListener('click', () => {
+        const nick = input.value.trim();
+        if (!nick) return;
+
+        if (!window.exceptionList.includes(nick)) {
+            window.exceptionList.push(nick);
+        }
+
+        // Mantém apenas este log
+        console.log("Lista atual de exceções:", window.exceptionList);
+
+        input.value = '';
+    });
+}
+
+initExceptionInput();
+
+// --- Código principal de processamento de pacotes ---
+if (374 === i) {
     RoomUnitEvent.parse(s);
-else if (1446 == i) {
+} else if (1446 === i || i == 1036) {
     if (window.J && window.J.elements.ee.checked) {
-        // Extrair info do pacote
-        const userId = s.l();   // ID do emissor
-        const message = s.o();  // Texto da mensagem
+        const userId = s.l();
+        const message = s.o();
         s.l();
         s.l();
 
-        // Encontrar o username pelo RoomUnitEvent
         let userObj = window.J.F.W.find(e => e.V === userId);
-        let username = userObj ? userObj.username : "desconhecido";
+        let username = userObj ? userObj.username.trim() : "desconhecido";
 
-        // Lista de exceções
-        const muteExceptions = ["strokinha","zezinhoestiloso","eoliennes","Disclored"];
+        const muteExceptions = window.exceptionList;
 
-        // Se NÃO estiver na lista de exceções, muta (return)
         if (!muteExceptions.includes(username)) {
             return;
         }
-
-        // Caso contrário, deixa passar normalmente
     } else {
         s.l();
         s.o();
         s.l();
         s.l();
     }
+
 } else if (1778 == i) {
     if (window.J && window.J.elements.ie.checked) return;
-
 } else if (1797 == i) {
     if (window.J && window.J.elements.te.checked) {
-        let writer = new BinaryWriter(1314);
-        writer.I(":enable 0");
-        writer.C(0);
-        window.ne.bind(t)(writer.K());
+        let e = new BinaryWriter(2080);
+        e.C(1);
+        window.ne.bind(t)(e.K());
+        setTimeout(() => {
+            let e = new BinaryWriter(2080);
+            e.C(0);
+            window.ne.bind(t)(e.K());
+        }, 500);
     }
-
 } else if (3920 == i) {
     let i = s.l(),
         e = s.o(),
@@ -1126,7 +1160,7 @@ const searcher = setInterval(() => {
             // Ajusta a janela principal depois do carregamento
             const janela = document.querySelector(".position-absolute.draggable-window");
             if (janela) {
-                janela.style.height = "580px";
+                janela.style.height = "660px";
             }
 
             const innerCard = janela?.querySelector(".nitro-card.theme-primary-slim.nitro-room-construction-tool");
@@ -1262,6 +1296,3 @@ const searcher = setInterval(() => {
 
     window.executarLojaRaros = executarLojaRaros;
 })();
-
-
-
