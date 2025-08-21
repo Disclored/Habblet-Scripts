@@ -3,6 +3,9 @@ Após isso, eles deverão ser ativados
 
 <img width="278" height="214" alt="image" src="https://github.com/user-attachments/assets/cb259ae8-d510-4283-9939-96a156e58bff" />
 
+
+
+
 O "Menu Rares" conta com uma nova opção da feira-livre
 <img width="248" height="422" alt="image" src="https://github.com/user-attachments/assets/d0be8edf-9ae3-4fa1-ae4a-3d13b98a5f34" />
 
