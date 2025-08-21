@@ -10,7 +10,7 @@ Para além deste readme, dentro de cada página dos scripts, apresento comentado
 ## 🔇Opção de mutar todos da sala, aplicando exceções.
 | | |
 |---|---|
-| <img width="254" height="611" alt="image" src="https://github.com/user-attachments/assets/757b5217-c857-469a-a140-1572ed752a8c" /> | O **Mutar todos** agora tem a opção de adicionar exceções. |
+| <img width="248" height="508" alt="image" src="https://github.com/user-attachments/assets/d8ba7eaa-573e-4564-b359-4c4c29a2740a" /> | O **Mutar todos** agora tem a opção de adicionar exceções. |
 
 ---
 
