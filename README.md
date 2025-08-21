@@ -1,7 +1,9 @@
 # 🛠️ Scripts para Tampermonkey
 
 Os scripts devem ser salvos no **Tampermonkey** e depois ativados. |
+
 À data de hoje, 21/08/2025, todos estão funcionais. |
+
 Para além deste readme, dentro de cada página dos scripts, apresento comentado em mais detalhes a sua função.
 
 ---
