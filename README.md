@@ -10,7 +10,7 @@ Para além deste readme, dentro de cada página dos scripts, apresento comentado
 ## 🔇Opção de mutar todos da sala, aplicando exceções.
 | | |
 |---|---|
-| <img width="248" height="508" alt="image" src="https://github.com/user-attachments/assets/d8ba7eaa-573e-4564-b359-4c4c29a2740a" /> | O **Mutar todos** agora tem a opção de adicionar exceções. O Próprio usuário deverá ser adicionado às exceções uma vez que, MUTA TODOS, incluindo o próprio. |
+| <img width="248" height="508" alt="image" src="https://github.com/user-attachments/assets/d8ba7eaa-573e-4564-b359-4c4c29a2740a" /> | O **Mutar todos** agora tem a opção de adicionar exceções. Mute aplica ao próprio user. |
 
 ---
 
