@@ -6,8 +6,8 @@
 // ==UserScript==
 // @name         Menu/Raros
 // @namespace    zezinhoestiloso
-// @version      2.6
-// @match        https://www.habblet.city/hotel*
+// @version      2.7
+// @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
 // @run-at       document-idle
@@ -524,7 +524,9 @@ async function main() {
             </div>
             <div class="d-flex gap-2 align-items-center justify-content-between" style="margin-top:4px;">
                <div class="d-flex flex-column w-100">
-                  <label class="text-black fw-bold" for="exception-user">Exceções (não mutar):</label>
+                  <label class="text-black fw-bold" for="exception-user" style="margin-left:3px;">
+                        Exceções (não mutar):
+                  </label>
                       <input type="text" id="exception-user" placeholder="Escreve o nick..." style="width:100%; padding:4px; border:1px solid #ccc; border-radius:4px;">
                      <button id="add-exception-btn" class="btn btn-secondary w-100" style="margin-top:4px;">Adicionar à exceção</button>
               </div>
@@ -1052,6 +1054,7 @@ const searcher = setInterval(() => {
 
         listaResumida.push(
             { nomeOriginal: "Raro Jacinto Azul", nomeNorm: normalizarNome("Raro Jacinto Azul"), preco: 2, urlImg: "" },
+            { nomeOriginal: "Mini Bonequinho Olímpico LTD", nomeNorm: normalizarNome("Mini Bonequinho Olímpico LTD"), preco: 20, urlImg: "" },
             { nomeOriginal: "Raro Jacinto Vermelho", nomeNorm: normalizarNome("Raro Jacinto Vermelho"), preco: 2, urlImg: "" },
             { nomeOriginal: "Raro tapete 100 dólares", nomeNorm: normalizarNome("Raro tapete 100 dólares"), preco: 3, urlImg: "" },
             { nomeOriginal: "strokinha", nomeNorm: normalizarNome("strokinha"), preco: "infinito", urlImg: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAcCAYAAACZOmSXAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAGHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyI+PHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj48cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0idXVpZDpmYWY1YmRkNS1iYTNkLTExZGEtYWQzMS1kMzNkNzUxODJmMWIiIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIj48dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPjwvcmRmOkRlc2NyaXB0aW9uPjwvcmRmOlJERj48L3g6eG1wbWV0YT4NCjw/eHBhY2tldCBlbmQ9J3cnPz4slJgLAAACCElEQVRIS82WMYsaQRiGn9XApUoMKRa84nKoRdJbBe4HHBys4UrTHkgKQTGkClqlEKzs0wgBQ9gFy/0XKYIgNkqwSCoV9dzRTaFf2J07L7G4W59mmHdmdnn2m9ldw3Ecnzvo9XoAZDIZfQiA6XQKQD6fB8C2bW3GbmJ68JAYurmYjEYjuCdjIVrzVqvlEzAV7tNYiNa8Xq/77GEq7GtcrVb1KGJzqbkwmUwAKBQKwXhv02KxGOoPBgMIXCeXy0VsDtz6htNNc7lcqK+jz3ddF4BUKgVAuVwOjRN5zW3bvtVcN3UcJ9QXvjU/APDm3adQrq8vlUoAZLNZANT3LwdmLuexVqsF43/i++EHKObdbhcC100mkwB0Op0DMxcMw9CjO9HN+/0+BHb55/cXAPz89RuAVxeVaM1v3Nx13b9n9H+wLAvLsvB9H9/3UUqhlMI0TUzTxDAMDMNgcXrO4vSc47Mrjs+u8Dzv5s0fkp0118/pLtrtNgDz+RyA8XgMwGw2A2A4HALQbDYBaDQaACQSiWjNH+mBIN/3j5cvAah9/QHA29fPAXj25CkE/oAWiwUASikI7H4514Lky+vraM131tzzPAiYSE0lXy6XAKxWKwgYSat/xSqVCgAvTk4AeHx0dGDmYibtfLtr11sjMY3H45t8vd6u3CC7OxbbeKXTaQjMl3alVLTmfwBulPdB0Kuf7AAAAABJRU5ErkJggg==" }
@@ -1116,7 +1119,7 @@ const searcher = setInterval(() => {
     const statusElem = document.getElementById("status-loja-raros");
     if (!statusElem) return;
 
-    let contador = 20; // 20 segundos
+    let contador = 21; // 21 segundos
     statusElem.style.color = "black";
     statusElem.style.textAlign = "center";
     statusElem.style.marginTop = "5px";
@@ -1296,3 +1299,5 @@ const searcher = setInterval(() => {
 
     window.executarLojaRaros = executarLojaRaros;
 })();
+
+
