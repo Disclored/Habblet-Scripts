@@ -6,7 +6,7 @@
 // ==UserScript==
 // @name         Menu/Raros
 // @namespace    zezinhoestiloso
-// @version      2.7
+// @version      2.8
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -984,7 +984,8 @@ const searcher = setInterval(() => {
     const substituicoesRaros = {
         "Sorveteira Espacial LTD": "Sorveteria Espacial LTD",
         "Escultura de Ovelha Apaixonante LTD": "Escultura da Ovelha Apaixonante LTD",
-        "Raro Máquina de Chocolate Retro": "Raro Máquina Chocolate Retro"
+        "Raro Máquina de Chocolate Retro": "Raro Máquina Chocolate Retro",
+        "Dado Wired LTD": "Porta-Dados Wired LTD"
     };
 
     function normalizarNome(nome) {
@@ -1119,7 +1120,7 @@ const searcher = setInterval(() => {
     const statusElem = document.getElementById("status-loja-raros");
     if (!statusElem) return;
 
-    let contador = 21; // 21 segundos
+    let contador = 20; // 20 segundos
     statusElem.style.color = "black";
     statusElem.style.textAlign = "center";
     statusElem.style.marginTop = "5px";
@@ -1258,9 +1259,15 @@ const searcher = setInterval(() => {
                     imgElem = document.createElement("img");
                     imgElem.src = imgUrl;
                     imgElem.className = "img-icone-raro";
+
+                    // define limite fixo de 40x40 px
+                    imgElem.style.width = "40px";
+                    imgElem.style.height = "40px";
+
+                    //imgElem.style.border = "1px solid white";
                     imgElem.style.display = "block";
-                    imgElem.style.margin = "15px auto 0";
-                    imgElem.style.transform = "scale(2)";          // zoom 2x
+                    imgElem.style.margin = "10px auto 0";
+                    imgElem.style.transform = "scale(1.7)";          // zoom 2x
                     imgElem.style.transformOrigin = "center top";  // centraliza o zoom
                     imgElem.style.imageRendering = "pixelated";    // mantém pixel art nítida
                     spanResultado.insertAdjacentElement("afterend", imgElem);
@@ -1299,5 +1306,8 @@ const searcher = setInterval(() => {
 
     window.executarLojaRaros = executarLojaRaros;
 })();
+
+
+
 
 
