@@ -3,10 +3,12 @@
 //NA FEIRA-LIVRE TAMBÉM É ADICIONADO UMA COMPARAÇAO TENDO EM CONTA O PREÇO DO RARO/ PREÇO DE VENDA
 //NA OPÇAO DE MUTE-ALL ADICIONEI UM CAMPO PARA ADICIONAR EXCEÇÕES. O SEU PRORIO USUARIO DEVERA SER ADICIONADO TAMBEM
 
+//O CONTADOR NO TITULO É PARA SABER QUANDO RECEBE OS DIAMANTES A CADA 1 HORA ONLINE
+
 // ==UserScript==
 // @name         Menu/Raros
 // @namespace    zezinhoestiloso
-// @version      2.8
+// @version      2.9
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -477,7 +479,7 @@ async function main() {
          style="height: 100%; overflow-y: auto;">
         <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header">
             <div class="d-flex w-100 align-items-center justify-content-center">
-                <span class="nitro-card-header-text">TE AMO KEMELLY</span>
+                <span id="script-title" class="nitro-card-header-text">Script - 60:00</span>
                 <div class="position-absolute end-0 nitro-card-header-close"></div>
             </div>
         </div>
@@ -571,7 +573,33 @@ async function main() {
 </div>
     `;
 
-    // Append the floating window and icon to the appropriate containers
+
+
+    // Contador horário de diamantes
+    function startCountdown(duration, display) {
+        let timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = Math.floor(timer / 60);
+            seconds = timer % 60;
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = "Script - " + minutes + ":" + seconds;
+
+            if (--timer < 0) {W
+                timer = duration; // Volta a 60:00 quando atinge 00:00
+            }
+        }, 1000);
+    }
+
+    const display = i.querySelector("#script-title");
+    if (display) {
+        let oneHour = 60 * 60;
+        startCountdown(oneHour, display);
+    }
+
+    
     let n = i.children[0],
         s = n.children[0].children[0];
 
