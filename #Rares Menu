@@ -8,8 +8,8 @@
 // ==UserScript==
 // @name         Menu/Raros
 // @namespace    zezinhoestiloso
-// @version      2.9
-// @match        https://www.habblet.city/hotel
+// @version      2.9.1
+// @match        https://www.habblet.city/*
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
 // @run-at       document-idle
@@ -587,8 +587,10 @@ async function main() {
 
             display.textContent = "Script - " + minutes + ":" + seconds;
 
-            if (--timer < 0) {W
-                timer = duration; // Volta a 60:00 quando atinge 00:00
+            timer--; // decrementa depois de atualizar o display
+
+            if (timer < 0) {
+                timer = duration; // volta a 60:00 quando chega a 0
             }
         }, 1000);
     }
@@ -599,7 +601,6 @@ async function main() {
         startCountdown(oneHour, display);
     }
 
-    
     let n = i.children[0],
         s = n.children[0].children[0];
 
@@ -1005,8 +1006,8 @@ const searcher = setInterval(() => {
 (function() {
     'use strict';
 
-    const limitePorLote = 50;
-    const totalPaginas = 25;
+    const limitePorLote = 60;
+    const totalPaginas = 30;
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const excecoesRaro = ["raroestatuadelucifer"];
     const substituicoesRaros = {
@@ -1148,7 +1149,7 @@ const searcher = setInterval(() => {
     const statusElem = document.getElementById("status-loja-raros");
     if (!statusElem) return;
 
-    let contador = 20; // 20 segundos
+    let contador = 24; // 24 segundos
     statusElem.style.color = "black";
     statusElem.style.textAlign = "center";
     statusElem.style.marginTop = "5px";
@@ -1334,6 +1335,8 @@ const searcher = setInterval(() => {
 
     window.executarLojaRaros = executarLojaRaros;
 })();
+
+
 
 
 
