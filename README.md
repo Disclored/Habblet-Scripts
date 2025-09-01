@@ -24,7 +24,7 @@ Para além deste readme, dentro de cada página dos scripts, apresento comentado
 ## ⏱️ Timer Automático
 | | |
 |---|---|
-| <img width="252" height="106" src="https://github.com/user-attachments/assets/de6ade53-8dc4-427f-bf46-c54536fc1847" /> | Ao iniciar, é ativado um **timer**. |
+| <img width="586" height="168" alt="image" src="https://github.com/user-attachments/assets/195c5e44-ba9f-4cad-9774-b799e0cd83b1" /> | Ao iniciar, é ativado um **timer**. E o carregamento pode ser acompanhado na consola |
 | <img width="244" height="222" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" /> | Após a ativação, surge também um campo para procurar o valor de raros. |
 
 ---
