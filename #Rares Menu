@@ -478,7 +478,7 @@ async function main() {
          style="height: 100%; overflow-y: auto;">
         <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header">
             <div class="d-flex w-100 align-items-center justify-content-center">
-                <span id="kemelly-title" class="nitro-card-header-text">TE AMO KEMELLY - 60:00</span>
+                <span id="script-title" class="nitro-card-header-text">Script - 60:00</span>
                 <div class="position-absolute end-0 nitro-card-header-close"></div>
             </div>
         </div>
@@ -584,7 +584,7 @@ async function main() {
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = "TE AMO KEMELLY - " + minutes + ":" + seconds;
+            display.textContent = "Script - " + minutes + ":" + seconds;
 
             timer--; // decrementa depois de atualizar o display
 
@@ -594,7 +594,7 @@ async function main() {
         }, 1000);
     }
 
-    const display = i.querySelector("#kemelly-title");
+    const display = i.querySelector("#script-title");
     if (display) {
         let oneHour = 60 * 60;
         startCountdown(oneHour, display);
