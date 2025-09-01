@@ -5,9 +5,9 @@
 //O CONTADOR NO TITULO É PARA SABER QUANDO RECEBE OS DIAMANTES A CADA 1 HORA ONLINE
 
 // ==UserScript==
-// @name         Menu/Raros
+// @name         Menu Raros
 // @namespace    zezinhoestiloso
-// @version      2.9.1
+// @version      2.9.2
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -478,7 +478,7 @@ async function main() {
          style="height: 100%; overflow-y: auto;">
         <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header">
             <div class="d-flex w-100 align-items-center justify-content-center">
-                <span id="script-title" class="nitro-card-header-text">Script - 60:00</span>
+                <span id="kemelly-title" class="nitro-card-header-text">TE AMO KEMELLY - 60:00</span>
                 <div class="position-absolute end-0 nitro-card-header-close"></div>
             </div>
         </div>
@@ -584,7 +584,7 @@ async function main() {
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = "Script - " + minutes + ":" + seconds;
+            display.textContent = "TE AMO KEMELLY - " + minutes + ":" + seconds;
 
             timer--; // decrementa depois de atualizar o display
 
@@ -594,7 +594,7 @@ async function main() {
         }, 1000);
     }
 
-    const display = i.querySelector("#script-title");
+    const display = i.querySelector("#kemelly-title");
     if (display) {
         let oneHour = 60 * 60;
         startCountdown(oneHour, display);
@@ -1005,8 +1005,8 @@ const searcher = setInterval(() => {
 (function() {
     'use strict';
 
-    const limitePorLote = 60;
-    const totalPaginas = 30;
+    const limitePorLote = 40;
+    const totalPaginas = 40;
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const excecoesRaro = ["raroestatuadelucifer"];
     const substituicoesRaros = {
@@ -1029,10 +1029,25 @@ const searcher = setInterval(() => {
         return nome.replace(/rar[oa]?/g, "");
     }
 
-    async function buscaDadosAPI() {
+    async function buscaDadosAPI(statusElem) {
         let listaResumida = [];
         for (let pag = 1; pag <= totalPaginas; pag++) {
             console.log(`Buscando valores da página ${pag} de ${totalPaginas}...`);
+
+            // Atualiza status em porcentagem
+            if (statusElem) {
+                const porcentagem = Math.round((pag / totalPaginas) * 100);
+                statusElem.textContent = `Carregando... ${porcentagem}%`;
+                statusElem.style.color = "black";
+                statusElem.style.textAlign = "center";
+                statusElem.style.marginTop = "5px";
+
+                if (porcentagem === 100) {
+                    //statusElem.textContent = "✅ Pronto";
+                    //statusElem.style.color = "green";
+                }
+            }
+
             try {
                 const json = await new Promise((resolve, reject) => {
                     GM_xmlhttpRequest({
@@ -1063,7 +1078,6 @@ const searcher = setInterval(() => {
                 });
 
                 if (json && Array.isArray(json.valores)) {
-                    //console.log("Página", pag, "retorno da API:", json); // <-- Adicionado
                     const resumido = json.valores.map(item => {
                         let nomeCorrigido = substituicoesRaros[item.mob] || item.mob;
                         return {
@@ -1078,7 +1092,12 @@ const searcher = setInterval(() => {
             } catch (err) {
                 console.error(`Erro na página ${pag}`, err);
             }
-            await delay(500);
+            await delay(1000);
+        }
+
+            // ✅ Limpa o "Carregando... 100%"
+        if (statusElem) {
+            statusElem.textContent = "";
         }
 
         listaResumida.push(
@@ -1086,7 +1105,7 @@ const searcher = setInterval(() => {
             { nomeOriginal: "Mini Bonequinho Olímpico LTD", nomeNorm: normalizarNome("Mini Bonequinho Olímpico LTD"), preco: 20, urlImg: "" },
             { nomeOriginal: "Raro Jacinto Vermelho", nomeNorm: normalizarNome("Raro Jacinto Vermelho"), preco: 2, urlImg: "" },
             { nomeOriginal: "Raro tapete 100 dólares", nomeNorm: normalizarNome("Raro tapete 100 dólares"), preco: 3, urlImg: "" },
-            { nomeOriginal: "strokinha", nomeNorm: normalizarNome("strokinha"), preco: "infinito", urlImg: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAcCAYAAACZOmSXAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAGHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyI+PHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj48cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0idXVpZDpmYWY1YmRkNS1iYTNkLTExZGEtYWQzMS1kMzNkNzUxODJmMWIiIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIj48dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPjwvcmRmOkRlc2NyaXB0aW9uPjwvcmRmOlJERj48L3g6eG1wbWV0YT4NCjw/eHBhY2tldCBlbmQ9J3cnPz4slJgLAAACCElEQVRIS82WMYsaQRiGn9XApUoMKRa84nKoRdJbBe4HHBys4UrTHkgKQTGkClqlEKzs0wgBQ9gFy/0XKYIgNkqwSCoV9dzRTaFf2J07L7G4W59mmHdmdnn2m9ldw3Ecnzvo9XoAZDIZfQiA6XQKQD6fB8C2bW3GbmJ68JAYurmYjEYjuCdjIVrzVqvlEzAV7tNYiNa8Xq/77GEq7GtcrVb1KGJzqbkwmUwAKBQKwXhv02KxGOoPBgMIXCeXy0VsDtz6htNNc7lcqK+jz3ddF4BUKgVAuVwOjRN5zW3bvtVcN3UcJ9QXvjU/APDm3adQrq8vlUoAZLNZANT3LwdmLuexVqsF43/i++EHKObdbhcC100mkwB0Op0DMxcMw9CjO9HN+/0+BHb55/cXAPz89RuAVxeVaM1v3Nx13b9n9H+wLAvLsvB9H9/3UUqhlMI0TUzTxDAMDMNgcXrO4vSc47Mrjs+u8Dzv5s0fkp0118/pLtrtNgDz+RyA8XgMwGw2A2A4HALQbDYBaDQaACQSiWjNH+mBIN/3j5cvAah9/QHA29fPAXj25CkE/oAWiwUASikI7H4514Lky+vraM131tzzPAiYSE0lXy6XAKxWKwgYSat/xSqVCgAvTk4AeHx0dGDmYibtfLtr11sjMY3H45t8vd6u3CC7OxbbeKXTaQjMl3alVLTmfwBulPdB0Kuf7AAAAABJRU5ErkJggg==" }
+            { nomeOriginal: "strokinha", nomeNorm: normalizarNome("strokinha"), preco: "infinito", urlImg: "data:image/png;base64,iVBOR..." }
         );
 
         console.log(`Carregados ${listaResumida.length} valores de raros`);
@@ -1145,35 +1164,11 @@ const searcher = setInterval(() => {
     }
 
     async function executarLojaRaros() {
-    const statusElem = document.getElementById("status-loja-raros");
-    if (!statusElem) return;
-
-    let contador = 24; // 24 segundos
-    statusElem.style.color = "black";
-    statusElem.style.textAlign = "center";
-    statusElem.style.marginTop = "5px";
-
-    // Atualiza o texto imediatamente
-    statusElem.textContent = `Carregando... (${contador}s)`;
-
-    const interval = setInterval(() => {
-        contador--;
-        if (contador > 0) {
-            statusElem.textContent = `Carregando... (${contador}s)`;
-        //} else {
-           // clearInterval(interval);
-            //statusElem.textContent = "Pronto";
-            //statusElem.style.color = "green";
-
-        } else {
-            clearInterval(interval);
-            statusElem.textContent = "";
-            statusElem.style.color = "";
-        }
-    }, 1000);
+        const statusElem = document.getElementById("status-loja-raros");
+        if (!statusElem) return;
 
         console.log("Iniciando busca da API...");
-        const apiDados = await buscaDadosAPI();
+        const apiDados = await buscaDadosAPI(statusElem);
         const apiMap = new Map(apiDados.map(({ nomeNorm, preco }) => [nomeNorm, preco]));
         const apiImgMap = new Map(apiDados.map(({ nomeNorm, urlImg }) => [nomeNorm, urlImg]));
         const apiNomesOriginais = apiDados.map(d => d.nomeOriginal);
@@ -1181,15 +1176,7 @@ const searcher = setInterval(() => {
         console.log("Carregando valores na loja");
         observarMudancas(apiMap);
 
-        //if (statusElem) {
-            //statusElem.textContent = "Ativo";
-            //statusElem.style.color = "#28a745";
-
         if (statusElem) {
-            statusElem.textContent = "";
-            statusElem.style.color = "";
-
-            // Ajusta a janela principal depois do carregamento
             const janela = document.querySelector(".position-absolute.draggable-window");
             if (janela) {
                 janela.style.height = "660px";
@@ -1260,7 +1247,6 @@ const searcher = setInterval(() => {
                 const preco = apiMap.get(nomeNorm);
                 const imgUrl = apiImgMap.get(nomeNorm);
 
-                // Atualiza preço
                 if (preco != null) {
                     spanResultado.textContent = `Valor: ${preco}`;
                     spanResultado.style.color = "#007bff";
@@ -1268,36 +1254,25 @@ const searcher = setInterval(() => {
                     spanResultado.style.textAlign = "center";
                     spanResultado.style.marginTop = "10px";
                     spanResultado.style.fontWeight = "bold";
-                //} else {
-                    //spanResultado.textContent = "Não encontrado";
-                    //spanResultado.style.color = "red";
-                //}
-
                 } else {
                     spanResultado.textContent = "";
                     spanResultado.style.color = "";
                 }
 
-                // Remove imagem antiga
                 let imgElem = divBusca.querySelector(".img-icone-raro");
                 if (imgElem) imgElem.remove();
 
-                // Cria imagem nova
                 if (imgUrl) {
                     imgElem = document.createElement("img");
                     imgElem.src = imgUrl;
                     imgElem.className = "img-icone-raro";
-
-                    // define limite fixo de 40x40 px
                     imgElem.style.width = "40px";
                     imgElem.style.height = "40px";
-
-                    //imgElem.style.border = "1px solid white";
                     imgElem.style.display = "block";
                     imgElem.style.margin = "10px auto 0";
-                    imgElem.style.transform = "scale(1.7)";          // zoom 2x
-                    imgElem.style.transformOrigin = "center top";  // centraliza o zoom
-                    imgElem.style.imageRendering = "pixelated";    // mantém pixel art nítida
+                    imgElem.style.transform = "scale(1.7)";
+                    imgElem.style.transformOrigin = "center top";
+                    imgElem.style.imageRendering = "pixelated";
                     spanResultado.insertAdjacentElement("afterend", imgElem);
                 }
             }
@@ -1334,6 +1309,9 @@ const searcher = setInterval(() => {
 
     window.executarLojaRaros = executarLojaRaros;
 })();
+
+
+
 
 
 
