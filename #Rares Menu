@@ -576,27 +576,33 @@ async function main() {
 
     // Contador horário de diamantes
     function startCountdown(duration, display) {
-        let timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = Math.floor(timer / 60);
-            seconds = timer % 60;
+        let endTime = Date.now() + duration * 1000;
+
+        function updateTimer() {
+            let now = Date.now();
+            let remaining = Math.max(0, Math.floor((endTime - now) / 1000));
+
+            let minutes = Math.floor(remaining / 60);
+            let seconds = remaining % 60;
 
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
             display.textContent = "Script - " + minutes + ":" + seconds;
 
-            timer--; // decrementa depois de atualizar o display
-
-            if (timer < 0) {
-                timer = duration; // volta a 60:00 quando chega a 0
+            if (remaining <= 0) {
+                // reinicia o contador
+                endTime = Date.now() + duration * 1000;
             }
-        }, 1000);
+        }
+
+        updateTimer(); // mostra logo no início
+        setInterval(updateTimer, 1000);
     }
 
     const display = i.querySelector("#script-title");
     if (display) {
-        let oneHour = 60 * 60;
+        let oneHour = 60 * 60; // aqui você ajusta o tempo desejado
         startCountdown(oneHour, display);
     }
 
@@ -1309,6 +1315,9 @@ const searcher = setInterval(() => {
 
     window.executarLojaRaros = executarLojaRaros;
 })();
+
+
+
 
 
 
