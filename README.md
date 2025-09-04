@@ -7,10 +7,16 @@ Os scripts devem ser salvos no **Tampermonkey** e depois ativados.
 Para além deste readme, dentro de cada página dos scripts, apresento comentado em mais detalhes a sua função. 
 
 ---
+## 💎 Contador de 1 hora para saber quando receberá diamantes.
+| | |
+|---|---|
+| <img width="253" height="39" alt="image" src="https://github.com/user-attachments/assets/c7cf8cff-c380-424e-82cd-0293c7956321" /> | 
+
+---
 ## 🔇Opção de mutar todos da sala, aplicando exceções.
 | | |
 |---|---|
-| <img width="248" height="508" alt="image" src="https://github.com/user-attachments/assets/d8ba7eaa-573e-4564-b359-4c4c29a2740a" /> | O **Mutar todos** agora tem a opção de adicionar exceções. Mute aplica ao próprio user. |
+| <img width="250" height="540" alt="image" src="https://github.com/user-attachments/assets/9969f441-52d8-453e-94a8-d1bb087f966c" /> | O **Mutar todos** agora tem a opção de adicionar exceções. Mute aplica ao próprio user. |
 
 ---
 
