@@ -1,46 +1,57 @@
-// ESTE SCRIPT REMOVE ADS DENTRO DO CLIENT DO HABBLET. PARA OS DA PÁGINA DE LOGIN DEVERÃO USAR ADBLOCK OU UBLOCK
-
 // ==UserScript==
 // @name         Habblet Ads Remover
 // @namespace    http://tampermonkey.net/
-// @version      1.1.1.1
-// @match        https://www.habblet.city/*
+// @version      1.5.0
+// @match        https://www.habblet.city/hotel
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
 // @grant        none
 // ==/UserScript==
 
-
 (function () {
     'use strict';
 
-    const observer = new MutationObserver(() => {
-        const divToRemove = document.getElementById('hjk324nb2');
-        if (divToRemove) {
-            divToRemove.remove();
-            observer.disconnect(); // Stop observing after removal
-        }
-    });
+    function safeRemove(el) {
+        try { if (el) el.remove(); } catch (e) {}
+    }
 
-    // Start observing the body for new elements
-    observer.observe(document.body, { childList: true, subtree: true });
+    function removeAds() {
+        // Remove containers flex centralizados (onde ficam os anúncios)
+        document.querySelectorAll('div[style*="display: flex"][style*="justify-content: center"]').forEach(safeRemove);
+
+        // Remove também <ins adsbygoogle>, iframes e timers, caso escapem
+        document.querySelectorAll('ins.adsbygoogle, iframe[id^="aswift_"], iframe[id^="google_ads_frame"], .adTimer')
+            .forEach(el => safeRemove(el.closest('div[style*="display: flex"][style*="justify-content: center"]') || el));
+    }
+
+    function init() {
+        // CSS para esconder instantaneamente (sem piscar)
+        const style = document.createElement('style');
+        style.textContent = `
+            div[style*="display: flex"][style*="justify-content: center"],
+            ins.adsbygoogle,
+            iframe[id^="aswift_"],
+            iframe[id^="google_ads_frame"],
+            .adTimer {
+                display: none !important;
+                visibility: hidden !important;
+                width: 0 !important;
+                height: 0 !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Execução inicial
+        removeAds();
+
+        // Observar mudanças no DOM (anúncios injetados dinamicamente)
+        const observer = new MutationObserver(removeAds);
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    // Aguarda o DOM carregar antes de rodar
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
-
-
-(function () {
-    'use strict';
-
-    const observer = new MutationObserver(() => {
-        const divToRemove = document.getElementById('56dfgav234');
-        if (divToRemove) {
-            divToRemove.remove();
-            observer.disconnect(); // Stop observing after removal
-        }
-    });
-
-    // Start observing the body for new elements
-    observer.observe(document.body, { childList: true, subtree: true });
-})();
-
-// Remove the div by its ID
-document.getElementById('675hfgh3453').remove(); // Removes the first div
-document.getElementById('6fs7567545g').remove(); // Removes the second div
