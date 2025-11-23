@@ -6,10 +6,12 @@ Os scripts devem ser salvos no **Tampermonkey** e depois ativados.
 
 Para além deste readme, dentro de cada página dos scripts, apresento comentado em mais detalhes a sua função. 
 
-Apresentação do script **Rares Menu**:
-
+-----------------------------------------------------------------------------------
+Apresentação do script **Rares Menu New**:
 
 O #Rares Value Menu, JÁ NÃO APRESENTA IMAGENS NO MENU, uma vez que foram aplicadas regras de segurança de que dominios e url's as imagens podem ser carregadas
+
+...................................................................................
 
 USAR O **#Rares Value Menu New**
 
