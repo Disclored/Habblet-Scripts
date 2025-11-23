@@ -1,0 +1,1348 @@
+#Rares Menu - New
+#Bypass the new CSP policy on habblet
+'https://ppanel.radiohabblet.com.br/imagem/valores/icon/sorveteira-fngica-ltd-e6d070ad421f210722be08c44ea00382.png' violates the following Content Security Policy directive: "img-src 'self' 
+data: https://images.habblet.city https://imaging.habblet.city https://images.leet.city 
+https://i.ytimg.com https://www.paypalobjects.com https://www.facebook.com https://*.google-analytics.com 
+https://stats.g.doubleclick.net https://*.gstatic.com https://*.imgur.com https://cdn.discordapp.com https://*.googleusercontent.com 
+https://*.googlesyndication.com https://*.doubleclick.net https://www.google.com
+https://www.googleadservices.com https://*.adtrafficquality.google https://www.googletagmanager.com https://sp.tinymce.com". The action has been blocked.
+
+#Instead of Loading the image directly from radiohabblet pannel. It encodes the image directly to base64 when the rare is selected on the Menu
+#Then it loads from arraybuffer 
+#This works since on CSP this is allowed: "img-src 'self' data: https://images.habblet.city ... "
+
+
+// ==UserScript==
+// @name         Menu Raros - New
+// @namespace    zezinhoestiloso
+// @version      2.9.2
+// @match        https://www.habblet.city/hotel
+// @grant        GM_xmlhttpRequest
+// @connect      www.radiohabblet.com.br
+// @connect      ppanel.radiohabblet.com.br
+// @run-at       document-idle
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
+// ==/UserScript==
+// ==/UserScript==
+
+function listen(i) {
+    i = i || console.log;
+    let e = Object.getOwnPropertyDescriptor(MessageEvent.prototype, "data"),
+        t = e.get;
+    e.get = function i() {
+        if (!(this.currentTarget instanceof WebSocket)) return t.call(this);
+        let e = t.call(this);
+        return Object.defineProperty(this, "data", { value: e }), window.i({ data: e, t: this.currentTarget, event: this });
+    };
+    Object.defineProperty(MessageEvent.prototype, "data", e);
+}
+
+class RoomUnitEvent {
+    static parse(h) {
+        for (let e = h.l(); e > 0; e--) {
+            let t = h.l(),
+                e = h.o(),
+                i = h.o(),
+                n = h.o(),
+                s = h.l(),
+                a = h.l(),
+                l = h.l(),
+                d = parseFloat(h.o()),
+                o = h.l(),
+                r = h.l(),
+                c = null;
+            if (1 == r)
+                c = {
+                    group: {},
+                    parse() {
+                        this.h = h.o();
+                        this.group.id = h.l();
+                        this.group.status = h.l();
+                        this.group.name = h.o();
+                        h.o();
+                        this.v = h.l();
+                        this.p = h.u();
+                    }
+                };
+            else if (4 == r)
+                c = {
+                    m: [],
+                    parse() {
+                        this.h = h.o();
+                        this.g = h.l();
+                        this.k = h.o();
+                        let i = h.l();
+                        for (let e = 0; e < i; e++) this.m.push(h.A());
+                    }
+                };
+            else if (2 == r)
+                c = {
+                    parse() {
+                        this.U = h.l().toString();
+                        this.g = h.l();
+                        this.k = h.o();
+                        this.P = h.l();
+                        this.T = h.u();
+                        this.B = h.u();
+                        this.X = h.u();
+                        this.H = h.u();
+                        this.j = h.u();
+                        this.D = h.u();
+                        this.R = h.l();
+                        this.S = h.o();
+                    }
+                };
+            else {
+                console.log(`Error! UnitType => ${r}`);
+                return;
+            }
+            c.id = t;
+            c.type = r;
+            c.username = e;
+            c.Z = i;
+            c.L = n;
+            c.V = s;
+            c.x = a;
+            c.y = l;
+            c.z = d;
+            c.targetX = a;
+            c.targetY = l;
+            c.Y = d;
+            c.G = o;
+            c.N = o;
+            c.parse(h);
+            let w;
+            window.J.F.W.find((e, i) => (w = i, e.id == t))
+                ? window.J.F.W[w] = c
+                : window.J.F.W.push(c);
+        }
+    }
+}
+
+class BinaryReader {
+    constructor(e) {
+        this.M = e;
+        this.view = new DataView(e);
+        this.offset = 0;
+    }
+    l() {
+        let e = this.view.getInt32(this.offset);
+        this.offset += 4;
+        return e;
+    }
+    A() {
+        let e = this.view.getInt16(this.offset);
+        this.offset += 2;
+        return e;
+    }
+    u() {
+        return !!this.M[this.offset++];
+    }
+    o() {
+        let e = this.A(),
+            i = (new TextDecoder).decode(this.M.slice(this.offset, this.offset + e));
+        this.offset += e;
+        return i;
+    }
+}
+
+class BinaryWriter {
+    constructor(e) {
+        this.M = [];
+        this.offset = 0;
+        this.C(0);
+        this.q(e);
+    }
+    C(e) {
+        this.M[this.offset++] = (e >> 24) & 255;
+        this.M[this.offset++] = (e >> 16) & 255;
+        this.M[this.offset++] = (e >> 8) & 255;
+        this.M[this.offset++] = e & 255;
+        return this;
+    }
+    q(e) {
+        this.M[this.offset++] = (e >> 8) & 255;
+        this.M[this.offset++] = e & 255;
+        return this;
+    }
+    I(e) {
+        let i = (new TextEncoder).encode(e);
+        this.q(i.length);
+        for (let e = 0; e < i.length; e++) {
+            this.M[this.offset + e] = i[e];
+        }
+        this.offset += i.length;
+        return this;
+    }
+    K() {
+        this.offset = 0;
+        this.C(this.M.length - 4);
+        return new Uint8Array(this.M).buffer;
+    }
+}
+
+const sleep = i => new Promise(e => setTimeout(e, i));
+
+
+async function main() {
+    let styleEl = document.createElement("style");
+    styleEl.innerHTML = `
+
+  /* RaveConfig Menu Styles */
+  .rave-config-menu {
+      background: #333;
+      color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+      position: absolute;
+      z-index: 402;
+      width: 320px;
+      font-family: sans-serif;
+      font-size: 14px;
+      display: none;
+  }
+  .rave-option {
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      background: #444;
+      margin-bottom: 5px;
+      text-align: center;
+  }
+  .rave-option:hover {
+      background: #555;
+  }
+  /* Custom Settings Panel */
+  #custom-settings {
+      margin-top: 10px;
+      background: #222;
+      padding: 10px;
+      border-radius: 4px;
+  }
+  /* Container for available swatches – horizontal scroll (using flex) */
+  #custom-swatch-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 5px;
+      margin-top: 5px;
+  }
+  .custom-swatch {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 4px;
+  }
+  .custom-swatch.selected {
+      border-color: #fff;
+  }
+  /* Container to show the selected sequence with numbering */
+  #custom-selected-sequence {
+      margin-top: 10px;
+      min-height: 40px;
+      border: 1px solid #555;
+      padding: 5px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+  }
+  .sequence-item {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid #fff;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+  }
+  .sequence-item span {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: red;
+      color: #fff;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+  }
+  /* Save button styling */
+  #save-custom-sequence {
+      background: green;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+  }
+  .btn-secondary {
+      width: 100%; /* Make buttons take full width of their container */
+  }
+
+  /* Estilos para o botão de engrenagem */
+  .xaru-gear-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+  }
+
+  .xaru-gear-icon {
+      width: 32px;
+      height: 32px;
+      background-color: #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+  }
+
+  .xaru-gear-icon:hover {
+      transform: rotate(45deg);
+      background-color: #555;
+  }
+
+  .xaru-gear-text {
+      margin-top: 5px;
+      font-size: 11px;
+      font-weight: bold;
+      font-family: 'Arial', 'Helvetica', sans-serif;
+      color: white;
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.8);
+      letter-spacing: 0.5px;
+  }
+  `;
+    document.head.appendChild(styleEl);
+
+    // Criar o botão de engrenagem
+    const gearButton = document.createElement("div");
+    gearButton.className = "xaru-gear-button";
+    gearButton.innerHTML = `
+        <div class="xaru-gear-icon">⚙️</div>
+        <div class="xaru-gear-text">Script</div>
+    `;
+    document.body.appendChild(gearButton);
+
+    // Criar janela de sniffer de OPCODEs
+    const opcodeSniffer = document.createElement("div");
+    opcodeSniffer.className = "position-absolute draggable-window";
+    opcodeSniffer.style.cssText = "z-index: 402; top: 50px; right: 50px; display: none; visibility: hidden;";
+    opcodeSniffer.innerHTML = `
+        <div class="d-flex overflow-hidden position-relative flex-column nitro-card theme-primary-slim nitro-room-construction-tool" style="background-color: #000;">
+            <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header" style="background-color: #111;">
+                <div class="d-flex w-100 align-items-center justify-content-center">
+                    <span class="nitro-card-header-text" style="color: #fff;">Sniffer de OPCODEs</span>
+                    <div class="position-absolute end-0 nitro-card-header-close" style="color: #fff; font-weight: bold;"></div>
+                </div>
+            </div>
+            <div id="opcode-log" style="background-color: #000; color: #ddd; font-family: monospace; height: 300px; width: 400px; overflow-y: auto; padding: 10px; font-size: 12px; user-select: text;">
+                <div>Logs de OPCODEs aparecerão aqui...</div>
+            </div>
+            <div class="d-flex justify-content-between p-2" style="background-color: #111;">
+                <button id="clear-opcode-log" class="btn btn-sm btn-danger">Limpar</button>
+                <button id="copy-opcode-log" class="btn btn-sm btn-primary">Copiar Logs</button>
+                <div>
+                    <label style="color: #fff;"><input type="checkbox" id="auto-scroll" checked> Auto-scroll</label>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(opcodeSniffer);
+
+    // Função para adicionar log ao sniffer
+    window.addOpcodeLog = function(direction, opcode, data) {
+        if (!document.getElementById('opcode-log')) return;
+
+        const logItem = document.createElement('div');
+        const timestamp = new Date().toLocaleTimeString();
+        let extraInfo = '';
+
+        // Tenta extrair informações adicionais para OPCODEs conhecidos
+        if (data) {
+            try {
+                if (opcode === 1314) {
+                    extraInfo = ` [CHAT] "${data.substring(0, 50)}${data.length > 50 ? '...' : ''}"`;
+                } else if (opcode === 2080) {
+                    extraInfo = ' [MOVIMENTO/AUSÊNCIA]';
+                } else if (opcode === 2730) {
+                    extraInfo = ' [COPY]';
+                } else if (opcode === 1597) {
+                    extraInfo = ' [DIGITANDO]';
+                } else if (opcode === 1778) {
+                    extraInfo = ' [MOBÍLIA]';
+                } else if (opcode === 3860) {
+                    extraInfo = ' [POSSÍVEL MOVIMENTO]';
+                }
+            } catch (e) {}
+        }
+
+        logItem.className = direction === 'ENVIADO' ? 'text-success' : 'text-info';
+        logItem.innerHTML = `<span class="text-secondary">[${timestamp}]</span> <strong>${direction}</strong>: OPCODE ${opcode}${extraInfo}`;
+
+        const logContainer = document.getElementById('opcode-log');
+        logContainer.appendChild(logItem);
+
+        // Auto-scroll
+        if (document.getElementById('auto-scroll').checked) {
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Limitar número de logs para evitar sobrecarga de memória
+        while (logContainer.children.length > 500) {
+            logContainer.removeChild(logContainer.firstChild);
+        }
+    };
+
+    // Configurar manipulador de fechamento e arrasto do Sniffer
+    const snifferHeader = opcodeSniffer.querySelector('.drag-handler');
+    const closeSnifferBtn = opcodeSniffer.querySelector('.nitro-card-header-close');
+    let isDraggingSniffer = false;
+    let snifferOffsetX = 0, snifferOffsetY = 0;
+
+    closeSnifferBtn.addEventListener('click', () => {
+        opcodeSniffer.style.display = 'none';
+        opcodeSniffer.style.visibility = 'hidden';
+    });
+
+    snifferHeader.addEventListener('mousedown', e => {
+        isDraggingSniffer = true;
+        const rect = opcodeSniffer.getBoundingClientRect();
+        snifferOffsetX = e.clientX - rect.left;
+        snifferOffsetY = e.clientY - rect.top;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDraggingSniffer = false;
+    });
+
+    document.addEventListener('mousemove', e => {
+        if (isDraggingSniffer) {
+            opcodeSniffer.style.left = `${e.clientX - snifferOffsetX}px`;
+            opcodeSniffer.style.top = `${e.clientY - snifferOffsetY}px`;
+        }
+    });
+
+    // Limpar logs
+    document.getElementById('clear-opcode-log').addEventListener('click', () => {
+        const logContainer = document.getElementById('opcode-log');
+        logContainer.innerHTML = '<div>Logs de OPCODEs limpos</div>';
+    });
+
+    // Copiar logs para a área de transferência
+    document.getElementById('copy-opcode-log').addEventListener('click', () => {
+        const logContainer = document.getElementById('opcode-log');
+        let textToCopy = '';
+
+        // Converter os logs para texto simples
+        for (const child of logContainer.children) {
+            textToCopy += child.textContent + '\n';
+        }
+
+        // Copiar para a área de transferência
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                // Mostrar mensagem de sucesso temporária
+                const successMsg = document.createElement('div');
+                successMsg.textContent = '✓ Logs copiados para a área de transferência!';
+                successMsg.style.color = '#4caf50';
+                successMsg.style.fontWeight = 'bold';
+                successMsg.style.padding = '5px';
+                successMsg.style.textAlign = 'center';
+
+                logContainer.insertBefore(successMsg, logContainer.firstChild);
+
+                // Remover a mensagem após 3 segundos
+                setTimeout(() => {
+                    if (successMsg.parentNode === logContainer) {
+                        logContainer.removeChild(successMsg);
+                    }
+                }, 3000);
+            })
+            .catch(err => {
+                console.error('Erro ao copiar logs: ', err);
+                alert('Não foi possível copiar os logs. Tente selecionar e copiar manualmente.');
+            });
+    });
+
+    let i = document.createElement("div");
+    i.innerHTML = '<div class="cursor-pointer navigation-item icon habobba-icon"></div>';
+    let t = i.children[0];
+
+    i.innerHTML = `
+<div class="position-absolute draggable-window"
+    style="z-index: 401; top: calc(-290.5px + 50vh); left: calc(-127.5px + 50vw); visibility: visible; height: 550px;">
+    <div class="d-flex position-relative flex-column nitro-card theme-primary-slim nitro-room-construction-tool"
+         style="height: 100%; overflow-y: auto;">
+        <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header">
+            <div class="d-flex w-100 align-items-center justify-content-center">
+                <span id="kemelly-title" class="nitro-card-header-text">TE AMO KEMELLY - 60:00</span>
+                <div class="position-absolute end-0 nitro-card-header-close"></div>
+            </div>
+        </div>
+        <div class="d-flex overflow-auto flex-column gap-2 container-fluid content-area text-black content">
+            <div class="line">
+                <p class="header-text fw-bold">Copiar</p>
+            </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between">
+                <div class="d-flex gap-2 align-items-center">
+                    <label class="switch">
+                        <input id="command-copy" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="d-inline text-black option-name">Comando :copy</div>
+                </div>
+            </div>
+
+            <div class="line">
+                <p class="header-text fw-bold">Privacidade</p>
+            </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between">
+                <div class="d-flex gap-2 align-items-center">
+                    <label class="switch">
+                        <input type="checkbox" id="hide-typing">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="d-inline text-black option-name">Ocultar balão digitando</div>
+                </div>
+            </div>
+            <div class="line">
+                <p class="header-text fw-bold">Utilitários / Performance</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button id="sniff-opcodes-btn" class="btn btn-secondary w-100">Sniffar Opcodes</button>
+            </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between">
+                <div class="d-flex gap-2 align-items-center">
+                    <label class="switch">
+                        <input type="checkbox" id="mute-all">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="d-inline text-black option-name">Mutar todos da sala</div>
+                </div>
+            </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between" style="margin-top:4px;">
+               <div class="d-flex flex-column w-100">
+                  <label class="text-black fw-bold" for="exception-user" style="margin-left:3px;">
+                        Exceções (não mutar):
+                  </label>
+                      <input type="text" id="exception-user" placeholder="Escreve o nick..." style="width:100%; padding:4px; border:1px solid #ccc; border-radius:4px;">
+                     <button id="add-exception-btn" class="btn btn-secondary w-100" style="margin-top:4px;">Adicionar à exceção</button>
+              </div>
+           </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between">
+                <div class="d-flex gap-2 align-items-center">
+                    <label class="switch">
+                        <input type="checkbox" id="furni-render">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="d-inline text-black option-name">Não renderizar mobis da sala</div>
+                </div>
+            </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between">
+                <div class="d-flex gap-2 align-items-center">
+                    <label class="switch">
+                        <input type="checkbox" id="anti-aus">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="d-inline text-black option-name">Anti ausente</div>
+                </div>
+            </div>
+            <div class="d-flex gap-2 align-items-center justify-content-between">
+                <div class="d-flex gap-2 align-items-center">
+                    <label class="switch">
+                        <input type="checkbox" id="enables-doidex-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="d-inline text-black option-name">Enables</div>
+                </div>
+            </div>
+            <div class="line">
+                <p class="header-text fw-bold">Raros da Feira Livre</p>
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <button id="btn-loja-raros" class="btn btn-secondary w-100">Valores dos Raros</button>
+                <div id="status-loja-raros" style="margin-top:0.1px; color:black; text-align:center;">A Feira-Livre terá comparação de preços</div>
+            </div>
+            <hr style="position: absolute; bottom: 10px; width: calc(100% - 32px); left: 16px;">
+        </div>
+    </div>
+</div>
+    `;
+
+
+
+    // Contador horário de diamantes
+    function startCountdown(duration, display) {
+        let endTime = Date.now() + duration * 1000;
+
+        function updateTimer() {
+            let now = Date.now();
+            let remaining = Math.max(0, Math.floor((endTime - now) / 1000));
+
+            let minutes = Math.floor(remaining / 60);
+            let seconds = remaining % 60;
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = "TE AMO KEMELLY - " + minutes + ":" + seconds;
+
+            if (remaining <= 0) {
+                // reinicia o contador
+                endTime = Date.now() + duration * 1000;
+            }
+        }
+
+        updateTimer(); // mostra logo no início
+        setInterval(updateTimer, 1000);
+    }
+
+    const display = i.querySelector("#kemelly-title");
+    if (display) {
+        let oneHour = 60 * 60; // aqui você ajusta o tempo desejado
+        startCountdown(oneHour, display);
+    }
+
+    let n = i.children[0],
+        s = n.children[0].children[0];
+
+    // Capturar todos os elementos de controle de forma segura
+    // Cada elemento é buscado individualmente com verificação de existência
+    const controls = {
+        commandCopy: n.querySelector("#command-copy"),
+        hideTyping: n.querySelector("#hide-typing"),
+        muteAll: n.querySelector("#mute-all"),
+        furniRender: n.querySelector("#furni-render"),
+        antiAus: n.querySelector("#anti-aus"),
+        enablesDoidexToggle: n.querySelector("#enables-doidex-toggle"),
+        raveConfigBtn: n.querySelector("#rave-config-btn"),
+        intervaloInput: n.querySelector("#intervalo"),
+        sniffOpcodesBtn: n.querySelector("#sniff-opcodes-btn")
+    };
+
+    let raveMode = 'random';
+    let customColors = [];
+    let isXaruRaveActive = false;
+    let isBillActive = false;
+    let isEnablesDoidexActive = false;
+    let enablesAbortController = new AbortController();
+    let abortController = new AbortController();
+    let billAbortController = new AbortController();
+
+    // Array de enables para o Enables doidex
+    const enablesArray = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+        31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+        41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+        51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+        61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+        71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+        81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+        91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+        101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+        111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
+        121, 122, 123, 124, 125, 126, 127, 128, 129, 130,
+        131, 132, 133, 134, 135, 136, 137, 138, 139, 140,
+        141, 142, 143, 144, 145, 146, 147, 148, 149, 150,
+        151, 152, 153, 154, 155, 156, 157, 158, 159, 160,
+        161, 162, 163, 164, 165, 166, 167, 168, 169, 170,
+        171, 172, 173, 174, 175, 176, 177, 178, 179, 180,
+        181, 182, 183, 184, 193, 194, 195, 196, 197, 198,
+        199, 200, 201, 202, 203, 204, 205, 206, 207, 208,
+        209, 210, 211, 212, 213, 214, 215, 500, 501, 502,
+        503, 504, 505, 506, 507, 508, 509, 510, 511, 512,
+        513, 514, 515, 516, 517, 518, 519, 520, 521, 522,
+        523, 524, 525, 526, 527, 528, 529, 530, 531, 532,
+        533, 534, 535, 536, 537, 538, 539, 540, 541, 542,
+        543, 544, 545, 546, 547, 548, 549, 550, 551, 552,
+        553, 554, 555, 556, 557, 558, 559, 560, 561, 562,
+        563, 564, 565, 566, 567, 568, 569, 570, 571, 572,
+        573, 574, 575, 576, 577, 578, 579, 580, 581, 582,
+        583, 584, 585, 586, 587, 588, 589, 590, 591, 592,
+        593, 594, 595, 596, 597, 598, 599, 600, 601, 602,
+        603, 604, 605, 606, 607, 608, 609, 610, 611, 612,
+        613, 614, 615, 616, 617, 618, 619, 620, 621, 622,
+        623, 624, 625, 626, 627, 628, 629, 630, 631, 632,
+        633, 634, 635, 636, 637, 638, 639, 640, 641, 642,
+        643, 644, 645, 646, 647, 648, 649, 650, 651, 652,
+        653, 654, 655, 656, 657, 658, 659, 660, 661, 662,
+        663, 664, 665, 666, 667, 668, 669, 670, 671, 672,
+        673, 674, 675, 676, 677, 678, 679, 680, 681, 682,
+        683, 684, 685, 686, 687, 688, 689, 690, 691, 692,
+        693, 694, 695, 696, 697, 698, 699, 700, 701, 702,
+        703, 704, 705, 706, 707, 708, 709, 710, 711, 712,
+        713, 714, 715, 716, 717, 718, 719, 720, 721, 722,
+        723, 724, 725, 726, 727, 728, 729, 730, 731, 732,
+        733, 734, 902, 903
+    ];
+
+    // Atualizar as referências no objeto global
+    window.J.elements = {
+        O: n,
+        $: controls.commandCopy,
+        _: controls.hideTyping,
+        ee: controls.muteAll,
+        ie: controls.furniRender,
+        te: controls.antiAus,
+        ve: controls.xaruraveToggle,
+        be: controls.billToggle,
+        de: controls.enablesDoidexToggle
+    };
+
+    // Toggle da janela flutuante ao clicar no ícone ou no botão de engrenagem
+    t.onclick = toggleXaruPanel;
+    gearButton.onclick = toggleXaruPanel;
+
+    // Event listener para o botão de Sniffar Opcodes
+    controls.sniffOpcodesBtn.addEventListener('click', () => {
+        const sniffer = document.querySelector('.position-absolute.draggable-window[style*="z-index: 402"]');
+        if (sniffer.style.visibility === "hidden" || sniffer.style.display === "none") {
+            sniffer.style.visibility = "visible";
+            sniffer.style.display = "block";
+        } else {
+            sniffer.style.display = "none";
+            sniffer.style.visibility = "hidden";
+        }
+    });
+
+    // Função para mostrar/ocultar o painel
+    function toggleXaruPanel() {
+        if (n.style.visibility === "hidden") {
+            n.style.visibility = "visible";
+            n.style.display = "block";
+        } else {
+            n.style.display = "none";
+            n.style.visibility = "hidden";
+        }
+    }
+
+    const raveMenuEl = document.createElement("div");
+    raveMenuEl.className = "rave-config-menu";
+    raveMenuEl.innerHTML = `
+      <div class="d-flex flex-column gap-2">
+          <div class="rave-option" id="random-mode">Aleatório</div>
+          <div class="rave-option" id="custom-mode">Personalizado</div>
+          <div id="custom-settings" style="display: none;">
+              <small class="form-text" style="color:#ccc;">Abra o Regulador de Luz para que as cores apareçam depois clique em "Personalizado" novamente</small>
+              <div id="custom-swatch-container"></div>
+              <div id="custom-selected-sequence"></div>
+              <button id="save-custom-sequence">Salvar</button>
+          </div>
+      </div>
+    `;
+    document.body.appendChild(raveMenuEl);
+
+    // --- Enables Doidex - Implementação como checkbox ---
+    controls.enablesDoidexToggle.addEventListener("change", async () => {
+        if (controls.enablesDoidexToggle.checked) {
+            try {
+                if (!window.t || !window.ne) {
+                    alert("Erro: Conexão com o servidor não disponível!");
+                    controls.enablesDoidexToggle.checked = false;
+                    return;
+                }
+
+                console.log("[Enables Doidex] Ativado");
+
+                enablesAbortController = new AbortController();
+                isEnablesDoidexActive = true;
+
+                const sendRandomEnable = () => {
+                    try {
+                        const randomIndex = Math.floor(Math.random() * enablesArray.length);
+                        const enableNumber = enablesArray[randomIndex];
+
+                        const enableCommand = `:enable ${enableNumber}`;
+
+                        const writer = new BinaryWriter(1314);
+                        writer.I(enableCommand);
+                        writer.C(0);
+                        window.ne.bind(window.t)(writer.K());
+
+                        console.log(`[Enables Doidex] Enviado: ${enableCommand}`);
+                        return true;
+                    } catch (err) {
+                        console.error("[Enables Doidex] Erro ao enviar enable:", err);
+                        return false;
+                    }
+                };
+
+                const enableLoop = async () => {
+                    if (!controls.enablesDoidexToggle.checked || enablesAbortController.signal.aborted) {
+                        return;
+                    }
+
+                    sendRandomEnable();
+
+                    const randomDelay = Math.floor(Math.random() * 700) + 800;
+                    await sleep(randomDelay);
+
+                    if (controls.enablesDoidexToggle.checked && !enablesAbortController.signal.aborted) {
+                        setTimeout(enableLoop, 100);
+                    }
+                };
+
+                enableLoop();
+
+            } catch (error) {
+                console.error("[Enables Doidex] Erro fatal:", error);
+                controls.enablesDoidexToggle.checked = false;
+                isEnablesDoidexActive = false;
+            }
+        } else {
+            enablesAbortController.abort();
+            isEnablesDoidexActive = false;
+            enablesAbortController = new AbortController();
+            console.log("[Enables Doidex] Desativado");
+        }
+    });
+
+    let w = false, h = 0, v = 0;
+    s.addEventListener("mousedown", e => {
+        if (e.target.classList.contains("nitro-card-header-close")) {
+            n.style.display = "none";
+            n.style.visibility = "hidden";
+            return;
+        }
+        w = true;
+        let rect = s.parentElement.parentElement.getBoundingClientRect();
+        h = e.clientX - rect.left;
+        v = e.clientY - rect.top;
+    });
+    document.addEventListener("mouseup", e => {
+        w = false;
+    });
+    document.addEventListener("mousemove", e => {
+        if (w) {
+            s.parentElement.parentElement.style.left = `${e.clientX - h}px`;
+            s.parentElement.parentElement.style.top = `${e.clientY - v}px`;
+        }
+    });
+
+
+    // Botão Loja Raros
+    const btnLojaRaros = n.querySelector("#btn-loja-raros");
+    if (btnLojaRaros) {
+        btnLojaRaros.addEventListener("click", () => {
+            if (window.executarLojaRaros) {
+                window.executarLojaRaros();
+            } else {
+                alert("Função Loja Raros não carregada.");
+            }
+        });
+    }
+
+    let navParent = document.querySelector(".navigation-item").parentElement;
+    navParent.appendChild(t);
+    document.querySelector("#draggable-windows-container").appendChild(n);
+}
+
+window.J = { elements: {}, F: { W: [] } };
+window.se = false;
+window.i = ({ data: e, t }) => {
+    if (!window.se) {
+        window.se = true;
+        window.t = t;
+        window.ne = t.send;
+        window.ae = t.addEventListener;
+        t.send = n => {
+            let i = new BinaryReader(n);
+            i.l();
+            let e = i.A();
+
+            // Registrar o OPCODE enviado no sniffer
+            if (window.addOpcodeLog) {
+                let extraData = '';
+                try {
+                    if (e === 1314) {
+                        // Para mensagens de chat, tentar extrair o texto
+                        let reader = new BinaryReader(n);
+                        reader.l(); // Pular length
+                        reader.A(); // Pular opcode
+                        extraData = reader.o(); // Ler string
+                    }
+                } catch (err) {}
+                window.addOpcodeLog('ENVIADO', e, extraData);
+            }
+
+            if (1314 == e) {
+                let e = i.o();
+                i.l();
+                let t = e.split(" ");
+                if (":copy" == t[0] && window.J && window.J.elements.$.checked) {
+                    let found = window.J.F.W.find(e => e.username == t[1]);
+                    if (console.log(found), !found) return;
+                    let writer = new BinaryWriter(2730);
+                    writer.I(found.h);
+                    writer.I(found.L);
+                    n = writer.K();
+                }
+            } else if (1597 == e && window.J && window.J.elements._.checked)
+                return;
+            window.ne.bind(t)(n);
+        };
+    }
+    let s = new BinaryReader(e);
+    s.l();
+    let i = s.A();
+
+    // Registrar o OPCODE recebido no sniffer
+    if (window.addOpcodeLog) {
+        let extraData = '';
+        try {
+            if (i === 1314) {
+                // Para mensagens de chat, tentar extrair o texto
+                let reader = new BinaryReader(e);
+                reader.l(); // Pular length
+                reader.A(); // Pular opcode
+                extraData = reader.o(); // Ler string
+            } else if (i === 3920) {
+                // Para atualizações de usuários, extrair o nome
+                let reader = new BinaryReader(e);
+                reader.l(); // Pular length
+                reader.A(); // Pular opcode
+                reader.l(); // ID do quarto
+                extraData = reader.o(); // Nome de usuário
+            }
+        } catch (err) {}
+        window.addOpcodeLog('RECEBIDO', i, extraData);
+    }
+
+
+// Array global para guardar os nicks digitados
+window.exceptionList = window.exceptionList || [];
+
+// Função que tenta encontrar o input e o botão repetidamente
+function initExceptionInput() {
+    const input = document.getElementById('exception-user');
+    const button = document.getElementById('add-exception-btn');
+
+    if (!input || !button) {
+        setTimeout(initExceptionInput, 500);
+        return;
+    }
+
+    button.addEventListener('click', () => {
+        const nick = input.value.trim();
+        if (!nick) return;
+
+        if (!window.exceptionList.includes(nick)) {
+            window.exceptionList.push(nick);
+        }
+
+        // Mantém apenas este log
+        console.log("Lista atual de exceções:", window.exceptionList);
+
+        input.value = '';
+    });
+}
+
+initExceptionInput();
+
+// --- Código principal de processamento de pacotes ---
+if (374 === i) {
+    RoomUnitEvent.parse(s);
+} else if (1446 === i || i == 1036) { // 1446 mensagens normais | 1036 mensagens em negrito
+    if (window.J && window.J.elements.ee.checked) {
+        const userId = s.l();
+        const message = s.o();
+        s.l();
+        s.l();
+
+        let userObj = window.J.F.W.find(e => e.V === userId);
+        let username = userObj ? userObj.username.trim() : "desconhecido";
+
+        const muteExceptions = window.exceptionList;
+
+        if (!muteExceptions.includes(username)) {
+            return;
+        }
+    } else {
+        s.l();
+        s.o();
+        s.l();
+        s.l();
+    }
+
+} else if (1778 == i) {
+    if (window.J && window.J.elements.ie.checked) return;
+} else if (1797 == i) {
+    if (window.J && window.J.elements.te.checked) {
+        let e = new BinaryWriter(2080);
+        e.C(1);
+        window.ne.bind(t)(e.K());
+        setTimeout(() => {
+            let e = new BinaryWriter(2080);
+            e.C(0);
+            window.ne.bind(t)(e.K());
+        }, 500);
+    }
+} else if (3920 == i) {
+    let i = s.l(),
+        e = s.o(),
+        t = s.o().toLocaleUpperCase();
+    s.o();
+    s.l();
+    let n = window.J.F.W.find(e => e.V === i);
+    n.L = e;
+    n.h = t;
+}
+
+return e;
+};
+
+listen();
+
+const searcher = setInterval(() => {
+    let navItem = document.querySelector(".navigation-item");
+    if (navItem) {
+        clearInterval(searcher);
+        main();
+    }
+}, 100);
+
+// --- Loja Raros Otimizado ---
+
+(function() {
+    'use strict';
+
+    const limitePorLote = 40;
+    const totalPaginas = 40;
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    const excecoesRaro = ["raroestatuadelucifer"];
+    const substituicoesRaros = {
+        "Sorveteira Espacial LTD": "Sorveteria Espacial LTD",
+        "Escultura de Ovelha Apaixonante LTD": "Escultura da Ovelha Apaixonante LTD",
+        "Raro Máquina de Chocolate Retro": "Raro Máquina Chocolate Retro",
+        "Dado Wired LTD": "Porta-Dados Wired LTD"
+    };
+
+    function normalizarNome(nome) {
+        if (!nome) return "";
+        nome = nome.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/ltd/g, "")
+            .replace(/,/g, "")
+            .replace(/['"’‘´]/g, "")
+            .replace(/\s+/g, "")
+            .trim();
+        if (excecoesRaro.includes(nome)) return nome;
+        return nome.replace(/rar[oa]?/g, "");
+    }
+
+    // ------------------ BASE64 HELPERS ------------------
+    function arrayBufferToBase64(buffer) {
+        let binary = "";
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+    }
+
+    function encodeImageToBase64(url) {
+        return new Promise(resolve => {
+            GM_xmlhttpRequest({
+                method: "GET",
+                url: url,
+                responseType: "arraybuffer",
+                onload: (res) => {
+                    if (res.status !== 200) return resolve("");
+                    try {
+                        const base64 = arrayBufferToBase64(res.response);
+                        resolve("data:image/png;base64," + base64);
+                    } catch (e) {
+                        resolve("");
+                    }
+                },
+                onerror: () => resolve("")
+            });
+        });
+    }
+    // -----------------------------------------------------
+
+    async function buscaDadosAPI(statusElem) {
+        let listaResumida = [];
+        for (let pag = 1; pag <= totalPaginas; pag++) {
+            console.log(`Buscando valores da página ${pag} de ${totalPaginas}...`);
+            if (statusElem) {
+                const porcentagem = Math.round((pag / totalPaginas) * 100);
+                statusElem.textContent = `Carregando... ${porcentagem}%`;
+                statusElem.style.color = "black";
+                statusElem.style.textAlign = "center";
+                statusElem.style.marginTop = "5px";
+            }
+
+            try {
+                const json = await new Promise((resolve, reject) => {
+                    GM_xmlhttpRequest({
+                        method: "POST",
+                        url: "https://www.radiohabblet.com.br/getItens/mobs-val",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                            "Origin": "https://www.radiohabblet.com.br",
+                            "Referer": "https://www.radiohabblet.com.br/",
+                            "User-Agent": navigator.userAgent,
+                        },
+                        data: JSON.stringify({ pag: pag, limit: limitePorLote }),
+                        onload: function(response) {
+                            if (response.status === 200) {
+                                try { resolve(JSON.parse(response.responseText)); }
+                                catch (e) { reject(e); }
+                            } else reject(new Error(`Status ${response.status}`));
+                        },
+                        onerror: reject
+                    });
+                });
+
+                if (json && Array.isArray(json.valores)) {
+                    const resumido = json.valores.map(item => {
+                        let nomeCorrigido = substituicoesRaros[item.mob] || item.mob;
+                        return {
+                            nomeOriginal: nomeCorrigido,
+                            nomeNorm: normalizarNome(nomeCorrigido),
+                            preco: item.preco,
+                            urlImg: item.urlImg || item.imagem || item.icon
+                        };
+                    });
+                    listaResumida.push(...resumido);
+                }
+            } catch (err) {
+                console.error(`Erro na página ${pag}`, err);
+            }
+            await delay(1000);
+        }
+
+        if (statusElem) statusElem.textContent = "";
+
+        // itens extras
+        listaResumida.push(
+            { nomeOriginal: "Raro Jacinto Azul", nomeNorm: normalizarNome("Raro Jacinto Azul"), preco: 2, urlImg: "" },
+            { nomeOriginal: "Mini Bonequinho Olímpico LTD", nomeNorm: normalizarNome("Mini Bonequinho Olímpico LTD"), preco: 20, urlImg: "" },
+            { nomeOriginal: "Raro Jacinto Vermelho", nomeNorm: normalizarNome("Raro Jacinto Vermelho"), preco: 2, urlImg: "" },
+            { nomeOriginal: "Raro tapete 100 dólares", nomeNorm: normalizarNome("Raro tapete 100 dólares"), preco: 3, urlImg: "" },
+            { nomeOriginal: "strokinha", nomeNorm: normalizarNome("strokinha"), preco: "infinito", urlImg: "data:image/png;base64,iVBOR..." }
+        );
+
+        console.log(`Carregados ${listaResumida.length} valores de raros`);
+        return listaResumida;
+    }
+
+    function extraiDadosLoja() {
+        const container = document.querySelector('.nitro-catalog-layout-marketplace-grid');
+        if (!container) return [];
+        return [...container.querySelectorAll('.layout-grid-item')].map(item => {
+            const nomeElem = item.querySelector('.fw-bold');
+            const precoElem = [...item.querySelectorAll('div')].find(div => div.textContent.includes('Preço:'));
+            if (!nomeElem || !precoElem) return null;
+            const precoMatch = precoElem.textContent.match(/Preço:\s*(\d+)/);
+            return {
+                nomeNorm: normalizarNome(nomeElem.textContent.trim()),
+                preco: precoMatch ? Number(precoMatch[1]) : null,
+                nomeElem
+            };
+        }).filter(Boolean);
+    }
+
+    function criaSeta(cor, simbolo, valorAPI) {
+        const span = document.createElement('span');
+        span.style.color = cor;
+        span.style.marginLeft = '6px';
+        span.style.fontWeight = 'bold';
+        span.classList.add('seta-preco-comparacao');
+        span.textContent = `${simbolo} (${valorAPI})`;
+        return span;
+    }
+
+    function comparaEMarca(apiMap, lojaDados) {
+        lojaDados.forEach(({ nomeNorm, preco, nomeElem }) => {
+            if (preco == null) return;
+            const precoApi = apiMap.get(nomeNorm);
+            if (precoApi == null) return;
+            const setaExistente = nomeElem.querySelector('.seta-preco-comparacao');
+            if (setaExistente) setaExistente.remove();
+            let seta;
+            if (preco < precoApi) seta = criaSeta('green', '⬇️', precoApi);
+            else if (preco > precoApi) seta = criaSeta('red', '⬆️', precoApi);
+            else seta = criaSeta('grey', '➡️', precoApi);
+            nomeElem.appendChild(seta);
+        });
+    }
+
+    function observarMudancas(apiMap) {
+        const observer = new MutationObserver(() => {
+            const lojaDados = extraiDadosLoja();
+            comparaEMarca(apiMap, lojaDados);
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        const lojaDados = extraiDadosLoja();
+        comparaEMarca(apiMap, lojaDados);
+    }
+
+    async function executarLojaRaros() {
+        const statusElem = document.getElementById("status-loja-raros");
+        if (!statusElem) return;
+
+        console.log("Iniciando busca da API...");
+        const apiDados = await buscaDadosAPI(statusElem);
+        const apiMap = new Map(apiDados.map(({ nomeNorm, preco }) => [nomeNorm, preco]));
+        const apiImgMap = new Map(apiDados.map(({ nomeNorm, urlImg }) => [nomeNorm, urlImg]));
+        const apiNomesOriginais = apiDados.map(d => d.nomeOriginal);
+
+        console.log("Carregando valores na loja");
+        observarMudancas(apiMap);
+
+        if (!statusElem) return;
+
+        const janela = document.querySelector(".position-absolute.draggable-window");
+        if (janela) janela.style.height = "660px";
+
+        const innerCard = janela?.querySelector(".nitro-card.theme-primary-slim.nitro-room-construction-tool");
+        if (innerCard) {
+            innerCard.style.height = "100%";
+            innerCard.style.overflowY = "auto";
+        }
+
+        const divBusca = document.createElement("div");
+        divBusca.style.textAlign = "center";
+        divBusca.style.marginTop = "8px";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "Buscar nome do raro...";
+        input.style.padding = "4px";
+        input.style.marginRight = "6px";
+
+        const spanResultado = document.createElement("span");
+        spanResultado.style.fontWeight = "bold";
+
+        divBusca.appendChild(input);
+        divBusca.appendChild(spanResultado);
+
+        const sugestoesDiv = document.createElement("div");
+        sugestoesDiv.style.position = "absolute";
+        sugestoesDiv.style.background = "#fff";
+        sugestoesDiv.style.border = "1px solid #ccc";
+        sugestoesDiv.style.maxHeight = "150px";
+        sugestoesDiv.style.overflowY = "auto";
+        sugestoesDiv.style.width = "200px";
+        sugestoesDiv.style.margin = "2px auto";
+        sugestoesDiv.style.left = "0";
+        sugestoesDiv.style.right = "0";
+        sugestoesDiv.style.zIndex = "9999";
+        sugestoesDiv.style.display = "none";
+
+        divBusca.style.position = "relative";
+        divBusca.appendChild(sugestoesDiv);
+
+        function gerarSugestoes(filtrados) {
+            sugestoesDiv.innerHTML = "";
+            if (!filtrados.length) {
+                sugestoesDiv.style.display = "none";
+                return;
+            }
+            sugestoesDiv.style.display = "block";
+            filtrados.forEach(sug => {
+                const item = document.createElement("div");
+                item.textContent = sug;
+                item.style.padding = "4px";
+                item.style.cursor = "pointer";
+                item.style.textAlign = "left";
+                item.addEventListener("click", () => {
+                    input.value = sug;
+                    sugestoesDiv.style.display = "none";
+                    mostrarPrecoEIcone(sug);
+                });
+                sugestoesDiv.appendChild(item);
+            });
+        }
+
+        async function mostrarPrecoEIcone(nomeBusca) {
+            const nomeNorm = normalizarNome(nomeBusca);
+            const preco = apiMap.get(nomeNorm);
+            let imgUrl = apiImgMap.get(nomeNorm);
+
+            if (preco != null) {
+                spanResultado.textContent = `Valor: ${preco}`;
+                spanResultado.style.color = "#007bff";
+                spanResultado.style.display = "block";
+                spanResultado.style.textAlign = "center";
+                spanResultado.style.marginTop = "10px";
+                spanResultado.style.fontWeight = "bold";
+            } else {
+                spanResultado.textContent = "";
+                spanResultado.style.color = "";
+            }
+
+            let imgElem = divBusca.querySelector(".img-icone-raro");
+            if (imgElem) imgElem.remove();
+
+            if (!imgUrl) return;
+
+            if (!imgUrl.startsWith("data:")) {
+                const base64 = await encodeImageToBase64(imgUrl);
+                if (base64) {
+                    imgUrl = base64;
+                    apiImgMap.set(nomeNorm, base64);
+                }
+            }
+
+            imgElem = document.createElement("img");
+            imgElem.src = imgUrl;
+            imgElem.className = "img-icone-raro";
+            imgElem.style.width = "40px";
+            imgElem.style.height = "40px";
+            imgElem.style.display = "block";
+            imgElem.style.margin = "10px auto 0";
+            imgElem.style.transform = "scale(1.7)";
+            imgElem.style.transformOrigin = "center top";
+            imgElem.style.imageRendering = "pixelated";
+            spanResultado.insertAdjacentElement("afterend", imgElem);
+        }
+
+        input.addEventListener("input", () => {
+            const nomeBusca = input.value.trim();
+            spanResultado.textContent = "";
+            const imgElem = divBusca.querySelector(".img-icone-raro");
+            if (imgElem) imgElem.remove();
+            sugestoesDiv.innerHTML = "";
+            sugestoesDiv.style.display = "none";
+
+            if (nomeBusca) {
+                const filtrados = apiNomesOriginais.filter(n => normalizarNome(n).includes(normalizarNome(nomeBusca)));
+                gerarSugestoes(filtrados.slice(0, 3));
+            }
+
+            mostrarPrecoEIcone(nomeBusca);
+        });
+
+        input.addEventListener("focus", () => {
+            if (!input.value.trim()) gerarSugestoes(apiNomesOriginais.slice(0, 3));
+        });
+
+        const btn = document.getElementById("btn-loja-raros");
+        btn.insertAdjacentElement("afterend", divBusca);
+        divBusca.insertAdjacentElement("afterend", statusElem);
+
+        console.log("Script Loja Raros carregado");
+    }
+
+    window.executarLojaRaros = executarLojaRaros;
+})();
