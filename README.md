@@ -9,7 +9,7 @@ Para além deste readme, dentro de cada página dos scripts, apresento comentado
 -----------------------------------------------------------------------------------
 Apresentação do script **Rares Menu New**:
 
-O #Rares Value Menu, JÁ NÃO APRESENTA IMAGENS NO MENU, uma vez que foram aplicadas regras de segurança de que dominios e url's as imagens podem ser carregadas
+O #Rares Value Menu Old, JÁ NÃO APRESENTA IMAGENS NO MENU, uma vez que foram aplicadas regras de segurança de que dominios e url's as imagens podem ser carregadas
 
 -----------------------------------------------------------------------------------
 
