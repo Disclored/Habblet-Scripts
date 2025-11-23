@@ -7,9 +7,10 @@ https://stats.g.doubleclick.net https://*.gstatic.com https://*.imgur.com https:
 https://*.googlesyndication.com https://*.doubleclick.net https://www.google.com
 https://www.googleadservices.com https://*.adtrafficquality.google https://www.googletagmanager.com https://sp.tinymce.com". The action has been blocked.
 
-#Instead of Loading the image directly from radiohabblet pannel. It encodes the image directly to base64 when the rare is selected on the Menu
-#Then it loads from arraybuffer 
-#This works since on CSP this is allowed: "img-src 'self' data: https://images.habblet.city ... "
+#Em vez de carregar a imagem diretamente do painel do RadioHabblet, ela é codificada em Base64 assim que o raro é selecionado no menu
+#Depois, a imagem é carregada a partir do ArrayBuffer
+#Isso funciona porque, no CSP, é permitido: "img-src 'self' data: https://images.habblet.city ..."
+
 
 
 // ==UserScript==
