@@ -9,8 +9,8 @@ Para além deste readme, dentro de cada página dos scripts, apresento comentado
 Apresentação do script **Rares Menu**:
 
 
-O #Rares Value Menu, já não dispoem das imagens no menu, uma vez que foram aplicadas regras de segurança de que dominios e url's as imagens podem ser carregadas
-Sendo assim, disponibilizei o #Rares Value Menu New, que faz um bypass a estas regras, ou seja, é o único funcional a 100% à data de hoje. 23/11/2025
+O #Rares Value Menu, JÁ NÃO APRESENTA IMAGENS NO MENU, uma vez que foram aplicadas regras de segurança de que dominios e url's as imagens podem ser carregadas
+Sendo assim, disponibilizei o **#Rares Value Menu New**, que faz um bypass a estas regras, ou seja, é o único funcional a 100% à data de hoje. 23/11/2025
 
 ---
 ## 💎 Contador de 1 hora para saber quando receberá diamantes.
