@@ -11,7 +11,7 @@ Apresentação do script **Rares Menu New**:
 
 O #Rares Value Menu, JÁ NÃO APRESENTA IMAGENS NO MENU, uma vez que foram aplicadas regras de segurança de que dominios e url's as imagens podem ser carregadas
 
-...................................................................................
+-----------------------------------------------------------------------------------
 
 USAR O **#Rares Value Menu New**
 
