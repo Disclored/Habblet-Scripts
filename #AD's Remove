@@ -1,3 +1,10 @@
+//Remove o contêiner principal onde os anúncios são exibidos.
+//Remove todos os elementos <ins class="adsbygoogle">.
+//Remove todos os iframes de anúncios do Google.
+//Remove os timers e textos relacionados aos anúncios.
+//Injeta CSS que força anúncios a ficarem invisíveis.
+//Impede que novos anúncios apareçam usando MutationObserver.
+//Executa tudo automaticamente assim que o site carrega.
 // ==UserScript==
 // @name         Habblet Ads Remover
 // @namespace    http://tampermonkey.net/
