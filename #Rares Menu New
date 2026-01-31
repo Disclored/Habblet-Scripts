@@ -1032,7 +1032,8 @@ const searcher = setInterval(() => {
     const excecoesRaro = ["raroestatuadelucifer"];
     const excecoesLTD = [
         "tronodecristal",
-        "tronodecristalltd"
+        "tronodecristalltd",
+        "pickupdjltd"
     ];
 
     const substituicoesRaros = {
