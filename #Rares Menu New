@@ -1029,7 +1029,13 @@ const searcher = setInterval(() => {
     const limitePorLote = 40;
     const totalPaginas = 40;
     const delay = ms => new Promise(res => setTimeout(res, ms));
-    const excecoesRaro = ["raroestatuadelucifer"];
+
+    const excecoesRaro = [
+        "Raro Estátua de Lúcifer",
+        "Raro Estátua Divina",
+        "Estátua de Lúcifer"
+    ];
+
     const excecoesLTD = [
         "tronodecristal",
         "tronodecristalltd",
@@ -1049,6 +1055,14 @@ const searcher = setInterval(() => {
     function normalizarNome(nome) {
         if (!nome) return "";
 
+        // exceções raros especiais (antes de remover o "Raro")
+        if (excecoesRaro.includes(nome)) {
+            return nome.toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, "");
+        }
+
         // remove o prefixo "Raro " ou "Rara " do começo
         nome = nome.replace(/^\s*rar[oa]\s+/i, "");
 
@@ -1065,12 +1079,8 @@ const searcher = setInterval(() => {
             nomeNorm = nomeNorm.replace(/ltd/g, "");
         }
 
-        // exceções raros especiais
-        if (excecoesRaro.includes(nomeNorm)) return nomeNorm;
-
         return nomeNorm;
     }
-
 
     // ------------------ BASE64 HELPERS ------------------
     function arrayBufferToBase64(buffer) {
@@ -1370,6 +1380,9 @@ const searcher = setInterval(() => {
 
         console.log("Script Loja Raros carregado");
     }
+
+    window.executarLojaRaros = executarLojaRaros;
+})();
 
     window.executarLojaRaros = executarLojaRaros;
 })();
