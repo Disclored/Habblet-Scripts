@@ -12,11 +12,10 @@ https://www.googleadservices.com https://*.adtrafficquality.google https://www.g
 #Isto funciona porque, no CSP, é permitido: "img-src 'self'"
 
 
-
 // ==UserScript==
 // @name         Menu Raros - New
 // @namespace    zezinhoestiloso
-// @version      2.9.2
+// @version      2.9.5
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -489,7 +488,7 @@ async function main() {
          style="height: 100%; overflow-y: auto;">
         <div class="d-flex position-relative flex-column gap-2 align-items-center justify-content-center drag-handler container-fluid nitro-card-header">
             <div class="d-flex w-100 align-items-center justify-content-center">
-                <span id="kemelly-title" class="nitro-card-header-text">TE AMO KEMELLY - 60:00</span>
+                <span id="kemelly-title" class="nitro-card-header-text">Script - 60:00</span>
                 <div class="position-absolute end-0 nitro-card-header-close"></div>
             </div>
         </div>
@@ -599,7 +598,7 @@ async function main() {
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = "TE AMO KEMELLY - " + minutes + ":" + seconds;
+            display.textContent = "Script - " + minutes + ":" + seconds;
 
             if (remaining <= 0) {
                 // reinicia o contador
@@ -1026,25 +1025,46 @@ const searcher = setInterval(() => {
     const totalPaginas = 40;
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const excecoesRaro = ["raroestatuadelucifer"];
+    const excecoesLTD = [
+        "tronodecristal",
+        "tronodecristalltd"
+    ];
+
     const substituicoesRaros = {
         "Sorveteira Espacial LTD": "Sorveteria Espacial LTD",
         "Escultura de Ovelha Apaixonante LTD": "Escultura da Ovelha Apaixonante LTD",
         "Raro Máquina de Chocolate Retro": "Raro Máquina Chocolate Retro",
-        "Dado Wired LTD": "Porta-Dados Wired LTD"
+        "Dado Wired LTD": "Porta-Dados Wired LTD",
+        "Pickup DJ LTD": "Pickup de DJ LTD",
+        "Relógio da Família Ornamentado LTD": "Relógio de Família Ornamentado LTD",
+        "Habblet Hotel Congelado LTD": "Habblet Hotel Nevado LTD"
     };
 
     function normalizarNome(nome) {
         if (!nome) return "";
-        nome = nome.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .replace(/ltd/g, "")
-            .replace(/,/g, "")
-            .replace(/['"’‘´]/g, "")
-            .replace(/\s+/g, "")
-            .trim();
-        if (excecoesRaro.includes(nome)) return nome;
-        return nome.replace(/rar[oa]?/g, "");
+
+        // remove o prefixo "Raro " ou "Rara " do começo
+        nome = nome.replace(/^\s*rar[oa]\s+/i, "");
+
+        // normaliza o nome (minusculo, sem acentos, sem caracteres extras)
+        let nomeNorm = nome.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/,/g, "")
+        .replace(/['"’‘´]/g, "")
+        .replace(/\s+/g, "")
+        .trim();
+
+        // 🔒 exceção pontual para Trono de Cristal / Trono de Cristal LTD
+        if (!excecoesLTD.includes(nomeNorm)) {
+            nomeNorm = nomeNorm.replace(/ltd/g, "");
+        }
+
+        // exceções raros especiais
+        if (excecoesRaro.includes(nomeNorm)) return nomeNorm;
+
+        return nomeNorm;
     }
+
 
     // ------------------ BASE64 HELPERS ------------------
     function arrayBufferToBase64(buffer) {
