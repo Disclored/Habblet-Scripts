@@ -11,6 +11,11 @@ https://www.googleadservices.com https://*.adtrafficquality.google https://www.g
 #Depois, a imagem é carregada a partir do ArrayBuffer
 #Isto funciona porque, no CSP, é permitido: "img-src 'self'"
 
+Alguns nomes de raros foram modificados pois na API e n Jogo diferem em algumas letras.
+Adicionados novas exceções para Raros que possuiem nomes diferentes entre a API e Jogo (Ex: Habblet Hotel Congelado LTD -> Habblet Hotel Nevado LTD)
+Normalização de muitos nomes de mobis que no jogo começam com "Raro xxxx" e na API apenas "xxxx" (Ex: Raro Chafariz Água-Marinha -> Chafariz Água-Marinha)
+Adicionado Slow Time para fazer os Posts à Rádio habblet pois deixava o site muito lento
+Resolução conflito entre o Raro "Trono Cristal LTD" (150 asinhas) e "Trono Cristal" (15 asinhas)
 
 // ==UserScript==
 // @name         Menu Raros - New
