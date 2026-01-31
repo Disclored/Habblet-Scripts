@@ -1,3 +1,10 @@
+//Remove o contêiner onde os anúncios são colocados.
+//Remove blocos AdSense, iframes e timers de anúncios.
+//Injeta CSS com !important para impedir qualquer anúncio de aparecer.
+//Usa MutationObserver para apagar anúncios assim que o site tenta recriá-los.
+//Atua antes e depois do carregamento do site, bloqueando totalmente a lógica de anúncios.
+
+
 // ==UserScript==
 // @name         Habblet Ads Remover
 // @namespace    http://tampermonkey.net/
