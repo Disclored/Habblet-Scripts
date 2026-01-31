@@ -1054,7 +1054,7 @@ const searcher = setInterval(() => {
         .replace(/\s+/g, "")
         .trim();
 
-        // 🔒 exceção pontual para Trono de Cristal / Trono de Cristal LTD
+        // exceção pontual para Trono de Cristal / Trono de Cristal LTD
         if (!excecoesLTD.includes(nomeNorm)) {
             nomeNorm = nomeNorm.replace(/ltd/g, "");
         }
