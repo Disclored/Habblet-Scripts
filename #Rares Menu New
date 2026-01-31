@@ -1,26 +1,26 @@
-#Rares Menu - New
-#Bypass the new CSP policy on habblet
-'https://ppanel.radiohabblet.com.br/imagem/valores/icon/sorveteira-fngica-ltd-e6d070ad421f210722be08c44ea00382.png' violates the following Content Security Policy directive: "img-src 'self' 
-data: https://images.habblet.city https://imaging.habblet.city https://images.leet.city 
-https://i.ytimg.com https://www.paypalobjects.com https://www.facebook.com https://*.google-analytics.com 
-https://stats.g.doubleclick.net https://*.gstatic.com https://*.imgur.com https://cdn.discordapp.com https://*.googleusercontent.com 
-https://*.googlesyndication.com https://*.doubleclick.net https://www.google.com
-https://www.googleadservices.com https://*.adtrafficquality.google https://www.googletagmanager.com https://sp.tinymce.com". The action has been blocked.
+//#Rares Menu - New
+//#Bypass the new CSP policy on habblet
+//'https://ppanel.radiohabblet.com.br/imagem/valores/icon/sorveteira-fngica-ltd-e6d070ad421f210722be08c44ea00382.png' violates the following Content Security Policy directive: "img-src 'self' 
+//data: https://images.habblet.city https://imaging.habblet.city https://images.leet.city 
+//https://i.ytimg.com https://www.paypalobjects.com https://www.facebook.com https://*.google-analytics.com 
+//https://stats.g.doubleclick.net https://*.gstatic.com https://*.imgur.com https://cdn.discordapp.com https://*.googleusercontent.com 
+//https://*.googlesyndication.com https://*.doubleclick.net https://www.google.com
+//https://www.googleadservices.com https://*.adtrafficquality.google https://www.googletagmanager.com https://sp.tinymce.com". The action has been blocked.
 
-#Em vez de carregar a imagem diretamente do painel da RadioHabblet, ela é codificada em Base64 assim que o raro é selecionado no menu e guardada num buffer
-#Depois, a imagem é carregada a partir do ArrayBuffer
-#Isto funciona porque, no CSP, é permitido: "img-src 'self'"
+//Em vez de carregar a imagem diretamente do painel da RadioHabblet, ela é codificada em Base64 assim que o raro é selecionado no menu e guardada num buffer
+//Depois, a imagem é carregada a partir do ArrayBuffer
+//Isto funciona porque, no CSP, é permitido: "img-src 'self'"
 
-Alguns nomes de raros foram modificados pois na API e n Jogo diferem em algumas letras.
-Adicionados novas exceções para Raros que possuiem nomes diferentes entre a API e Jogo (Ex: Habblet Hotel Congelado LTD -> Habblet Hotel Nevado LTD)
-Normalização de muitos nomes de mobis que no jogo começam com "Raro xxxx" e na API apenas "xxxx" (Ex: Raro Chafariz Água-Marinha -> Chafariz Água-Marinha)
-Adicionado Slow Time para fazer os Posts à Rádio habblet pois deixava o site muito lento
-Resolução conflito entre o Raro "Trono Cristal LTD" (150 asinhas) e "Trono Cristal" (15 asinhas)
+//Alguns nomes de raros foram modificados pois na API e n Jogo diferem em algumas letras.
+//Adicionados novas exceções para Raros que possuiem nomes diferentes entre a API e Jogo (Ex: Habblet Hotel Congelado LTD -> Habblet Hotel Nevado LTD)
+//Normalização de muitos nomes de mobis que no jogo começam com "Raro xxxx" e na API apenas "xxxx" (Ex: Raro Chafariz Água-Marinha -> Chafariz Água-Marinha)
+//Adicionado Slow Time para fazer os Posts à Rádio habblet pois deixava o site muito lento
+//Resolução conflito entre o Raro "Trono Cristal LTD" (150 asinhas) e "Trono Cristal" (15 asinhas)
 
 // ==UserScript==
 // @name         Menu Raros - New
 // @namespace    zezinhoestiloso
-// @version      2.9.5
+// @version      2.9.6
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
