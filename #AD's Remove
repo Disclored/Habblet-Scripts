@@ -1,13 +1,7 @@
-//Remove o contêiner onde os anúncios são colocados.
-//Remove blocos AdSense, iframes e timers de anúncios.
-//Injeta CSS com !important para impedir qualquer anúncio de aparecer.
-//Usa MutationObserver para apagar anúncios assim que o site tenta recriá-los.
-//Atua antes e depois do carregamento do site, bloqueando totalmente a lógica de anúncios.
-
 // ==UserScript==
 // @name         Habblet Ads Remover
 // @namespace    http://tampermonkey.net/
-// @version      1.5.0
+// @version      1.5.1
 // @match        https://www.habblet.city/hotel
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
 // @grant        none
@@ -27,6 +21,27 @@
         // Remove também <ins adsbygoogle>, iframes e timers, caso escapem
         document.querySelectorAll('ins.adsbygoogle, iframe[id^="aswift_"], iframe[id^="google_ads_frame"], .adTimer')
             .forEach(el => safeRemove(el.closest('div[style*="display: flex"][style*="justify-content: center"]') || el));
+    }
+
+    function interceptCountdown() {
+        // Verifica se a função original existe
+        if (typeof window.updateCountdownText === "function") {
+            const originalUpdateCountdownText = window.updateCountdownText;
+
+            // Substitui a função por uma versão segura
+            window.updateCountdownText = function() {
+                const el1 = document.getElementById("adTimer1");
+                const el2 = document.getElementById("adTimer2");
+
+                if (el1 || el2) {
+                    // Chama a função original apenas se os elementos existirem
+                    originalUpdateCountdownText();
+                } else {
+                    // Caso contrário, mostra mensagem amigável no console
+                    console.log("Anúncio bloqueado");
+                }
+            };
+        }
     }
 
     function init() {
@@ -49,8 +64,14 @@
         // Execução inicial
         removeAds();
 
+        // Intercepta a função de countdown para evitar erros
+        interceptCountdown();
+
         // Observar mudanças no DOM (anúncios injetados dinamicamente)
-        const observer = new MutationObserver(removeAds);
+        const observer = new MutationObserver(() => {
+            removeAds();
+            interceptCountdown();
+        });
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
