@@ -20,7 +20,7 @@
 // ==UserScript==
 // @name         Menu Raros - New
 // @namespace    zezinhoestiloso
-// @version      2.9.6
+// @version      2.9.7
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -31,123 +31,153 @@
 // ==/UserScript==
 
 function listen(i) {
-    i = i || console.log;
+    i = i || function () {};
     let e = Object.getOwnPropertyDescriptor(MessageEvent.prototype, "data"),
         t = e.get;
-    e.get = function i() {
+
+    e.get = function () {
         if (!(this.currentTarget instanceof WebSocket)) return t.call(this);
         let e = t.call(this);
-        return Object.defineProperty(this, "data", { value: e }), window.i({ data: e, t: this.currentTarget, event: this });
+        Object.defineProperty(this, "data", { value: e });
+        window.i({ data: e, t: this.currentTarget, event: this });
+        return e;
     };
+
     Object.defineProperty(MessageEvent.prototype, "data", e);
 }
 
 class RoomUnitEvent {
     static parse(h) {
-        for (let e = h.l(); e > 0; e--) {
-            let t = h.l(),
-                e = h.o(),
-                i = h.o(),
-                n = h.o(),
-                s = h.l(),
-                a = h.l(),
-                l = h.l(),
-                d = parseFloat(h.o()),
-                o = h.l(),
-                r = h.l(),
-                c = null;
-            if (1 == r)
-                c = {
-                    group: {},
-                    parse() {
-                        this.h = h.o();
-                        this.group.id = h.l();
-                        this.group.status = h.l();
-                        this.group.name = h.o();
-                        h.o();
-                        this.v = h.l();
-                        this.p = h.u();
-                    }
-                };
-            else if (4 == r)
-                c = {
-                    m: [],
-                    parse() {
-                        this.h = h.o();
-                        this.g = h.l();
-                        this.k = h.o();
-                        let i = h.l();
-                        for (let e = 0; e < i; e++) this.m.push(h.A());
-                    }
-                };
-            else if (2 == r)
-                c = {
-                    parse() {
-                        this.U = h.l().toString();
-                        this.g = h.l();
-                        this.k = h.o();
-                        this.P = h.l();
-                        this.T = h.u();
-                        this.B = h.u();
-                        this.X = h.u();
-                        this.H = h.u();
-                        this.j = h.u();
-                        this.D = h.u();
-                        this.R = h.l();
-                        this.S = h.o();
-                    }
-                };
-            else {
-                console.log(`Error! UnitType => ${r}`);
-                return;
+        try {
+            let count = h.l();
+
+            for (let u = 0; u < count; u++) {
+                let id = h.l(),
+                    username = h.o(),
+                    Z = h.o(),
+                    L = h.o(),
+                    V = h.l(),
+                    x = h.l(),
+                    y = h.l(),
+                    z = parseFloat(h.o()),
+                    G = h.l(),
+                    type = h.l(),
+                    c;
+
+                if (type === 1) {
+                    c = {
+                        group: {},
+                        parse() {
+                            this.h = h.o();
+                            this.group.id = h.l();
+                            this.group.status = h.l();
+                            this.group.name = h.o();
+                            h.o();
+                            this.v = h.l();
+                            this.p = h.u();
+                        }
+                    };
+                } else if (type === 4) {
+                    c = {
+                        m: [],
+                        parse() {
+                            this.h = h.o();
+                            this.g = h.l();
+                            this.k = h.o();
+                            let len = h.l();
+                            for (let i = 0; i < len; i++) this.m.push(h.A());
+                        }
+                    };
+                } else if (type === 2) {
+                    c = {
+                        parse() {
+                            this.U = h.l().toString();
+                            this.g = h.l();
+                            this.k = h.o();
+                            this.P = h.l();
+                            this.T = h.u();
+                            this.B = h.u();
+                            this.X = h.u();
+                            this.H = h.u();
+                            this.j = h.u();
+                            this.D = h.u();
+                            this.R = h.l();
+                            this.S = h.o();
+                        }
+                    };
+                } else {
+                    return;
+                }
+
+                c.id = id;
+                c.type = type;
+                c.username = username;
+                c.Z = Z;
+                c.L = L;
+                c.V = V;
+                c.x = x;
+                c.y = y;
+                c.z = z;
+                c.targetX = x;
+                c.targetY = y;
+                c.Y = z;
+                c.G = G;
+                c.N = G;
+
+                c.parse(h);
+
+                let idx;
+                window.J.F.W.find((e, i) => (idx = i, e.id === id))
+                    ? window.J.F.W[idx] = c
+                    : window.J.F.W.push(c);
             }
-            c.id = t;
-            c.type = r;
-            c.username = e;
-            c.Z = i;
-            c.L = n;
-            c.V = s;
-            c.x = a;
-            c.y = l;
-            c.z = d;
-            c.targetX = a;
-            c.targetY = l;
-            c.Y = d;
-            c.G = o;
-            c.N = o;
-            c.parse(h);
-            let w;
-            window.J.F.W.find((e, i) => (w = i, e.id == t))
-                ? window.J.F.W[w] = c
-                : window.J.F.W.push(c);
+        } catch {
+            return;
         }
     }
 }
 
 class BinaryReader {
-    constructor(e) {
-        this.M = e;
-        this.view = new DataView(e);
+    constructor(buffer) {
+        this.M = new Uint8Array(buffer);
+        this.view = new DataView(buffer);
         this.offset = 0;
     }
+
+    ensure(size) {
+        if (this.offset + size > this.view.byteLength) {
+            throw new Error();
+        }
+    }
+
     l() {
-        let e = this.view.getInt32(this.offset);
+        this.ensure(4);
+        let v = this.view.getInt32(this.offset);
         this.offset += 4;
-        return e;
+        return v;
     }
+
     A() {
-        let e = this.view.getInt16(this.offset);
+        this.ensure(2);
+        let v = this.view.getInt16(this.offset);
         this.offset += 2;
-        return e;
+        return v;
     }
+
     u() {
+        this.ensure(1);
         return !!this.M[this.offset++];
     }
+
     o() {
-        let e = this.A(),
-            i = (new TextDecoder).decode(this.M.slice(this.offset, this.offset + e));
-        this.offset += e;
-        return i;
+        let len = this.A();
+        if (len < 0) throw new Error();
+        this.ensure(len);
+        let str = new TextDecoder().decode(
+            this.M.slice(this.offset, this.offset + len)
+        );
+        this.offset += len;
+        return str;
     }
 }
 
@@ -158,6 +188,7 @@ class BinaryWriter {
         this.C(0);
         this.q(e);
     }
+
     C(e) {
         this.M[this.offset++] = (e >> 24) & 255;
         this.M[this.offset++] = (e >> 16) & 255;
@@ -165,20 +196,23 @@ class BinaryWriter {
         this.M[this.offset++] = e & 255;
         return this;
     }
+
     q(e) {
         this.M[this.offset++] = (e >> 8) & 255;
         this.M[this.offset++] = e & 255;
         return this;
     }
+
     I(e) {
-        let i = (new TextEncoder).encode(e);
-        this.q(i.length);
-        for (let e = 0; e < i.length; e++) {
-            this.M[this.offset + e] = i[e];
+        let enc = new TextEncoder().encode(e);
+        this.q(enc.length);
+        for (let i = 0; i < enc.length; i++) {
+            this.M[this.offset + i] = enc[i];
         }
-        this.offset += i.length;
+        this.offset += enc.length;
         return this;
     }
+
     K() {
         this.offset = 0;
         this.C(this.M.length - 4);
@@ -187,7 +221,6 @@ class BinaryWriter {
 }
 
 const sleep = i => new Promise(e => setTimeout(e, i));
-
 
 async function main() {
     let styleEl = document.createElement("style");
@@ -844,13 +877,26 @@ async function main() {
     const btnLojaRaros = n.querySelector("#btn-loja-raros");
     if (btnLojaRaros) {
         btnLojaRaros.addEventListener("click", () => {
+            // Se já executou, não faz nada
+            if (window.lojaRarosExecutada) return;
+
             if (window.executarLojaRaros) {
+                // Executa a função uma vez
                 window.executarLojaRaros();
+
+                // Marca como executada
+                window.lojaRarosExecutada = true;
+
+                // Bloqueia visualmente o botão
+                btnLojaRaros.disabled = true;
+                btnLojaRaros.style.opacity = "0.5";
+                btnLojaRaros.style.cursor = "not-allowed";
             } else {
                 alert("Função Loja Raros não carregada.");
             }
         });
     }
+
 
     let navParent = document.querySelector(".navigation-item").parentElement;
     navParent.appendChild(t);
@@ -1049,7 +1095,8 @@ const searcher = setInterval(() => {
         "Dado Wired LTD": "Porta-Dados Wired LTD",
         "Pickup DJ LTD": "Pickup de DJ LTD",
         "Relógio da Família Ornamentado LTD": "Relógio de Família Ornamentado LTD",
-        "Habblet Hotel Congelado LTD": "Habblet Hotel Nevado LTD"
+        "Habblet Hotel Congelado LTD": "Habblet Hotel Nevado LTD",
+        "Cesta de Ovos da Páscoa Gigante LTD": "Cesta de Ovos de Páscoa Gigante LTD"
     };
 
     function normalizarNome(nome) {
@@ -1380,9 +1427,6 @@ const searcher = setInterval(() => {
 
         console.log("Script Loja Raros carregado");
     }
-
-    window.executarLojaRaros = executarLojaRaros;
-})();
 
     window.executarLojaRaros = executarLojaRaros;
 })();
