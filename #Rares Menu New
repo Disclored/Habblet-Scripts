@@ -18,9 +18,9 @@
 //Resolução conflito entre o Raro "Trono Cristal LTD" (150 asinhas) e "Trono Cristal" (15 asinhas)
 
 // ==UserScript==
-// @name         Menu Raros - New
+// @name         Menu Habblet
 // @namespace    zezinhoestiloso
-// @version      2.9.7
+// @version      3.0.0
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -400,49 +400,105 @@ async function main() {
     `;
     document.body.appendChild(opcodeSniffer);
 
-    // Função para adicionar log ao sniffer
-    window.addOpcodeLog = function(direction, opcode, data) {
-        if (!document.getElementById('opcode-log')) return;
+// Função atualizada para adicionar log ao sniffer com detalhes clicáveis
+window.addOpcodeLog = function(direction, opcode, rawData, data) {
+    if (!document.getElementById('opcode-log')) return;
 
-        const logItem = document.createElement('div');
-        const timestamp = new Date().toLocaleTimeString();
-        let extraInfo = '';
+    const logItem = document.createElement('div');
+    const timestamp = new Date().toLocaleTimeString();
+    let extraInfo = '';
 
-        // Tenta extrair informações adicionais para OPCODEs conhecidos
-        if (data) {
-            try {
-                if (opcode === 1314) {
-                    extraInfo = ` [CHAT] "${data.substring(0, 50)}${data.length > 50 ? '...' : ''}"`;
-                } else if (opcode === 2080) {
-                    extraInfo = ' [MOVIMENTO/AUSÊNCIA]';
-                } else if (opcode === 2730) {
-                    extraInfo = ' [COPY]';
-                } else if (opcode === 1597) {
-                    extraInfo = ' [DIGITANDO]';
-                } else if (opcode === 1778) {
-                    extraInfo = ' [MOBÍLIA]';
-                } else if (opcode === 3860) {
-                    extraInfo = ' [POSSÍVEL MOVIMENTO]';
-                }
-            } catch (e) {}
-        }
+    // Tenta extrair informações adicionais para OPCODEs conhecidos
+    if (data) {
+        try {
+            if (opcode === 1314) {
+                extraInfo = ` [CHAT] "${data.substring(0, 50)}${data.length > 50 ? '...' : ''}"`;
+            } else if (opcode === 2080) {
+                extraInfo = ' [MOVIMENTO/AUSÊNCIA]';
+            } else if (opcode === 2730) {
+                extraInfo = ' [COPY]';
+            } else if (opcode === 1597) {
+                extraInfo = ' [DIGITANDO]';
+            } else if (opcode === 2456) {
+                extraInfo = ' [c(1) acenar, c(2) beijar, c(3) etc..]';
+            } else if (opcode === 3860) {
+                extraInfo = ' [POSSÍVEL MOVIMENTO]';
+            }
+        } catch (e) {}
+    }
 
-        logItem.className = direction === 'ENVIADO' ? 'text-success' : 'text-info';
-        logItem.innerHTML = `<span class="text-secondary">[${timestamp}]</span> <strong>${direction}</strong>: OPCODE ${opcode}${extraInfo}`;
+    logItem.className = direction === 'ENVIADO' ? 'text-success' : 'text-info';
+    logItem.style.cursor = 'pointer';
+    logItem.innerHTML = `<span class="text-secondary">[${timestamp}]</span> <strong>${direction}</strong>: OPCODE ${opcode}${extraInfo}`;
 
-        const logContainer = document.getElementById('opcode-log');
-        logContainer.appendChild(logItem);
+    const logContainer = document.getElementById('opcode-log');
+    logContainer.appendChild(logItem);
 
-        // Auto-scroll
-        if (document.getElementById('auto-scroll').checked) {
-            logContainer.scrollTop = logContainer.scrollHeight;
-        }
+    // Clique para abrir detalhes
+    logItem.onclick = () => {
+        const existing = document.querySelector('.opcode-details');
+        if (existing) existing.remove();
 
-        // Limitar número de logs para evitar sobrecarga de memória
-        while (logContainer.children.length > 500) {
-            logContainer.removeChild(logContainer.firstChild);
-        }
+        const details = document.createElement('div');
+        details.className = 'opcode-details';
+        details.style.cssText = `
+            position: absolute;
+            background: #111;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 10000;
+            max-width: 400px;
+            white-space: pre-wrap;
+        `;
+
+        // Converter rawData em hex
+        let hexData = '';
+        try {
+            const buffer = rawData instanceof ArrayBuffer ? rawData : new Uint8Array(rawData).buffer;
+            hexData = Array.from(new Uint8Array(buffer))
+                .map(b => b.toString(16).padStart(2,'0'))
+                .join(' ');
+        } catch(e){ hexData = 'Erro ao converter dados'; }
+
+        details.innerHTML = `
+<strong>OPCODE:</strong> ${opcode}<br>
+<strong>Direção:</strong> ${direction}<br>
+<strong>Hex:</strong> ${hexData}<br>
+<strong>Bytes:</strong> ${rawData.byteLength || rawData.length}<br>
+<strong>Extra:</strong> ${data || ''}
+        `;
+
+        const rect = logItem.getBoundingClientRect();
+        details.style.top = rect.bottom + 4 + 'px';
+        details.style.left = rect.left + 'px';
+
+        document.body.appendChild(details);
+
+        // Fechar ao clicar fora
+        const removeDetails = e => {
+            if (!details.contains(e.target) && e.target !== logItem) {
+                details.remove();
+                document.removeEventListener('click', removeDetails);
+            }
+        };
+        document.addEventListener('click', removeDetails);
     };
+
+    // Auto-scroll
+    if (document.getElementById('auto-scroll')?.checked) {
+        logContainer.scrollTop = logContainer.scrollHeight;
+    }
+
+    // Limitar número de logs
+    while (logContainer.children.length > 500) {
+        logContainer.removeChild(logContainer.firstChild);
+    }
+};
+
 
     // Configurar manipulador de fechamento e arrasto do Sniffer
     const snifferHeader = opcodeSniffer.querySelector('.drag-handler');
@@ -583,10 +639,10 @@ async function main() {
             <div class="d-flex gap-2 align-items-center justify-content-between">
                 <div class="d-flex gap-2 align-items-center">
                     <label class="switch">
-                        <input type="checkbox" id="furni-render">
+                        <input type="checkbox" id="kiss-loop">
                         <span class="slider"></span>
                     </label>
-                    <div class="d-inline text-black option-name">Não renderizar mobis da sala</div>
+                    <div class="d-inline text-black option-name">Beijar Infinitamente</div>
                 </div>
             </div>
             <div class="d-flex gap-2 align-items-center justify-content-between">
@@ -663,7 +719,7 @@ async function main() {
         commandCopy: n.querySelector("#command-copy"),
         hideTyping: n.querySelector("#hide-typing"),
         muteAll: n.querySelector("#mute-all"),
-        furniRender: n.querySelector("#furni-render"),
+        kissLoop: n.querySelector("#kiss-loop"),
         antiAus: n.querySelector("#anti-aus"),
         enablesDoidexToggle: n.querySelector("#enables-doidex-toggle"),
         raveConfigBtn: n.querySelector("#rave-config-btn"),
@@ -735,7 +791,7 @@ async function main() {
         $: controls.commandCopy,
         _: controls.hideTyping,
         ee: controls.muteAll,
-        ie: controls.furniRender,
+        ie: controls.kissLoop,
         te: controls.antiAus,
         ve: controls.xaruraveToggle,
         be: controls.billToggle,
@@ -928,7 +984,7 @@ window.i = ({ data: e, t }) => {
                         extraData = reader.o(); // Ler string
                     }
                 } catch (err) {}
-                window.addOpcodeLog('ENVIADO', e, extraData);
+                window.addOpcodeLog('ENVIADO', e, n, extraData); // pacote enviado
             }
 
             if (1314 == e) {
@@ -971,7 +1027,7 @@ window.i = ({ data: e, t }) => {
                 extraData = reader.o(); // Nome de usuário
             }
         } catch (err) {}
-        window.addOpcodeLog('RECEBIDO', i, extraData);
+        window.addOpcodeLog('RECEBIDO', i, e, extraData); // pacote recebido
     }
 
 
@@ -1005,34 +1061,78 @@ function initExceptionInput() {
 
 initExceptionInput();
 
-// --- Código principal de processamento de pacotes ---
+/// --- Código principal de processamento de pacotes ---
 if (374 === i) {
     RoomUnitEvent.parse(s);
-} else if (1446 === i || i == 1036) { // 1446 mensagens normais | 1036 mensagens em negrito
+} else if (1446 === i || i == 1036) { // falas normais e a negrito
     if (window.J && window.J.elements.ee.checked) {
+        const originalOffset = s.offset;
         const userId = s.l();
         const message = s.o();
         s.l();
         s.l();
 
-        let userObj = window.J.F.W.find(e => e.V === userId);
-        let username = userObj ? userObj.username.trim() : "desconhecido";
+        //console.log(`[MUTE] UserID: ${userId}`);
 
-        const muteExceptions = window.exceptionList;
-
-        if (!muteExceptions.includes(username)) {
+        // 1. Verificar por UserID primeiro (mais rápido e confiável)
+        const allowedUserIds = window.allowedUserIds || [];
+        if (allowedUserIds.includes(userId)) {
+            //console.log(`[MUTE] Permitindo UserID ${userId} (lista de IDs)`);
+            s.offset = originalOffset;
             return;
         }
+
+        // 2. Verificar por username (se a lista de exceções existir)
+        const muteExceptions = window.exceptionList || [];
+        if (muteExceptions.length > 0) {
+            let username = "desconhecido";
+
+            // Busca eficiente de username
+            const userList = window.J?.F?.W || window.J?.F?.users || [];
+            const user = userList.find(u => u?.V === userId);
+            if (user) {
+                username = user.username || "sem-nome";
+                //console.log(`[MUTE] Username encontrado: "${username}"`);
+
+                // CORREÇÃO: Case-insensitive comparison
+                // Normalizar TUDO para minúsculas
+                const normalizedExceptions = muteExceptions.map(ex =>
+                    ex.toString().trim().toLowerCase()
+                );
+                const normalizedUsername = username.trim().toLowerCase();
+
+                //console.log(`[MUTE] Comparando: "${normalizedUsername}" com:`, normalizedExceptions);
+
+                if (normalizedExceptions.includes(normalizedUsername)) {
+                    //console.log(`[MUTE] Permitindo "${username}" (case-insensitive match)`);
+                    s.offset = originalOffset;
+                    return;
+                } else {
+                    //console.log(`[MUTE] "${username}" NÃO está nas exceções`);
+                }
+            } else {
+                //console.log(`[MUTE] Usuário não encontrado na lista`);
+            }
+        } else {
+            //console.log(`[MUTE] Lista de exceções vazia`);
+        }
+
+        // 3. BLOQUEAR (se não passou nas verificações acima)
+        //console.log(`[MUTE] Bloqueando UserID ${userId}`);
+        //throw new Error("BLOCKED");
+        throw {
+            message: `Falas bloqueadas do UserID: ${userId}`
+        };
+
+
     } else {
+        // Se mute desligado, processar normalmente
         s.l();
         s.o();
         s.l();
         s.l();
     }
-
-} else if (1778 == i) {
-    if (window.J && window.J.elements.ie.checked) return;
-} else if (1797 == i) {
+} else if (1797 == i) { // Anti Ausente
     if (window.J && window.J.elements.te.checked) {
         let e = new BinaryWriter(2080);
         e.C(1);
@@ -1043,7 +1143,7 @@ if (374 === i) {
             window.ne.bind(t)(e.K());
         }, 500);
     }
-} else if (3920 == i) {
+} else if (3920 == i) { // Atualização de usuário
     let i = s.l(),
         e = s.o(),
         t = s.o().toLocaleUpperCase();
@@ -1053,6 +1153,36 @@ if (374 === i) {
     n.L = e;
     n.h = t;
 }
+
+// --- Loop do botão para Beijar ---
+(() => {
+    let kissAbortController = new AbortController();
+
+    const furniBtn = window.J?.elements?.ie;
+    if (!furniBtn) return;
+
+    furniBtn.addEventListener("change", () => {
+        if (furniBtn.checked) {
+            kissAbortController = new AbortController();
+
+            const sendKiss = () => {
+                if (!furniBtn.checked || kissAbortController.signal.aborted) return;
+
+                try {
+                    const writer = new BinaryWriter(2456); // Opcode do beijo
+                    writer.C(2); // C(2) é de beijar, C(1) acenar, etc
+                    window.ne.bind(window.t)(writer.K());
+                } catch {}
+
+                setTimeout(sendKiss, 2000);
+            };
+
+            sendKiss();
+        } else {
+            kissAbortController.abort();
+        }
+    });
+})();
 
 return e;
 };
@@ -1066,6 +1196,10 @@ const searcher = setInterval(() => {
         main();
     }
 }, 100);
+
+
+
+
 
 // --- Loja Raros Otimizado ---
 
