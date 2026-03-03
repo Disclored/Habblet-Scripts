@@ -20,7 +20,7 @@
 // ==UserScript==
 // @name         Menu Habblet
 // @namespace    zezinhoestiloso
-// @version      3.0.0
+// @version      3.0.1
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
@@ -400,10 +400,13 @@ async function main() {
     `;
     document.body.appendChild(opcodeSniffer);
 
-// Função atualizada para adicionar log ao sniffer com detalhes clicáveis
+// Variável global para contar a ordem dos pacotes
+window.packetSequence = 0;
+
 window.addOpcodeLog = function(direction, opcode, rawData, data) {
     if (!document.getElementById('opcode-log')) return;
 
+    window.packetSequence++;
     const logItem = document.createElement('div');
     const timestamp = new Date().toLocaleTimeString();
     let extraInfo = '';
@@ -434,7 +437,6 @@ window.addOpcodeLog = function(direction, opcode, rawData, data) {
     const logContainer = document.getElementById('opcode-log');
     logContainer.appendChild(logItem);
 
-    // Clique para abrir detalhes
     logItem.onclick = () => {
         const existing = document.querySelector('.opcode-details');
         if (existing) existing.remove();
@@ -451,54 +453,124 @@ window.addOpcodeLog = function(direction, opcode, rawData, data) {
             font-family: monospace;
             font-size: 12px;
             z-index: 10000;
-            max-width: 400px;
+            max-width: 450px;
+            max-height: 400px;
+            overflow-y: auto;
             white-space: pre-wrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         `;
 
-        // Converter rawData em hex
         let hexData = '';
+        let asciiData = '';
+        const byteLen = rawData.byteLength || rawData.length;
+
+        let uint8;
+
         try {
             const buffer = rawData instanceof ArrayBuffer ? rawData : new Uint8Array(rawData).buffer;
-            hexData = Array.from(new Uint8Array(buffer))
-                .map(b => b.toString(16).padStart(2,'0'))
-                .join(' ');
-        } catch(e){ hexData = 'Erro ao converter dados'; }
+            uint8 = new Uint8Array(buffer);
 
-        details.innerHTML = `
+            const limit = 2000;
+            const toProcess = uint8.slice(0, limit);
+
+            hexData = Array.from(toProcess).map(b => b.toString(16).padStart(2,'0')).join(' ');
+            asciiData = Array.from(toProcess).map(b => (b >= 32 && b <= 126) ? String.fromCharCode(b) : '.').join('');
+
+            if (byteLen > limit) {
+                hexData += ` ... (Truncado para performance, use "Copiar Tudo" para ver os ${byteLen} bytes)`;
+            }
+        } catch(e){
+            hexData = 'Erro ao converter dados';
+            asciiData = 'Erro ao converter dados';
+        }
+
+        // HEX completo
+        const fullHex = uint8
+            ? Array.from(uint8).map(b => b.toString(16).padStart(2,'0')).join(' ')
+            : '';
+
+        // ASCII completo
+        const fullAscii = uint8
+            ? Array.from(uint8).map(b => (b >= 32 && b <= 126) ? String.fromCharCode(b) : '.').join('')
+            : '';
+
+        const textToCopy = `ORDEM: #${window.packetSequence}
+OPCODE: ${opcode}
+DIREÇÃO: ${direction}
+BYTES: ${byteLen}
+
+HEX:
+${fullHex}
+
+ASCII:
+${fullAscii}
+
+EXTRA:
+${data || ''}`;
+
+        const execCopy = (text, btn) => {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            btn.innerText = 'Copiado!';
+            setTimeout(() => { btn.innerText = 'Copiar Tudo'; }, 1000);
+        };
+
+        const headerDiv = document.createElement('div');
+        headerDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #444; padding-bottom:5px;';
+
+        const title = document.createElement('span');
+        title.innerHTML = `<strong>ORDEM:</strong> #${window.packetSequence}`;
+
+        const copyBtn = document.createElement('button');
+        copyBtn.innerText = 'Copiar Tudo';
+        copyBtn.style.cssText = 'cursor:pointer; padding:2px 8px; font-size:11px;';
+        copyBtn.onclick = (e) => {
+            e.stopPropagation();
+            execCopy(textToCopy, copyBtn);
+        };
+
+        headerDiv.appendChild(title);
+        headerDiv.appendChild(copyBtn);
+        details.appendChild(headerDiv);
+
+        const infoContent = document.createElement('div');
+        infoContent.innerHTML = `
 <strong>OPCODE:</strong> ${opcode}<br>
 <strong>Direção:</strong> ${direction}<br>
-<strong>Hex:</strong> ${hexData}<br>
-<strong>Bytes:</strong> ${rawData.byteLength || rawData.length}<br>
-<strong>Extra:</strong> ${data || ''}
+<strong>Bytes:</strong> ${byteLen}<br><br>
+<strong>Hex:</strong><br><span style="color:#aaa;">${hexData}</span><br><br>
+<strong>ASCII:</strong><br><span style="color:#aaa;">${asciiData}</span><br><br>
+<strong>Extra:</strong> ${data || 'Nenhum'}
         `;
+        details.appendChild(infoContent);
 
         const rect = logItem.getBoundingClientRect();
-        details.style.top = rect.bottom + 4 + 'px';
+        details.style.top = (window.scrollY + rect.bottom + 4) + 'px';
         details.style.left = rect.left + 'px';
 
         document.body.appendChild(details);
 
-        // Fechar ao clicar fora
         const removeDetails = e => {
             if (!details.contains(e.target) && e.target !== logItem) {
                 details.remove();
                 document.removeEventListener('click', removeDetails);
             }
         };
-        document.addEventListener('click', removeDetails);
+        setTimeout(() => document.addEventListener('click', removeDetails), 10);
     };
 
-    // Auto-scroll
     if (document.getElementById('auto-scroll')?.checked) {
         logContainer.scrollTop = logContainer.scrollHeight;
     }
 
-    // Limitar número de logs
     while (logContainer.children.length > 500) {
         logContainer.removeChild(logContainer.firstChild);
     }
 };
-
 
     // Configurar manipulador de fechamento e arrasto do Sniffer
     const snifferHeader = opcodeSniffer.querySelector('.drag-handler');
@@ -1072,12 +1144,9 @@ if (374 === i) {
         s.l();
         s.l();
 
-        //console.log(`[MUTE] UserID: ${userId}`);
-
         // 1. Verificar por UserID primeiro (mais rápido e confiável)
         const allowedUserIds = window.allowedUserIds || [];
         if (allowedUserIds.includes(userId)) {
-            //console.log(`[MUTE] Permitindo UserID ${userId} (lista de IDs)`);
             s.offset = originalOffset;
             return;
         }
@@ -1091,40 +1160,31 @@ if (374 === i) {
             const userList = window.J?.F?.W || window.J?.F?.users || [];
             const user = userList.find(u => u?.V === userId);
             if (user) {
-                username = user.username || "sem-nome";
-                //console.log(`[MUTE] Username encontrado: "${username}"`);
+                username = user.username || "desconhecido";
 
-                // CORREÇÃO: Case-insensitive comparison
-                // Normalizar TUDO para minúsculas
+                // Case-insensitive comparison com lista de exceções
                 const normalizedExceptions = muteExceptions.map(ex =>
                     ex.toString().trim().toLowerCase()
                 );
                 const normalizedUsername = username.trim().toLowerCase();
 
-                //console.log(`[MUTE] Comparando: "${normalizedUsername}" com:`, normalizedExceptions);
-
                 if (normalizedExceptions.includes(normalizedUsername)) {
-                    //console.log(`[MUTE] Permitindo "${username}" (case-insensitive match)`);
                     s.offset = originalOffset;
                     return;
-                } else {
-                    //console.log(`[MUTE] "${username}" NÃO está nas exceções`);
                 }
-            } else {
-                //console.log(`[MUTE] Usuário não encontrado na lista`);
             }
-        } else {
-            //console.log(`[MUTE] Lista de exceções vazia`);
         }
 
         // 3. BLOQUEAR (se não passou nas verificações acima)
-        //console.log(`[MUTE] Bloqueando UserID ${userId}`);
-        //throw new Error("BLOCKED");
+        // Mostra username em vez do ID
+        let username = "desconhecido";
+        const userList = window.J?.F?.W || window.J?.F?.users || [];
+        const user = userList.find(u => u?.V === userId);
+        if (user && user.username) username = user.username;
+
         throw {
-            message: `Falas bloqueadas do UserID: ${userId}`
+            message: `Fala mutada do "${username}"`
         };
-
-
     } else {
         // Se mute desligado, processar normalmente
         s.l();
@@ -1132,6 +1192,7 @@ if (374 === i) {
         s.l();
         s.l();
     }
+
 } else if (1797 == i) { // Anti Ausente
     if (window.J && window.J.elements.te.checked) {
         let e = new BinaryWriter(2080);
@@ -1157,6 +1218,7 @@ if (374 === i) {
 // --- Loop do botão para Beijar ---
 (() => {
     let kissAbortController = new AbortController();
+    let kissTimeout = null;
 
     const furniBtn = window.J?.elements?.ie;
     if (!furniBtn) return;
@@ -1169,20 +1231,24 @@ if (374 === i) {
                 if (!furniBtn.checked || kissAbortController.signal.aborted) return;
 
                 try {
-                    const writer = new BinaryWriter(2456); // Opcode do beijo
-                    writer.C(2); // C(2) é de beijar, C(1) acenar, etc
-                    window.ne.bind(window.t)(writer.K());
+                    const writer = new BinaryWriter(2456);
+                    writer.C(2);
+                    window.ne.call(window.t, writer.K());
                 } catch {}
 
-                setTimeout(sendKiss, 2000);
+                kissTimeout = setTimeout(sendKiss, 2000);
             };
 
-            sendKiss();
+            //Delay inicial de 2 segundos
+            kissTimeout = setTimeout(sendKiss, 1000);
+
         } else {
             kissAbortController.abort();
+            clearTimeout(kissTimeout);
         }
     });
 })();
+
 
 return e;
 };
