@@ -2,7 +2,7 @@
 
 Os scripts devem ser salvos no **Tampermonkey** e depois ativados. 
 
-À data de hoje, 04/09/2025, todos estão funcionais.
+À data de hoje, 20/06/2025, APENAS A LOJA DE RAROS está funcional
 
 Para além deste readme, dentro de cada página dos scripts, apresento comentado em mais detalhes a sua função. 
 
