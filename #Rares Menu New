@@ -17,17 +17,22 @@
 //Adicionado Slow Time para fazer os Posts à Rádio habblet pois deixava o site muito lento
 //Resolução conflito entre o Raro "Trono Cristal LTD" (150 asinhas) e "Trono Cristal" (15 asinhas)
 
+
 // ==UserScript==
 // @name         Menu Habblet
 // @namespace    zezinhoestiloso
-// @version      3.0.1
+// @version      3.1.0
 // @match        https://www.habblet.city/hotel
 // @grant        GM_xmlhttpRequest
 // @connect      www.radiohabblet.com.br
 // @connect      ppanel.radiohabblet.com.br
 // @run-at       document-idle
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
-// ==/UserScript==
+// @connect      www.radiohabblet.com.br
+// @connect      ppanel.radiohabblet.com.br
+// @connect      painel.radiohabblet.com.br
+// @connect      images.habbo.com
+// @connect      habcat.net
 // ==/UserScript==
 
 function listen(i) {
@@ -1361,12 +1366,20 @@ const searcher = setInterval(() => {
     }
     // -----------------------------------------------------
 
+ const pageSize = 24; // tamanho de página observado no pedido capturado
+const baseUrlPainel = "https://painel.radiohabblet.com.br/"; // prefixo para caminhos relativos de icon/image
+
     async function buscaDadosAPI(statusElem) {
         let listaResumida = [];
-        for (let pag = 1; pag <= totalPaginas; pag++) {
-            console.log(`Buscando valores da página ${pag} de ${totalPaginas}...`);
+        let pag = 1;
+        let totalResultados = null;
+
+        while (true) {
+            console.log(`Buscando valores da página ${pag}...`);
             if (statusElem) {
-                const porcentagem = Math.round((pag / totalPaginas) * 100);
+                const porcentagem = totalResultados
+                ? Math.min(100, Math.round(((pag - 1) * pageSize / totalResultados) * 100))
+                : 0;
                 statusElem.textContent = `Carregando... ${porcentagem}%`;
                 statusElem.style.color = "black";
                 statusElem.style.textAlign = "center";
@@ -1374,49 +1387,65 @@ const searcher = setInterval(() => {
             }
 
             try {
+                const url = `https://painel.radiohabblet.com.br/api/records/values?filter=is_active,eq,1&order=updated_at,desc&include=id,mob,price,icon,image,status_mob,rarity&page=${pag},${pageSize}`;
+
                 const json = await new Promise((resolve, reject) => {
                     GM_xmlhttpRequest({
-                        method: "POST",
-                        url: "https://www.radiohabblet.com.br/getItens/mobs-val",
+                        method: "GET",
+                        url: url,
                         headers: {
-                            "Content-Type": "application/json",
                             "Accept": "application/json",
-                            "Origin": "https://www.radiohabblet.com.br",
                             "Referer": "https://www.radiohabblet.com.br/",
                             "User-Agent": navigator.userAgent,
                         },
-                        data: JSON.stringify({ pag: pag, limit: limitePorLote }),
-                        onload: function(response) {
+                        onload: function (response) {
                             if (response.status === 200) {
                                 try { resolve(JSON.parse(response.responseText)); }
-                                catch (e) { reject(e); }
+                                catch (e) {
+                                    console.error(`Página ${pag} - resposta não-JSON:`, response.responseText.slice(0, 300));
+                                    reject(e);
+                                }
                             } else reject(new Error(`Status ${response.status}`));
                         },
                         onerror: reject
                     });
                 });
 
-                if (json && Array.isArray(json.valores)) {
-                    const resumido = json.valores.map(item => {
+                if (json && Array.isArray(json.records)) {
+                    if (typeof json.results === "number") totalResultados = json.results;
+
+                    const resolveUrl = (path) => {
+                        if (!path) return "";
+                        return path.startsWith("http") ? path : baseUrlPainel + path;
+                    };
+
+                    const resumido = json.records.map(item => {
                         let nomeCorrigido = substituicoesRaros[item.mob] || item.mob;
                         return {
                             nomeOriginal: nomeCorrigido,
                             nomeNorm: normalizarNome(nomeCorrigido),
-                            preco: item.preco,
-                            urlImg: item.urlImg || item.imagem || item.icon
+                            preco: item.price,
+                            urlImg: resolveUrl(item.icon || item.image)
                         };
                     });
                     listaResumida.push(...resumido);
+                } else {
+                    console.warn(`Página ${pag} sem "records" válidos, a parar.`);
+                    break;
                 }
             } catch (err) {
                 console.error(`Erro na página ${pag}`, err);
+                break; // para em vez de insistir até 40 páginas fixas
             }
-            await delay(1000);
+
+            if (totalResultados !== null && pag * pageSize >= totalResultados) break;
+            pag++;
+            await delay(700);
         }
 
         if (statusElem) statusElem.textContent = "";
 
-        // itens extras
+        // itens extras (mantidos como no original)
         listaResumida.push(
             { nomeOriginal: "Raro Jacinto Azul", nomeNorm: normalizarNome("Raro Jacinto Azul"), preco: 2, urlImg: "" },
             { nomeOriginal: "Mini Bonequinho Olímpico LTD", nomeNorm: normalizarNome("Mini Bonequinho Olímpico LTD"), preco: 20, urlImg: "" },
@@ -1585,6 +1614,9 @@ const searcher = setInterval(() => {
                 if (base64) {
                     imgUrl = base64;
                     apiImgMap.set(nomeNorm, base64);
+                } else {
+                    console.warn(`Não foi possível carregar imagem para "${nomeBusca}":`, imgUrl);
+                    return; // não tenta mostrar a imagem original (bloqueada por CSP)
                 }
             }
 
