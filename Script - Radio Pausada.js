@@ -6,7 +6,6 @@
 // @namespace    Unknow
 // @version      1.2
 // @description  Garante que ao entrar a rádio fique em pausa mudando o botão para "play"
-// @author       zeezinhoestiloso
 // @match        *://*.habblet.city/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
 // @run-at       document-start
