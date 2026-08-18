@@ -33,7 +33,7 @@ Usuários não mutados:
 ## 📌 Menu Rares – Nova Opção Feira-Livre
 | | |
 |---|---|
-| <img width="248" height="508" alt="image" src="https://github.com/user-attachments/assets/d8ba7eaa-573e-4564-b359-4c4c29a2740a" /> | O **Menu Rares** agora conta com uma nova opção de busca de valores de raros. |
+| <img width="253" height="546" alt="image" src="https://github.com/user-attachments/assets/f6a8f2bc-8cbe-4ac6-9612-cb2ec3f8de9b" /> | O **Menu Rares** agora conta com uma nova opção de busca de valores de raros. |
 
 ---
 
