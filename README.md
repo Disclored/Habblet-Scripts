@@ -10,17 +10,6 @@ Além deste README, cada script contém comentários no próprio código com uma
 
 ---
 
-## Índice
-
-* [Contador de Diamantes](#contador-de-diamantes)
-* [Mutar Todos com Exceções](#mutar-todos-com-exceções)
-* [Menu Rares — Feira-Livre](#menu-rares--feira-livre)
-* [Timer Automático](#timer-automático)
-* [Comparação de Preços](#comparação-de-preços)
-* [Estado](#estado)
-
----
-
 ## Contador de Diamantes
 
 Adiciona um contador de 1 hora para saber quando será possível receber novamente os diamantes.
