@@ -6,8 +6,6 @@ Os scripts devem ser salvos no **Tampermonkey** e depois ativados.
 
 Para além deste readme, dentro de cada página dos scripts, apresento comentado em mais detalhes a sua função. 
 
------------------------------------------------------------------------------------
-
 ---
 ## 💎 Contador de 1 hora para saber quando receberá diamantes.
 | | |
