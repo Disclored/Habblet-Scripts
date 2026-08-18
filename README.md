@@ -29,7 +29,8 @@ Adiciona uma opção para mutar todos os utilizadores da sala, permitindo defini
 * Manter determinados utilizadores sem mute através das exceções.
 * Aplicar o mute ao próprio utilizador.
 
-<img width="254" height="649" alt="Menu de mute" src="https://github.com/user-attachments/assets/0cfa5a5d-10d2-4c70-a5be-2fd2f8854c24" />
+<img width="253" height="120" alt="image" src="https://github.com/user-attachments/assets/fdb928c1-7ff5-45e4-afee-a00884a31f0f" />
+
 
 A lista de utilizadores mutados e não mutados também pode ser consultada através da consola do navegador.
 
