@@ -6,8 +6,6 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 
 **Estado em 18/08/2026:** todas as funcionalidades apresentadas neste README estão funcionais.
 
-Além deste README, cada script contém comentários no próprio código com uma explicação mais detalhada sobre o seu funcionamento.
-
 ---
 
 ## Contador de Diamantes
