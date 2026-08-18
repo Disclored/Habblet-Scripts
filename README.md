@@ -7,15 +7,6 @@ Os scripts devem ser salvos no **Tampermonkey** e depois ativados.
 Para além deste readme, dentro de cada página dos scripts, apresento comentado em mais detalhes a sua função. 
 
 -----------------------------------------------------------------------------------
-Apresentação do script **Rares Menu New**:
-
-O #Rares Menu Old, JÁ NÃO APRESENTA IMAGENS NO MENU, uma vez que foram aplicadas regras de segurança de que dominios e url's as imagens podem ser carregadas
-
------------------------------------------------------------------------------------
-
-USAR O **#Rares Menu New**
-
-Sendo assim, disponibilizei o **#Rares Menu New**, que faz um bypass a estas regras, ou seja, é o único funcional a 100% à data de hoje. 23/11/2025
 
 ---
 ## 💎 Contador de 1 hora para saber quando receberá diamantes.
