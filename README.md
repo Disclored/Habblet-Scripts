@@ -1,51 +1,114 @@
-# 🛠️ Scripts para Tampermonkey
+# Scripts para Tampermonkey
 
-Os scripts devem ser salvos no **Tampermonkey** e depois ativados. 
+Coleção de scripts para Tampermonkey que adicionam e modificam algumas funcionalidades no cliente web.
 
-À data de hoje, 18/08/2026, tudo está funcional
+Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no navegador.
 
-Para além deste readme, dentro de cada página dos scripts, apresento comentado em mais detalhes a sua função. 
+**Estado em 18/08/2026:** todas as funcionalidades apresentadas neste README estão funcionais.
 
----
-## 💎 Contador de 1 hora para saber quando receberá diamantes.
-| | |
-|---|---|
-| <img width="253" height="39" alt="image" src="https://github.com/user-attachments/assets/c7cf8cff-c380-424e-82cd-0293c7956321" /> | 
-
----
-## 🔇Opção de mutar todos da sala, aplicando exceções.
-| | |
-|---|---|
-| <img width="254" height="649" alt="image" src="https://github.com/user-attachments/assets/0cfa5a5d-10d2-4c70-a5be-2fd2f8854c24" /> | O **Mutar todos** agora tem a opção de adicionar exceções. Mute aplica ao próprio user. |
-
-Visualização através da consola do Browser:
-
-Usuários mutados:
-<img width="747" height="533" alt="image" src="https://github.com/user-attachments/assets/8f8cd267-6d78-416f-b705-e224578ec4b1" />
-
-Usuários não mutados:
-<img width="359" height="38" alt="image" src="https://github.com/user-attachments/assets/7cdebc67-aac5-4a06-a53c-64c8da029501" />
-
-
+Além deste README, cada script contém comentários no próprio código com uma explicação mais detalhada sobre o seu funcionamento.
 
 ---
 
-## 📌 Menu Rares – Nova Opção Feira-Livre
-| | |
-|---|---|
-| <img width="253" height="546" alt="image" src="https://github.com/user-attachments/assets/f6a8f2bc-8cbe-4ac6-9612-cb2ec3f8de9b" /> | O **Menu Rares** agora conta com uma nova opção de busca de valores de raros. |
+## Índice
+
+* [Contador de Diamantes](#contador-de-diamantes)
+* [Mutar Todos com Exceções](#mutar-todos-com-exceções)
+* [Menu Rares — Feira-Livre](#menu-rares--feira-livre)
+* [Timer Automático](#timer-automático)
+* [Comparação de Preços](#comparação-de-preços)
+* [Estado](#estado)
 
 ---
 
-## ⏱️ Timer Automático
-| | |
-|---|---|
-| <img width="586" height="168" alt="image" src="https://github.com/user-attachments/assets/195c5e44-ba9f-4cad-9774-b799e0cd83b1" /> | Ao iniciar, é ativado um **timer**. E o carregamento pode ser acompanhado na consola |
-| <img width="244" height="222" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" /> | Após a ativação, surge também um campo para procurar o valor de raros. |
+## Contador de Diamantes
+
+Adiciona um contador de 1 hora para saber quando será possível receber novamente os diamantes.
+
+<img width="253" height="39" alt="Contador de diamantes" src="https://github.com/user-attachments/assets/c7cf8cff-c380-424e-82cd-0293c7956321" />
 
 ---
 
-## 💰 Comparação de Preços
-| | |
-|---|---|
-| <img width="750" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" /> | A *feira-livre* agora apresenta uma **comparação de preço de venda / valor**, com visualização intuitiva.<br><br>⬆️ **Vermelho** → preço de venda acima do valor do raro.<br>⬇️ **Verde** → preço de venda abaixo do valor do raro.<br>➡️ **Cinza** → preço de venda igual ao valor do raro. |
+## Mutar Todos com Exceções
+
+Adiciona uma opção para mutar todos os utilizadores da sala, permitindo definir exceções para determinados utilizadores.
+
+É possível:
+
+* Mutar todos os utilizadores da sala.
+* Adicionar utilizadores à lista de exceções.
+* Manter determinados utilizadores sem mute através das exceções.
+* Aplicar o mute ao próprio utilizador.
+
+A lista de utilizadores mutados e não mutados também pode ser consultada através da consola do navegador.
+
+<img width="254" height="649" alt="Menu de mute" src="https://github.com/user-attachments/assets/0cfa5a5d-10d2-4c70-a5be-2fd2f8854c24" />
+
+### Utilizadores mutados
+
+<img width="747" height="533" alt="Utilizadores mutados" src="https://github.com/user-attachments/assets/8f8cd267-6d78-416f-b705-e2245c8ec4b1" />
+
+### Utilizadores não mutados
+
+<img width="359" height="38" alt="Utilizadores não mutados" src="https://github.com/user-attachments/assets/7cdebc67-aac5-4a06-a53c-64c8da029501" />
+
+---
+
+## Menu Rares — Feira-Livre
+
+O Menu Rares conta com uma nova opção para pesquisar e consultar os valores dos raros.
+
+<img width="253" height="546" alt="Menu Rares — Feira-Livre" src="https://github.com/user-attachments/assets/f6a8f2bc-8cbe-4ac6-9612-cb2ec3f8de9b" />
+
+---
+
+## Timer Automático
+
+Ao iniciar o script, é ativado automaticamente um timer.
+
+O processo de carregamento pode ser acompanhado através da consola do navegador.
+
+<img width="586" height="168" alt="Timer automático" src="https://github.com/user-attachments/assets/195c5e44-ba9f-4cad-9774-b799e0cd83b1" />
+
+Após a ativação, é também disponibilizado um campo para pesquisar o valor dos raros.
+
+<img width="244" height="222" alt="Pesquisa de valores" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" />
+
+---
+
+## Comparação de Preços
+
+A Feira-Livre apresenta agora uma comparação entre o preço de venda e o valor do raro.
+
+A diferença é apresentada através de cores:
+
+| Cor      | Significado                            |
+| -------- | -------------------------------------- |
+| Vermelho | Preço de venda acima do valor do raro  |
+| Verde    | Preço de venda abaixo do valor do raro |
+| Cinza    | Preço de venda igual ao valor do raro  |
+
+<img width="750" alt="Comparação de preços" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" />
+
+---
+
+## Estado
+
+| Funcionalidade           | Estado    |
+| ------------------------ | --------- |
+| Contador de Diamantes    | Funcional |
+| Mutar Todos com Exceções | Funcional |
+| Menu Rares — Feira-Livre | Funcional |
+| Timer Automático         | Funcional |
+| Comparação de Preços     | Funcional |
+
+**Última verificação:** 18/08/2026
+
+---
+
+## Notas
+
+* Os scripts devem ser executados através do Tampermonkey.
+* Algumas funcionalidades dependem da estrutura atual do cliente web.
+* Alterações futuras no site podem exigir atualizações nos scripts.
+* Para informações mais detalhadas sobre cada script, consultar os comentários existentes no respetivo código.
