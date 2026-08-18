@@ -83,20 +83,6 @@ A diferença é apresentada através de cores:
 
 ---
 
-## Estado
-
-| Funcionalidade           | Estado    |
-| ------------------------ | --------- |
-| Contador de Diamantes    | Funcional |
-| Mutar Todos com Exceções | Funcional |
-| Menu Rares — Feira-Livre | Funcional |
-| Timer Automático         | Funcional |
-| Comparação de Preços     | Funcional |
-
-**Última verificação:** 18/08/2026
-
----
-
 ## Notas
 
 * Os scripts devem ser executados através do Tampermonkey.
