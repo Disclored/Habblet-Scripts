@@ -3,7 +3,7 @@
 
 // ==UserScript==
 // @name         Radio Pause Auto
-// @namespace    zezinhoestiloso
+// @namespace    Unknow
 // @version      1.2
 // @description  Garante que ao entrar a rádio fique em pausa mudando o botão para "play"
 // @author       zeezinhoestiloso
