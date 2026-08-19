@@ -16,12 +16,23 @@ Adiciona um contador de 1 hora para saber quando será possível receber novamen
 
 ---
 
+## Ocultar Balão de Digitação
+
+Oculta o balão que indica aos restantes utilizadores que o próprio está a escrever uma mensagem.
+
+---
+
+## Sniffar Opcodes
+
+Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, permitindo acompanhar os pacotes enviados/recebidos através da consola do navegador.
+
+---
+
 ## Mutar Todos com Exceções
 
 Adiciona uma opção para mutar todos os utilizadores da sala, permitindo definir exceções para determinados utilizadores.
 
 É possível:
-
 * Mutar todos os utilizadores da sala.
 * Adicionar utilizadores à lista de exceções.
 * Manter determinados utilizadores sem mute através das exceções.
@@ -29,17 +40,33 @@ Adiciona uma opção para mutar todos os utilizadores da sala, permitindo defini
 
 <img width="253" height="120" alt="image" src="https://github.com/user-attachments/assets/fdb928c1-7ff5-45e4-afee-a00884a31f0f" />
 
-
 A lista de utilizadores mutados e não mutados também pode ser consultada através da consola do navegador.
 
 ### Utilizadores mutados
 
 <img width="750" height="528" alt="image" src="https://github.com/user-attachments/assets/f86ce648-db3b-4f3b-9ebf-e458fb5cfdaa" />
 
-
 ### Utilizadores não mutados
 
 <img width="359" height="38" alt="Utilizadores não mutados" src="https://github.com/user-attachments/assets/7cdebc67-aac5-4a06-a53c-64c8da029501" />
+
+---
+
+## Beijar Infinitamente
+
+Permite enviar o beijo de forma contínua, sem necessidade de repetir a ação manualmente.
+
+---
+
+## Anti Ausente
+
+Bloqueia a atribuição automática do estado de "ausente" ao utilizador.
+
+---
+
+## Enables
+
+Aplica um enable aleatório ao utilizador a cada 2 segundos.
 
 ---
 
@@ -71,7 +98,6 @@ A Feira-Livre apresenta agora uma comparação entre o preço de venda e o valor
 
 A diferença é apresentada através de cores:
 
-
 | Cor      | Seta | Significado                            |
 | -------- | :--: | --------------------------------------- |
 | Vermelho | ⬆️   | Preço de venda acima do valor do raro  |
@@ -79,7 +105,6 @@ A diferença é apresentada através de cores:
 | Cinza    | ➡️   | Preço de venda igual ao valor do raro  |
 
 <img width="389" height="615" alt="image" src="https://github.com/user-attachments/assets/317d7cac-acaf-4f59-912d-3113abe1847c" />
-
 
 ---
 
