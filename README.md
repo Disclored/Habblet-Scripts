@@ -43,7 +43,7 @@ A lista de utilizadores mutados e não mutados também pode ser consultada atrav
 
 ---
 
-## Menu Rares — Feira-Livre
+## Menu Raros // Feira-Livre
 
 O Menu Rares conta com uma nova opção para pesquisar e consultar os valores dos raros.
 
