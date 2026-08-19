@@ -117,7 +117,7 @@ A diferença é apresentada através de cores:
 | Verde    |  ⬇️  | Preço de venda abaixo do valor do raro |
 | Cinza    |  ➡️  | Preço de venda igual ao valor do raro  |
 
-<img width="410" alt="Comparação de preços" src="https://github.com/user-attachments/assets/81cf219e-8801-4721-b0ea-b7459c0ed17a" />
+<img width="453" height="697" alt="Captura de ecrã 2026-08-19 100527" src="https://github.com/user-attachments/assets/c7c66187-3a72-4656-9066-a73a55e5d10d" />
 </p>
 
 ---
