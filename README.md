@@ -128,7 +128,6 @@ O processo de carregamento pode ser acompanhado através da consola do navegador
 
 <tr>
 <td width="270" valign="top">
-<img width="253" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" alt="Pesquisa de valores dos raros" />
 </td>
 <td valign="top">
 
