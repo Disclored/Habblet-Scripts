@@ -20,11 +20,15 @@ Adiciona um contador de 1 hora para saber quando será possível receber novamen
 
 Oculta o balão que indica aos restantes utilizadores que o próprio está a escrever uma mensagem.
 
+<img width="244" height="65" alt="image" src="https://github.com/user-attachments/assets/7a1a43e7-5f53-46dd-8403-d92cdf29b089" />
+
 ---
 
 ## Sniffar Opcodes
 
 Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, permitindo acompanhar os pacotes enviados/recebidos através da consola do navegador.
+
+<img width="515" height="590" alt="image" src="https://github.com/user-attachments/assets/de22e735-1583-4786-9087-38919b3f77f2" />
 
 ---
 
@@ -56,17 +60,24 @@ A lista de utilizadores mutados e não mutados também pode ser consultada atrav
 
 Permite enviar o beijo de forma contínua, sem necessidade de repetir a ação manualmente.
 
+<img width="262" height="75" alt="image" src="https://github.com/user-attachments/assets/d231e0c3-cac5-4d46-a711-0a7fd38dc7fb" />
+
 ---
 
 ## Anti Ausente
 
 Bloqueia a atribuição automática do estado de "ausente" ao utilizador.
 
+<img width="256" height="97" alt="image" src="https://github.com/user-attachments/assets/798bbd71-b226-4fe3-a34d-7f5829caf391" />
+
 ---
 
 ## Enables
 
-Aplica um enable aleatório ao utilizador a cada 2 segundos.
+Aplica um enable aleatório ao utilizador a cada 1 segundo.
+
+<img width="252" height="45" alt="image" src="https://github.com/user-attachments/assets/9d1a2869-c896-4db1-a681-2d3b679c3354" />
+
 
 ---
 
@@ -88,7 +99,7 @@ O processo de carregamento pode ser acompanhado através da consola do navegador
 
 Após a ativação, é também disponibilizado um campo para pesquisar o valor dos raros.
 
-<img width="244" height="222" alt="Pesquisa de valores" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" />
+<img width="254" height="226" alt="image" src="https://github.com/user-attachments/assets/d37d5141-91e0-4c87-9290-eb0d1f8d28b4" />
 
 ---
 
