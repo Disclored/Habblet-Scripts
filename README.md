@@ -34,20 +34,18 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/53a35c11-0db9-4945-bcbf-31f20055310a" alt="Sniffar Opcodes" />
 </td>
 <td valign="top">
 
 ### Sniffar Opcodes
 
-Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, permitindo acompanhar os pacotes enviados e recebidos através da consola do navegador.
-
 </td>
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/c5f24cc4-dfc8-406d-9d5d-6696c7a5e047" alt="Mutar Todos com Exceções" />
 </td>
 <td valign="top">
@@ -56,74 +54,57 @@ Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, per
 
 Permite mutar todos os utilizadores da sala e definir exceções para determinados utilizadores.
 
-É possível:
-
-* Mutar todos os utilizadores da sala.
-* Adicionar utilizadores à lista de exceções.
-* Manter determinados utilizadores sem mute através das exceções.
-* Aplicar o mute ao próprio utilizador.
-
 </td>
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/c02aeaca-59b2-4928-802d-ef93d2da85a7" alt="Beijar Infinitamente" />
 </td>
 <td valign="top">
 
 ### Beijar Infinitamente
 
-Permite enviar o beijo de forma contínua, sem necessidade de repetir a ação manualmente.
-
 </td>
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/a0a88625-0311-428f-aa1e-65dd3b60861b" alt="Anti Ausente" />
 </td>
 <td valign="top">
 
 ### Anti Ausente
 
-Bloqueia a atribuição automática do estado de "ausente" ao utilizador.
-
 </td>
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/1d1f3c4a-482f-401b-a951-a5cac36724b4" alt="Enables" />
 </td>
 <td valign="top">
 
 ### Enables
 
-Aplica um enable aleatório ao utilizador a cada 2 segundos.
-
 </td>
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/f4abc006-19b4-4154-951f-b58253d2210f" alt="Timer automático da Feira-Livre" />
 </td>
 <td valign="top">
 
-### Menu Raros // Feira-Livre
+### Menu Raros
 
 O Menu Rares conta com uma nova opção para pesquisar e consultar os valores dos raros.
-
-Ao iniciar o script, é ativado automaticamente um timer.
-
-O processo de carregamento pode ser acompanhado através da consola do navegador.
 
 </td>
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" alt="Pesquisa de valores dos raros" />
 </td>
 <td valign="top">
