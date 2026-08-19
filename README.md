@@ -96,18 +96,6 @@ Mutar todos da sala com exceções
 <td valign="top">
 
 ### Menu Raros
-Listagem de raros
-
-</td>
-</tr>
-
-<tr>
-<td width="270" valign="center">
-<img width="253" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" alt="Pesquisa de valores dos raros" />
-</td>
-<td valign="top">
-
-### Pesquisa de Valores
 Pesquisar valor
 
 </td>
