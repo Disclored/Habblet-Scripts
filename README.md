@@ -18,6 +18,7 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 <td valign="center">
   
 ### Contador de Diamantes
+Horário a receber diamantes
 
 </td>
 </tr>
@@ -29,6 +30,7 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 <td valign="top">
 
 ### Ocultar Balão de Digitação
+Oculta balão de fala
 
 </td>
 </tr>
@@ -40,6 +42,7 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 <td valign="top">
 
 ### Sniffar Opcodes
+Sniffar pacotes
 
 </td>
 </tr>
@@ -51,8 +54,7 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 <td valign="top">
 
 ### Mutar Todos com Exceções
-
-Permite mutar todos os utilizadores da sala e definir exceções para determinados utilizadores.
+Mutar todos da sala com exceções
 
 </td>
 </tr>
@@ -64,6 +66,7 @@ Permite mutar todos os utilizadores da sala e definir exceções para determinad
 <td valign="top">
 
 ### Beijar Infinitamente
+Loop de beijar
 
 </td>
 </tr>
@@ -75,6 +78,7 @@ Permite mutar todos os utilizadores da sala e definir exceções para determinad
 <td valign="top">
 
 ### Anti Ausente
+Bloqueia pacote de ausência
 
 </td>
 </tr>
@@ -86,6 +90,7 @@ Permite mutar todos os utilizadores da sala e definir exceções para determinad
 <td valign="top">
 
 ### Enables
+Enables aleatórios
 
 </td>
 </tr>
@@ -97,8 +102,7 @@ Permite mutar todos os utilizadores da sala e definir exceções para determinad
 <td valign="top">
 
 ### Menu Raros
-
-O Menu Rares conta com uma nova opção para pesquisar e consultar os valores dos raros.
+Listagem de raros
 
 </td>
 </tr>
@@ -110,8 +114,7 @@ O Menu Rares conta com uma nova opção para pesquisar e consultar os valores do
 <td valign="top">
 
 ### Pesquisa de Valores
-
-Após a ativação, é também disponibilizado um campo para pesquisar o valor dos raros.
+Pesquisar valor
 
 </td>
 </tr>
