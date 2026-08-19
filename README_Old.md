@@ -21,7 +21,7 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 Horário a receber diamantes
 </td>
 <td rowspan="9" valign="top" align="center">
-<img width="253" src="COLAR_LINK_MENU_COMPLETO_AQUI" alt="Menu completo do script" />
+<img width="253" src="https://github.com/user-attachments/assets/f8c065fc-05ab-4220-aecc-9a8554b723e1" alt="Menu completo do script" />
 </td>
 </tr>
 <tr>
