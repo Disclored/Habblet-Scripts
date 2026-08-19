@@ -71,11 +71,12 @@ A Feira-Livre apresenta agora uma comparação entre o preço de venda e o valor
 
 A diferença é apresentada através de cores:
 
-| Cor      | Significado                            |
-| -------- | -------------------------------------- |
-| Vermelho | Preço de venda acima do valor do raro  |
-| Verde    | Preço de venda abaixo do valor do raro |
-| Cinza    | Preço de venda igual ao valor do raro  |
+
+| Cor      | Seta | Significado                            |
+| -------- | :--: | --------------------------------------- |
+| Vermelho | ⬆️   | Preço de venda acima do valor do raro  |
+| Verde    | ⬇️   | Preço de venda abaixo do valor do raro |
+| Cinza    | ➡️   | Preço de venda igual ao valor do raro  |
 
 <img width="750" alt="Comparação de preços" src="https://github.com/user-attachments/assets/53ba2ef3-92d3-4f65-b16e-39234f20802e" />
 
