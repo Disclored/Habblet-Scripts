@@ -91,7 +91,7 @@ Mutar todos da sala com exceções
 
 <tr>
 <td width="270" valign="center">
-<img width="253" src="https://github.com/user-attachments/assets/f4abc006-19b4-4154-951f-b58253d2210f" alt="Timer automático da Feira-Livre" />
+<img width="253" src="https://github.com/user-attachments/assets/55e179f8-511f-4703-aeea-ed3205222aba" alt="Timer automático da Feira-Livre" />
 </td>
 <td valign="top">
 
