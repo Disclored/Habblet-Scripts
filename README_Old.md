@@ -4,96 +4,107 @@ Coleção de scripts para Tampermonkey que adicionam e modificam algumas funcion
 
 Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no navegador.
 
-**Estado em 18/08/2026:** todas as funcionalidades apresentadas neste README estão funcionais.
+**Estado em 18/08/2026:** todas as funcionalidades descritas neste README encontram-se funcionais.
 
 ---
 
-## Contador de Diamantes
+## Funcionalidades
 
-Adiciona um contador de 1 hora para saber quando será possível receber novamente os diamantes.
+<table>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/c7cf8cff-c380-424e-82cd-0293c7956321" alt="Contador de diamantes" />
+</td>
+<td valign="center">
 
-<img width="253" height="39" alt="Contador de diamantes" src="https://github.com/user-attachments/assets/c7cf8cff-c380-424e-82cd-0293c7956321" />
+### Contador de Diamantes
+Horário a receber diamantes
+</td>
+<td rowspan="9" valign="top" align="center">
+<img width="253" src="COLAR_LINK_MENU_COMPLETO_AQUI" alt="Menu completo do script" />
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/46797922-b776-4ce4-98ea-e2b06649c270" alt="Ocultar balão de digitação" />
+</td>
+<td valign="top">
 
----
+### Ocultar Balão de Digitação
+Oculta balão de fala
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/53a35c11-0db9-4945-bcbf-31f20055310a" alt="Sniffar Opcodes" />
+</td>
+<td valign="top">
 
-## Ocultar Balão de Digitação
+### Sniffar Opcodes
+Sniffar pacotes
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/c5f24cc4-dfc8-406d-9d5d-6696c7a5e047" alt="Mutar Todos com Exceções" />
+</td>
+<td valign="top">
 
-Oculta o balão que indica aos restantes utilizadores que o próprio está a escrever uma mensagem.
+### Mutar Todos com Exceções
+Mutar todos da sala com exceções
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/c02aeaca-59b2-4928-802d-ef93d2da85a7" alt="Beijar Infinitamente" />
+</td>
+<td valign="top">
 
-<img width="244" height="65" alt="image" src="https://github.com/user-attachments/assets/7a1a43e7-5f53-46dd-8403-d92cdf29b089" />
+### Beijar Infinitamente
+Loop de beijar
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/a0a88625-0311-428f-aa1e-65dd3b60861b" alt="Anti Ausente" />
+</td>
+<td valign="top">
 
----
+### Anti Ausente
+Bloqueia pacote de ausência
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/1d1f3c4a-482f-401b-a951-a5cac36724b4" alt="Enables" />
+</td>
+<td valign="top">
 
-## Sniffar Opcodes
+### Enables
+Enables aleatórios
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/f4abc006-19b4-4154-951f-b58253d2210f" alt="Timer automático da Feira-Livre" />
+</td>
+<td valign="top">
 
-Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, permitindo acompanhar os pacotes enviados/recebidos através da consola do navegador.
+### Menu Raros
+Listagem de raros
+</td>
+</tr>
+<tr>
+<td width="270" valign="center">
+<img width="253" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" alt="Pesquisa de valores dos raros" />
+</td>
+<td valign="top">
 
-Permite ver detalhes do pacote ao clicar. Bytes, Hexdecimal e ASCII
-
-<img width="515" height="590" alt="image" src="https://github.com/user-attachments/assets/de22e735-1583-4786-9087-38919b3f77f2" />
-
----
-
-## Mutar Todos com Exceções
-
-Adiciona uma opção para mutar todos os utilizadores da sala, permitindo definir exceções para determinados utilizadores.
-
-É possível:
-* Mutar todos os utilizadores da sala.
-* Adicionar utilizadores à lista de exceções.
-* Manter determinados utilizadores sem mute através das exceções.
-* Aplicar o mute ao próprio utilizador.
-
-<img width="253" height="120" alt="image" src="https://github.com/user-attachments/assets/fdb928c1-7ff5-45e4-afee-a00884a31f0f" />
-
-A lista de utilizadores mutados e não mutados também pode ser consultada através da consola do navegador.
-
-### Utilizadores mutados
-
-<img width="750" height="528" alt="image" src="https://github.com/user-attachments/assets/f86ce648-db3b-4f3b-9ebf-e458fb5cfdaa" />
-
-### Utilizadores não mutados
-
-<img width="359" height="38" alt="Utilizadores não mutados" src="https://github.com/user-attachments/assets/7cdebc67-aac5-4a06-a53c-64c8da029501" />
-
----
-
-## Beijar Infinitamente
-
-Permite enviar o beijo de forma contínua, sem necessidade de repetir a ação manualmente.
-
-<img width="262" height="75" alt="image" src="https://github.com/user-attachments/assets/d231e0c3-cac5-4d46-a711-0a7fd38dc7fb" />
-
----
-
-## Anti Ausente
-
-Bloqueia a atribuição automática do estado de "ausente" ao utilizador.
-
-<img width="256" height="97" alt="image" src="https://github.com/user-attachments/assets/798bbd71-b226-4fe3-a34d-7f5829caf391" />
-
----
-
-## Enables
-
-Aplica um enable aleatório ao utilizador a cada 1 segundo.
-
-<img width="252" height="45" alt="image" src="https://github.com/user-attachments/assets/9d1a2869-c896-4db1-a681-2d3b679c3354" />
-
-
----
-
-## Menu Raros // Feira-Livre
-
-O Menu Raros conta com uma nova opção para pesquisar e consultar os valores dos raros.
-
-O processo de carregamento pode ser acompanhado através da consola do navegador.
-
-<img width="586" height="168" alt="Timer automático" src="https://github.com/user-attachments/assets/195c5e44-ba9f-4cad-9774-b799e0cd83b1" />
-
-Após a ativação, é também disponibilizado um campo para pesquisar o valor dos raros.
-
-<img width="254" height="226" alt="image" src="https://github.com/user-attachments/assets/d37d5141-91e0-4c87-9290-eb0d1f8d28b4" />
+### Pesquisa de Valores
+Pesquisar valor
+</td>
+</tr>
+</table>
 
 ---
 
@@ -104,12 +115,12 @@ A Feira-Livre apresenta agora uma comparação entre o preço de venda e o valor
 A diferença é apresentada através de cores:
 
 | Cor      | Seta | Significado                            |
-| -------- | :--: | --------------------------------------- |
-| Vermelho | ⬆️   | Preço de venda acima do valor do raro  |
-| Verde    | ⬇️   | Preço de venda abaixo do valor do raro |
-| Cinza    | ➡️   | Preço de venda igual ao valor do raro  |
+| :------- | :--: | :------------------------------------- |
+| Vermelho |  ⬆️  | Preço de venda acima do valor do raro  |
+| Verde    |  ⬇️  | Preço de venda abaixo do valor do raro |
+| Cinza    |  ➡️  | Preço de venda igual ao valor do raro  |
 
-<img width="389" height="615" alt="image" src="https://github.com/user-attachments/assets/317d7cac-acaf-4f59-912d-3113abe1847c" />
+<img width="389" alt="Comparação de preços" src="https://github.com/user-attachments/assets/317d7cac-acaf-4f59-912d-3113abe1847c" />
 
 ---
 
