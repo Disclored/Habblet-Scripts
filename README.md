@@ -16,10 +16,7 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 <img width="253" src="https://github.com/user-attachments/assets/c7cf8cff-c380-424e-82cd-0293c7956321" alt="Contador de diamantes" />
 </td>
 <td valign="top">
-
 ### Contador de Diamantes
-
-Adiciona um contador de 1 hora para saber quando será possível receber novamente os diamantes.
 
 </td>
 </tr>
