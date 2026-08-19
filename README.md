@@ -23,14 +23,12 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 </tr>
 
 <tr>
-<td width="270" valign="top">
+<td width="270" valign="center">
 <img width="253" src="https://github.com/user-attachments/assets/46797922-b776-4ce4-98ea-e2b06649c270" alt="Ocultar balão de digitação" />
 </td>
 <td valign="top">
 
 ### Ocultar Balão de Digitação
-
-Oculta o balão que indica aos restantes utilizadores que o próprio está a escrever uma mensagem.
 
 </td>
 </tr>
