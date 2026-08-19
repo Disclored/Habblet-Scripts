@@ -27,6 +27,7 @@ Oculta o balão que indica aos restantes utilizadores que o próprio está a esc
 ## Sniffar Opcodes
 
 Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, permitindo acompanhar os pacotes enviados/recebidos através da consola do navegador.
+Permite ver detalhes do pacote ao clicar. Bytes, Hexdecimal e ASCII
 
 <img width="515" height="590" alt="image" src="https://github.com/user-attachments/assets/de22e735-1583-4786-9087-38919b3f77f2" />
 
