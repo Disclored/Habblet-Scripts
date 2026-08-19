@@ -111,6 +111,7 @@ Aplica um enable aleatório ao utilizador a cada 2 segundos.
 
 <tr>
 <td width="270" valign="top">
+<img width="253" src="https://github.com/user-attachments/assets/f4abc006-19b4-4154-951f-b58253d2210f" alt="Timer automático da Feira-Livre" />
 </td>
 <td valign="top">
 
