@@ -18,11 +18,10 @@ Adiciona um contador de 1 hora para saber quando será possível receber novamen
 
 ## Ocultar Balão de Digitação
 
-
 <table>
 <tr>
-<td><img width="253" alt="Ocultar balão de digitação" src="https://github.com/user-attachments/assets/46797922-b776-4ce4-98ea-e2b06649c270" /></td>
-<td>Oculta o balão que indica aos restantes utilizadores que o próprio está a escrever uma mensagem.</td>
+<td valign="middle"><img width="253" height="30" alt="Ocultar balão de digitação" src="https://github.com/user-attachments/assets/46797922-b776-4ce4-98ea-e2b06649c270" /></td>
+<td valign="middle">Oculta o balão que indica aos restantes utilizadores que o próprio está a escrever uma mensagem.</td>
 </tr>
 </table>
 
@@ -32,8 +31,8 @@ Adiciona um contador de 1 hora para saber quando será possível receber novamen
 
 <table>
 <tr>
-<td><img width="253" alt="Sniffar Opcodes" src="https://github.com/user-attachments/assets/3b6f0a50-890a-4cd9-80d5-7d9ac20eb72d" /></td>
-<td>Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, permitindo acompanhar os pacotes enviados/recebidos através da consola do navegador.</td>
+<td valign="middle"><img width="253" height="42" alt="Sniffar Opcodes" src="https://github.com/user-attachments/assets/78c24b89-9066-4d8e-8306-eb80e08fddb2" /></td>
+<td valign="middle">Adiciona um sniffer de opcodes que regista o tráfego trocado com o cliente, permitindo acompanhar os pacotes enviados/recebidos através da consola do navegador.</td>
 </tr>
 </table>
 
@@ -43,8 +42,8 @@ Adiciona um contador de 1 hora para saber quando será possível receber novamen
 
 <table>
 <tr>
-<td><img width="253" alt="Mutar Todos com Exceções" src="https://github.com/user-attachments/assets/dd068bd0-b1b3-4ded-ac35-68481ac269c7" /></td>
-<td>
+<td valign="middle"><img width="253" height="114" alt="Mutar Todos com Exceções" src="https://github.com/user-attachments/assets/dd068bd0-b1b3-4ded-ac35-68481ac269c7" /></td>
+<td valign="middle">
 
 Adiciona uma opção para mutar todos os utilizadores da sala, permitindo definir exceções para determinados utilizadores.
 
@@ -64,8 +63,8 @@ Adiciona uma opção para mutar todos os utilizadores da sala, permitindo defini
 
 <table>
 <tr>
-<td><img width="253" alt="Beijar Infinitamente" src="https://github.com/user-attachments/assets/c02aeaca-59b2-4928-802d-ef93d2da85a7" /></td>
-<td>Permite enviar o beijo de forma contínua, sem necessidade de repetir a ação manualmente.</td>
+<td valign="middle"><img width="253" height="30" alt="Beijar Infinitamente" src="https://github.com/user-attachments/assets/c02aeaca-59b2-4928-802d-ef93d2da85a7" /></td>
+<td valign="middle">Permite enviar o beijo de forma contínua, sem necessidade de repetir a ação manualmente.</td>
 </tr>
 </table>
 
@@ -75,8 +74,8 @@ Adiciona uma opção para mutar todos os utilizadores da sala, permitindo defini
 
 <table>
 <tr>
-<td><img width="253" alt="Anti Ausente" src="https://github.com/user-attachments/assets/a0a88625-0311-428f-aa1e-65dd3b60861b" /></td>
-<td>Bloqueia a atribuição automática do estado de "ausente" ao utilizador.</td>
+<td valign="middle"><img width="253" height="30" alt="Anti Ausente" src="https://github.com/user-attachments/assets/a0a88625-0311-428f-aa1e-65dd3b60861b" /></td>
+<td valign="middle">Bloqueia a atribuição automática do estado de "ausente" ao utilizador.</td>
 </tr>
 </table>
 
@@ -86,8 +85,8 @@ Adiciona uma opção para mutar todos os utilizadores da sala, permitindo defini
 
 <table>
 <tr>
-<td><img width="253" alt="Enables" src="https://github.com/user-attachments/assets/1d1f3c4a-482f-401b-a951-a5cac36724b4" /></td>
-<td>Aplica um enable aleatório ao utilizador a cada 2 segundos.</td>
+<td valign="middle"><img width="253" height="30" alt="Enables" src="https://github.com/user-attachments/assets/1d1f3c4a-482f-401b-a951-a5cac36724b4" /></td>
+<td valign="middle">Aplica um enable aleatório ao utilizador a cada 2 segundos.</td>
 </tr>
 </table>
 
@@ -96,6 +95,12 @@ Adiciona uma opção para mutar todos os utilizadores da sala, permitindo defini
 ## Menu Raros // Feira-Livre
 
 O Menu Rares conta com uma nova opção para pesquisar e consultar os valores dos raros.
+
+<img width="253" height="546" alt="Menu Rares — Feira-Livre" src="https://github.com/user-attachments/assets/f6a8f2bc-8cbe-4ac6-9612-cb2ec3f8de9b" />
+
+---
+
+## Timer Automático
 
 Ao iniciar o script, é ativado automaticamente um timer.
 
