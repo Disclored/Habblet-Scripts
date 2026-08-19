@@ -40,7 +40,6 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/0
 <td valign="top">
 
 ### Sniffar Opcodes
-Sniffar pacotes
 
 </td>
 </tr>
