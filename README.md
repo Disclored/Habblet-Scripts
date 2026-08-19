@@ -18,7 +18,6 @@ Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no
 <td valign="center">
   
 ### Contador de Diamantes
-Horário a receber diamantes
 
 </td>
 </tr>
