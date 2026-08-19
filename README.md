@@ -84,14 +84,6 @@ Aplica um enable aleatório ao utilizador a cada 2 segundos.
 
 O Menu Rares conta com uma nova opção para pesquisar e consultar os valores dos raros.
 
-<img width="253" height="546" alt="Menu Rares — Feira-Livre" src="https://github.com/user-attachments/assets/f6a8f2bc-8cbe-4ac6-9612-cb2ec3f8de9b" />
-
----
-
-## Timer Automático
-
-Ao iniciar o script, é ativado automaticamente um timer.
-
 O processo de carregamento pode ser acompanhado através da consola do navegador.
 
 <img width="586" height="168" alt="Timer automático" src="https://github.com/user-attachments/assets/195c5e44-ba9f-4cad-9774-b799e0cd83b1" />
