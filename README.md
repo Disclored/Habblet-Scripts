@@ -4,7 +4,7 @@ Coleção de scripts para Tampermonkey que adicionam e modificam algumas funcion
 
 Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no navegador.
 
-**Estado em 18/08/2026:** todas as funcionalidades descritas neste README encontram-se funcionais.
+Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/08/2026**)
 
 ---
 
