@@ -117,9 +117,11 @@ Aplica um enable aleatório ao utilizador a cada 2 segundos.
 
 ### Menu Raros // Feira-Livre
 
-Adiciona uma nova opção ao Menu Rares para pesquisar e consultar os valores dos raros.
+O Menu Rares conta com uma nova opção para pesquisar e consultar os valores dos raros.
 
-Ao iniciar o script, é ativado automaticamente um timer. O processo de carregamento pode ser acompanhado através da consola do navegador.
+Ao iniciar o script, é ativado automaticamente um timer.
+
+O processo de carregamento pode ser acompanhado através da consola do navegador.
 
 </td>
 </tr>
@@ -132,31 +134,30 @@ Ao iniciar o script, é ativado automaticamente um timer. O processo de carregam
 
 ### Pesquisa de Valores
 
-Após a ativação, é disponibilizado um campo para pesquisar o valor dos raros.
-
-</td>
-</tr>
-
-<tr>
-<td width="270" valign="top">
-<img width="253" src="https://github.com/user-attachments/assets/317d7cac-acaf-4f59-912d-3113abe1847c" alt="Comparação de preços da Feira-Livre" />
-</td>
-<td valign="top">
-
-### Comparação de Preços
-
-A Feira-Livre apresenta uma comparação entre o preço de venda e o valor do raro.
-
-| Cor      | Seta | Significado                   |
-| :------- | :--: | :---------------------------- |
-| Vermelho |  ⬆️  | Preço acima do valor do raro  |
-| Verde    |  ⬇️  | Preço abaixo do valor do raro |
-| Cinza    |  ➡️  | Preço igual ao valor do raro  |
+Após a ativação, é também disponibilizado um campo para pesquisar o valor dos raros.
 
 </td>
 </tr>
 
 </table>
+
+---
+
+## Comparação de Preços
+
+A Feira-Livre apresenta agora uma comparação entre o preço de venda e o valor do raro.
+
+A diferença é apresentada através de cores:
+
+| Cor      | Seta | Significado                            |
+| :------- | :--: | :------------------------------------- |
+| Vermelho |  ⬆️  | Preço de venda acima do valor do raro  |
+| Verde    |  ⬇️  | Preço de venda abaixo do valor do raro |
+| Cinza    |  ➡️  | Preço de venda igual ao valor do raro  |
+
+<p align="center">
+<img width="389" alt="Comparação de preços" src="https://github.com/user-attachments/assets/317d7cac-acaf-4f59-912d-3113abe1847c" />
+</p>
 
 ---
 
