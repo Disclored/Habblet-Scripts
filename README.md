@@ -30,7 +30,6 @@ Horário a receber diamantes
 <td valign="top">
 
 ### Ocultar Balão de Digitação
-Oculta balão de fala
 
 </td>
 </tr>
@@ -66,7 +65,6 @@ Mutar todos da sala com exceções
 <td valign="top">
 
 ### Beijar Infinitamente
-Loop de beijar
 
 </td>
 </tr>
@@ -78,7 +76,6 @@ Loop de beijar
 <td valign="top">
 
 ### Anti Ausente
-Bloqueia pacote de ausência
 
 </td>
 </tr>
@@ -90,7 +87,6 @@ Bloqueia pacote de ausência
 <td valign="top">
 
 ### Enables
-Enables aleatórios
 
 </td>
 </tr>
