@@ -111,7 +111,6 @@ Aplica um enable aleatório ao utilizador a cada 2 segundos.
 
 <tr>
 <td width="270" valign="top">
-<img width="253" src="https://github.com/user-attachments/assets/195c5e44-ba9f-4cad-9774-b799e0cd83b1" alt="Timer automático da Feira-Livre" />
 </td>
 <td valign="top">
 
@@ -128,6 +127,7 @@ O processo de carregamento pode ser acompanhado através da consola do navegador
 
 <tr>
 <td width="270" valign="top">
+<img width="253" src="https://github.com/user-attachments/assets/bb8b9210-b68a-48df-a71d-00662385af01" alt="Pesquisa de valores dos raros" />
 </td>
 <td valign="top">
 
