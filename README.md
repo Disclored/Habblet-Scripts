@@ -59,7 +59,6 @@ A lista de utilizadores mutados e não mutados também pode ser consultada atrav
 ## Beijar Infinitamente
 
 Permite enviar o beijo de forma contínua, sem necessidade de repetir a ação manualmente.
-<img width="753" height="99" alt="anti-ausente" src="https://github.com/user-attachments/assets/2f6dff4e-6606-4f73-8c80-e69277012f8d" />
 
 <img width="253" height="39" alt="beijar-infinitamente" src="https://github.com/user-attachments/assets/2f5e6522-642a-4e88-b309-3360a8b96dbd" />
 
