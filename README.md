@@ -70,7 +70,9 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**25/0
 </td>
 <td valign="top">
 <h3>Menu Raros</h3>
-<p>Pesquisar Valores de raros, pelo nome. Esta opção ativa a comparação de preços na Feira-Livre.
+<p>Pesquisar Valores de raros, pelo nome. 
+  
+Esta opção ativa a comparação de preços na Feira-Livre.
   
 Os Valores são extraídos diretamente da API da Radio Habblet</p>
 </td>
@@ -87,6 +89,7 @@ Os Valores são extraídos diretamente da API da Radio Habblet</p>
 <li>Ativar a opção de Substituir</li>
 <li>Abrir a câmera, tirar uma foto, editar, visualizar e comprar</li>
 <li>(Obrigatório ser .png)</li>
+<li>O uso desta substituição é contra a Habblet Etiqueta, podendo causar Ban.</li>
 </ol>
 </td>
 </tr>
