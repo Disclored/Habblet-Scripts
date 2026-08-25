@@ -1,7 +1,9 @@
 # Scripts para Tampermonkey
+
 Coleção de scripts para Tampermonkey que adicionam e modificam algumas funcionalidades no cliente web.
 Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no navegador.
 Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/08/2026**)
+
 ---
 ## Funcionalidades
 <table>
@@ -68,7 +70,9 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/0
 </td>
 <td valign="top">
 <h3>Menu Raros</h3>
-<p>Pesquisar valor</p>
+<p>Pesquisar Valores de raros, pelo nome.
+  
+Os Valores são extraídos diretamente da API da Radio Habblet</p>
 </td>
 </tr>
 <tr>
@@ -82,6 +86,7 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/0
 <li>Escolher a imagem desejada</li>
 <li>Ativar a opção de Substituir</li>
 <li>Abrir a câmera, tirar uma foto, editar, visualizar e comprar</li>
+<li>(Obrigatório ser .png)</li>
 </ol>
 </td>
 </tr>
@@ -99,7 +104,7 @@ A diferença é apresentada através de cores:
 </p>
 
 ## Outras Funcionalidades
-* **Rádio Pausada** — Pausa a rádio automaticamente ao entrar no som.
+* **Rádio Pausada** — Pausa a rádio automaticamente ao entrar no jogo.
 * **Remove Anúncios** — Remove os anúncios apresentados no cliente web.
 
 ## Notas
