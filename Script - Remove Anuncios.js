@@ -1,92 +1,10 @@
-//Remove o contêiner onde os anúncios são colocados.
-//Remove blocos AdSense, iframes e timers de anúncios.
-//Injeta CSS com !important para impedir qualquer anúncio de aparecer.
-//Usa MutationObserver para apagar anúncios assim que o site tenta recriá-los.
-//Atua antes e depois do carregamento do site, bloqueando totalmente a lógica de anúncios.
-
-
 // ==UserScript==
-// @name         Habblet Ads Remover
-// @namespace    Unknow
+// @name         Ofuscado - Habblet Ads Remover
+// @namespace    http://tampermonkey.net/
 // @version      1.5.1
 // @match        https://www.habblet.city/hotel
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
 // @grant        none
 // ==/UserScript==
 
-(function () {
-    'use strict';
-
-    function safeRemove(el) {
-        try { if (el) el.remove(); } catch (e) {}
-    }
-
-    function removeAds() {
-        // Remove containers flex centralizados (onde ficam os anúncios)
-        document.querySelectorAll('div[style*="display: flex"][style*="justify-content: center"]').forEach(safeRemove);
-
-        // Remove também <ins adsbygoogle>, iframes e timers, caso escapem
-        document.querySelectorAll('ins.adsbygoogle, iframe[id^="aswift_"], iframe[id^="google_ads_frame"], .adTimer')
-            .forEach(el => safeRemove(el.closest('div[style*="display: flex"][style*="justify-content: center"]') || el));
-    }
-
-    function interceptCountdown() {
-        // Verifica se a função original existe
-        if (typeof window.updateCountdownText === "function") {
-            const originalUpdateCountdownText = window.updateCountdownText;
-
-            // Substitui a função por uma versão segura
-            window.updateCountdownText = function() {
-                const el1 = document.getElementById("adTimer1");
-                const el2 = document.getElementById("adTimer2");
-
-                if (el1 || el2) {
-                    // Chama a função original apenas se os elementos existirem
-                    originalUpdateCountdownText();
-                } else {
-                    // Caso contrário, mostra mensagem amigável no console
-                    console.log("Anúncio bloqueado");
-                }
-            };
-        }
-    }
-
-    function init() {
-        // CSS para esconder instantaneamente (sem piscar)
-        const style = document.createElement('style');
-        style.textContent = `
-            div[style*="display: flex"][style*="justify-content: center"],
-            ins.adsbygoogle,
-            iframe[id^="aswift_"],
-            iframe[id^="google_ads_frame"],
-            .adTimer {
-                display: none !important;
-                visibility: hidden !important;
-                width: 0 !important;
-                height: 0 !important;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Execução inicial
-        removeAds();
-
-        // Intercepta a função de countdown para evitar erros
-        interceptCountdown();
-
-        // Observar mudanças no DOM (anúncios injetados dinamicamente)
-        const observer = new MutationObserver(() => {
-            removeAds();
-            interceptCountdown();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-    }
-
-    // Aguarda o DOM carregar antes de rodar
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
-
+function _0x4069(_0x599d27,_0x3a9993){_0x599d27=_0x599d27-0x118;const _0x4b85c3=_0x4b85();let _0x406922=_0x4b85c3[_0x599d27];return _0x406922;}function _0x4b85(){const _0x2eadb5=['129864lmBqcz','4739224GTmxGB','appendChild','5TrsSAr','log','updateCountdownText','div[style*=\x22display:\x20flex\x22][style*=\x22justify-content:\x20center\x22]','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20div[style*=\x22display:\x20flex\x22][style*=\x22justify-content:\x20center\x22],\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20ins.adsbygoogle,\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20iframe[id^=\x22aswift_\x22],\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20iframe[id^=\x22google_ads_frame\x22],\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.adTimer\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20none\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20visibility:\x20hidden\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x200\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x200\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20','DOMContentLoaded','1925MtXGhs','textContent','3740199NKveZJ','closest','293KMrSLf','addEventListener','6417KUTHBx','style','4rKzeIF','remove','23110RyhMVo','body','getElementById','createElement','7EXyevE','adTimer2','Anúncio\x20bloqueado','loading','92586039cSsyMR','function','2920YDjpzB','9068826vbLsja','readyState','forEach','adTimer1','querySelectorAll'];_0x4b85=function(){return _0x2eadb5;};return _0x4b85();}(function(_0x200599,_0xb92e92){const _0x10ad89=_0x4069,_0x1085b4=_0x200599();while(!![]){try{const _0x334da7=parseInt(_0x10ad89(0x139))/0x1*(-parseInt(_0x10ad89(0x126))/0x2)+parseInt(_0x10ad89(0x137))/0x3*(-parseInt(_0x10ad89(0x11a))/0x4)+parseInt(_0x10ad89(0x12f))/0x5*(-parseInt(_0x10ad89(0x127))/0x6)+parseInt(_0x10ad89(0x120))/0x7*(parseInt(_0x10ad89(0x12d))/0x8)+-parseInt(_0x10ad89(0x118))/0x9*(parseInt(_0x10ad89(0x11c))/0xa)+parseInt(_0x10ad89(0x135))/0xb*(-parseInt(_0x10ad89(0x12c))/0xc)+parseInt(_0x10ad89(0x124))/0xd;if(_0x334da7===_0xb92e92)break;else _0x1085b4['push'](_0x1085b4['shift']());}catch(_0x4b08b2){_0x1085b4['push'](_0x1085b4['shift']());}}}(_0x4b85,0xf0ecd),(function(){'use strict';const _0x151d29=_0x4069;function _0x20556e(_0x459778){const _0x53f557=_0x4069;try{if(_0x459778)_0x459778[_0x53f557(0x11b)]();}catch(_0x4e9fc4){}}function _0x2cd4c5(){const _0x47138d=_0x4069;document[_0x47138d(0x12b)](_0x47138d(0x132))[_0x47138d(0x129)](_0x20556e),document[_0x47138d(0x12b)]('ins.adsbygoogle,\x20iframe[id^=\x22aswift_\x22],\x20iframe[id^=\x22google_ads_frame\x22],\x20.adTimer')[_0x47138d(0x129)](_0x11496a=>_0x20556e(_0x11496a[_0x47138d(0x138)](_0x47138d(0x132))||_0x11496a));}function _0x1c0a82(){const _0x56873a=_0x4069;if(typeof window[_0x56873a(0x131)]===_0x56873a(0x125)){const _0x2f41e6=window[_0x56873a(0x131)];window[_0x56873a(0x131)]=function(){const _0x3c5b6a=_0x56873a,_0x479a37=document[_0x3c5b6a(0x11e)](_0x3c5b6a(0x12a)),_0x4a3395=document[_0x3c5b6a(0x11e)](_0x3c5b6a(0x121));_0x479a37||_0x4a3395?_0x2f41e6():console[_0x3c5b6a(0x130)](_0x3c5b6a(0x122));};}}function _0x39432c(){const _0x5a0f20=_0x4069,_0xf21b85=document[_0x5a0f20(0x11f)](_0x5a0f20(0x119));_0xf21b85[_0x5a0f20(0x136)]=_0x5a0f20(0x133),document['head'][_0x5a0f20(0x12e)](_0xf21b85),_0x2cd4c5(),_0x1c0a82();const _0x32df88=new MutationObserver(()=>{_0x2cd4c5(),_0x1c0a82();});_0x32df88['observe'](document[_0x5a0f20(0x11d)],{'childList':!![],'subtree':!![]});}document[_0x151d29(0x128)]===_0x151d29(0x123)?document[_0x151d29(0x13a)](_0x151d29(0x134),_0x39432c):_0x39432c();}()));
