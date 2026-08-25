@@ -10,8 +10,7 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/0
 <img width="253" src="https://github.com/user-attachments/assets/c7cf8cff-c380-424e-82cd-0293c7956321" alt="Contador de diamantes" />
 </td>
 <td valign="center">
-  
-### Contador de Diamantes
+<h3>Contador de Diamantes</h3>
 </td>
 </tr>
 <tr>
@@ -19,7 +18,7 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/0
 <img width="253" src="https://github.com/user-attachments/assets/46797922-b776-4ce4-98ea-e2b06649c270" alt="Ocultar balão de digitação" />
 </td>
 <td valign="top">
-### Ocultar Balão de Digitação
+<h3>Ocultar Balão de Digitação</h3>
 </td>
 </tr>
 <tr>
@@ -27,7 +26,7 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/0
 <img width="253" src="https://github.com/user-attachments/assets/53a35c11-0db9-4945-bcbf-31f20055310a" alt="Sniffar Opcodes" />
 </td>
 <td valign="top">
-### Sniffar Opcodes
+<h3>Sniffar Opcodes</h3>
 </td>
 </tr>
 <tr>
@@ -35,8 +34,8 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/0
 <img width="253" src="https://github.com/user-attachments/assets/c5f24cc4-dfc8-406d-9d5d-6696c7a5e047" alt="Mutar Todos com Exceções" />
 </td>
 <td valign="top">
-### Mutar Todos com Exceções
-Mutar todos da sala com exceções
+<h3>Mutar Todos com Exceções</h3>
+<p>Mutar todos da sala com exceções</p>
 </td>
 </tr>
 <tr>
@@ -44,7 +43,7 @@ Mutar todos da sala com exceções
 <img width="253" src="https://github.com/user-attachments/assets/c02aeaca-59b2-4928-802d-ef93d2da85a7" alt="Beijar Infinitamente" />
 </td>
 <td valign="top">
-### Beijar Infinitamente
+<h3>Beijar Infinitamente</h3>
 </td>
 </tr>
 <tr>
@@ -52,7 +51,7 @@ Mutar todos da sala com exceções
 <img width="253" src="https://github.com/user-attachments/assets/a0a88625-0311-428f-aa1e-65dd3b60861b" alt="Anti Ausente" />
 </td>
 <td valign="top">
-### Anti Ausente
+<h3>Anti Ausente</h3>
 </td>
 </tr>
 <tr>
@@ -60,7 +59,7 @@ Mutar todos da sala com exceções
 <img width="253" src="https://github.com/user-attachments/assets/1d1f3c4a-482f-401b-a951-a5cac36724b4" alt="Enables" />
 </td>
 <td valign="top">
-### Enables
+<h3>Enables</h3>
 </td>
 </tr>
 <tr>
@@ -68,29 +67,26 @@ Mutar todos da sala com exceções
 <img width="253" src="https://github.com/user-attachments/assets/55e179f8-511f-4703-aeea-ed3205222aba" alt="Timer automático da Feira-Livre" />
 </td>
 <td valign="top">
-### Menu Raros
-Pesquisar valor
+<h3>Menu Raros</h3>
+<p>Pesquisar valor</p>
 </td>
 </tr>
 <tr>
 <td width="270" valign="center">
-<img width="253" src="https://github.com/user-attachments/assets/3533aa8f-7829-4d54-8f53-06bdf27ece79" />
+<img width="253" src="https://github.com/user-attachments/assets/3533aa8f-7829-4d54-8f53-06bdf27ece79" alt="Photo Replace" />
 </td>
 <td valign="top">
-
-### Photo Replace
-Substitui Fotos tiradas com a câmera do jogo.
-1 - Escoolher imagem desejada
-2 - Ativar a opção de Substituir
-3 - Abrir a câmera, tirar uma foto, editar e visualizar. Comprar
+<h3>Photo Replace</h3>
+<p>Substitui fotos tiradas com a câmera do jogo.</p>
+<ol>
+<li>Escolher a imagem desejada</li>
+<li>Ativar a opção de Substituir</li>
+<li>Abrir a câmera, tirar uma foto, editar, visualizar e comprar</li>
+</ol>
 </td>
 </tr>
 </table>
----
-## Outras Funcionalidades
-* **Rádio Pausada** — Pausa a rádio automaticamente ao entrar no som.
-* **Remove Anúncios** — Remove os anúncios apresentados no cliente web.
----
+
 ## Comparação de Preços
 A Feira-Livre apresenta agora uma comparação entre o preço de venda e o valor do raro.
 A diferença é apresentada através de cores:
@@ -101,7 +97,11 @@ A diferença é apresentada através de cores:
 | Cinza    |  ➡️  | Preço de venda igual ao valor do raro  |
 <img width="453" height="697" alt="Captura de ecrã 2026-08-19 100527" src="https://github.com/user-attachments/assets/c7c66187-3a72-4656-9066-a73a55e5d10d" />
 </p>
----
+
+## Outras Funcionalidades
+* **Rádio Pausada** — Pausa a rádio automaticamente ao entrar no som.
+* **Remove Anúncios** — Remove os anúncios apresentados no cliente web.
+
 ## Notas
 * Os scripts devem ser executados através do Tampermonkey.
 * Algumas funcionalidades dependem da estrutura atual do cliente web.
