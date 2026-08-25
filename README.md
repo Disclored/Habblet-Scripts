@@ -2,7 +2,7 @@
 
 Coleção de scripts para Tampermonkey que adicionam e modificam algumas funcionalidades no cliente web.
 Os scripts devem ser instalados no **Tampermonkey** e posteriormente ativados no navegador.
-Todas as funcionalidades descritas neste README encontram-se funcionais. (**18/08/2026**)
+Todas as funcionalidades descritas neste README encontram-se funcionais. (**25/08/2026**)
 
 ---
 ## Funcionalidades
