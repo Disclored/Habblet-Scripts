@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Menu Habblet
+// @name         Ofuscado - Menu Habblet
 // @namespace    Unknow
 // @version      5.0
 // @match        https://www.habblet.city/hotel
