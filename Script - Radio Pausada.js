@@ -1,117 +1,13 @@
-//ESTE SCRIPT PAUSA A RADIO AUTOMATICAMENTE QUANDO SE ENTRA NO JOGO
-//ELE NAO SILENCIA, POR ISSO, SE QUISEREM OUVIR RADIO NOVAMENTE, É SÓ CLICAR NO BOTAO NORMALMENTE PARA LIGAR
-
 // ==UserScript==
-// @name         Radio Pause Auto
+// @name         Ofuscado - Radio Pause
 // @namespace    Unknow
-// @version      1.2
-// @description  Garante que ao entrar a rádio fique em pausa mudando o botão para "play"
+// @version      2.5
+// @description  Intercepta áudio da rádio com switch funcional
 // @match        *://*.habblet.city/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
 // @run-at       document-start
 // @all-frames   true
 // @grant        none
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=habblet.city
 // ==/UserScript==
 
-(function () {
-  'use strict';
-
-  // Parte característica do ícone "PAUSE" (duas barras) fornecido por você
-  const PAUSE_PATH_SNIPPET = 'M144 479H48';
-
-  // Evita clicar mais de uma vez por carregamento
-  let alreadyApplied = false;
-
-  // Utilitários
-  const isElement = (n) => n && n.nodeType === 1;
-
-  // Sobe alguns níveis no DOM procurando um container que tenha o slider de volume
-  function hasVolumeSliderNearby(node) {
-    let cur = node;
-    for (let i = 0; i < 6 && cur; i++) {
-      if (cur.querySelector && cur.querySelector('input[type="range"]')) return true;
-      cur = cur.parentElement;
-    }
-    return false;
-  }
-
-  // Procura o botão correto (ícone SVG com path do "pause" + slider por perto)
-  function findRadioPauseButtons(root = document) {
-    const svgs = root.querySelectorAll('svg.fa-icon, svg.fa-icon.cursor-pointer');
-    const matches = [];
-    for (const svg of svgs) {
-      const path = svg.querySelector('path');
-      const d = path && path.getAttribute('d');
-      if (!d) continue;
-      if (d.includes(PAUSE_PATH_SNIPPET) && hasVolumeSliderNearby(svg)) {
-        matches.push(svg);
-      }
-    }
-    return matches;
-  }
-
-  function clickToPause(svg) {
-    // Só executa uma vez
-    if (alreadyApplied) return true;
-    try {
-      svg.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-      alreadyApplied = true;
-      console.log('[Habblet Rádio] Botão alternado para "play" (rádio em pausa).');
-      return true;
-    } catch (e) {
-      console.warn('[Habblet Rádio] Falha ao clicar:', e);
-      return false;
-    }
-  }
-
-  function tryApply(root = document) {
-    if (alreadyApplied) return true;
-    const btns = findRadioPauseButtons(root);
-    if (btns.length) {
-      return clickToPause(btns[0]);
-    }
-    return false;
-  }
-
-  // --- Observadores e fallbacks ---
-
-  // Observa o DOM inteiro para quando o player for injetado
-  let observer = new MutationObserver((mutations) => {
-    if (alreadyApplied) return;
-    for (const m of mutations) {
-      // Verifica nós adicionados e seus descendentes
-      for (const node of m.addedNodes) {
-        if (!isElement(node)) continue;
-        if (tryApply(node)) {
-          observer.disconnect();
-          clearInterval(intervalId);
-          return;
-        }
-      }
-    }
-  });
-
-  // Começa a observar o mais cedo possível
-  const startObserving = () => {
-    try {
-      observer.observe(document.documentElement || document, { childList: true, subtree: true });
-    } catch {}
-  };
-  startObserving();
-
-  // Intervalo de segurança (caso o observer perca algo)
-  let attempts = 0;
-  const intervalId = setInterval(() => {
-    if (alreadyApplied || attempts++ > 80) { // ~20s (80 * 250ms)
-      clearInterval(intervalId);
-      if (observer) observer.disconnect();
-      return;
-    }
-    tryApply();
-  }, 250);
-
-  // Também tenta em eventos padrão
-  document.addEventListener('DOMContentLoaded', () => tryApply());
-  window.addEventListener('load', () => tryApply());
-
-})();
+function _0x8229(){const _0x2a72cd=['addEventListener','RADIO_BLOCKER_ACTIVE','prototype','ATIVO','Audio\x20da\x20radio\x20interceptado.\x20Radio\x20parada','1506855VPwAHa','querySelector','paused','click','Audio','audio','catch','play','4300083oAKLEl','80HZqKTm','131664VbRaTe','Audio\x20da\x20rádio\x20desativado\x20ao\x20entrar','querySelectorAll','793014oaJLmd','3786072MEskmW','Bloqueio\x20de\x20rádio\x20agora:','log','9153ERxjnb','pause','9437544tMveGI','70790hNUPve','40JzUQAA'];_0x8229=function(){return _0x2a72cd;};return _0x8229();}function _0x1731(_0x55b075,_0x330088){_0x55b075=_0x55b075-0x17d;const _0x822967=_0x8229();let _0x1731d8=_0x822967[_0x55b075];return _0x1731d8;}(function(_0x235c53,_0x11df3f){const _0x4781d0=_0x1731,_0x1dcd78=_0x235c53();while(!![]){try{const _0xfb6a55=-parseInt(_0x4781d0(0x182))/0x1+-parseInt(_0x4781d0(0x183))/0x2+-parseInt(_0x4781d0(0x17d))/0x3+parseInt(_0x4781d0(0x17f))/0x4*(parseInt(_0x4781d0(0x17e))/0x5)+-parseInt(_0x4781d0(0x188))/0x6+parseInt(_0x4781d0(0x190))/0x7*(-parseInt(_0x4781d0(0x18a))/0x8)+-parseInt(_0x4781d0(0x186))/0x9*(-parseInt(_0x4781d0(0x189))/0xa);if(_0xfb6a55===_0x11df3f)break;else _0x1dcd78['push'](_0x1dcd78['shift']());}catch(_0x4d8ada){_0x1dcd78['push'](_0x1dcd78['shift']());}}}(_0x8229,0xe9b9b),(function(){'use strict';const _0x5e3405=_0x1731;window[_0x5e3405(0x18c)]=!![];const _0x289897=window[_0x5e3405(0x194)];window[_0x5e3405(0x194)]=function(..._0x4c9599){const _0x26777e=_0x5e3405,_0x3b06fe=new _0x289897(..._0x4c9599);return _0x3b06fe[_0x26777e(0x18b)](_0x26777e(0x197),function(){const _0x5520f5=_0x26777e;window['RADIO_BLOCKER_ACTIVE']&&(_0x3b06fe[_0x5520f5(0x187)](),console[_0x5520f5(0x185)](_0x5520f5(0x18f)));}),_0x3b06fe;},window['Audio'][_0x5e3405(0x18d)]=_0x289897[_0x5e3405(0x18d)];const _0xb20d32=HTMLAudioElement[_0x5e3405(0x18d)][_0x5e3405(0x197)];HTMLAudioElement[_0x5e3405(0x18d)][_0x5e3405(0x197)]=function(..._0x25088e){const _0x1cec71=_0x5e3405;if(window['RADIO_BLOCKER_ACTIVE']){try{this[_0x1cec71(0x187)]();}catch(_0x95944f){}return console[_0x1cec71(0x185)]('Audio\x20da\x20radio\x20interceptado.\x20Radio\x20parada'),Promise['resolve']();}else return _0xb20d32['apply'](this,_0x25088e);};function _0x5b8ec3(){const _0x228921=_0x5e3405,_0x26cd6d=document[_0x228921(0x191)]('.d-flex.position-absolute.gap-2.px-2.mx-5');if(!_0x26cd6d){setTimeout(_0x5b8ec3,0x1f4);return;}_0x26cd6d['addEventListener'](_0x228921(0x193),()=>{const _0x45db51=_0x228921;window[_0x45db51(0x18c)]=!window[_0x45db51(0x18c)],console[_0x45db51(0x185)](_0x45db51(0x184),window[_0x45db51(0x18c)]?_0x45db51(0x18e):'DESATIVADO');if(!window[_0x45db51(0x18c)]){const _0x32201b=document[_0x45db51(0x181)](_0x45db51(0x195));_0x32201b['forEach'](_0x4358f9=>{const _0x569656=_0x45db51;if(_0x4358f9[_0x569656(0x192)])_0x4358f9['play']()[_0x569656(0x196)](()=>{});});}});}_0x5b8ec3(),console[_0x5e3405(0x185)](_0x5e3405(0x180));}()));
