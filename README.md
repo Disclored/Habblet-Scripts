@@ -70,7 +70,7 @@ Todas as funcionalidades descritas neste README encontram-se funcionais. (**25/0
 </td>
 <td valign="top">
 <h3>Menu Raros</h3>
-<p>Pesquisar Valores de raros, pelo nome.
+<p>Pesquisar Valores de raros, pelo nome. Esta opção ativa a comparação de preços na Feira-Livre.
   
 Os Valores são extraídos diretamente da API da Radio Habblet</p>
 </td>
